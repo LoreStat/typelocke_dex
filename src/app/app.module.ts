@@ -5,13 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RecentlyWatchedComponent } from './recently-watched/recently-watched.component';
-import { TrackerComponent } from './tracker/tracker.component';
-import { MenuComponent } from './menu/menu.component';
-import { SuggestionsComponent } from './suggestions/suggestions.component';
-import { SettingsComponent } from './settings/settings.component';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { MatchSelectionComponent } from './match-selection/match-selection.component';
+import { RecentlyWatchedComponent } from './components/recently-watched/recently-watched.component';
+import { TrackerComponent } from './components/tracker/tracker.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { SuggestionsComponent } from './components/suggestions/suggestions.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { MatchSelectionComponent } from './components/match-selection/match-selection.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+
+import { DataService } from './services/data.service';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -24,7 +27,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     SuggestionsComponent,
     SettingsComponent,
     StatisticsComponent,
-    MatchSelectionComponent
+    MatchSelectionComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     AutoCompleteModule,
     FormsModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
