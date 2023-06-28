@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div *ngIf="!choosenMatch">
+  <app-match-selection></app-match-selection>
+
+</div>
+
+<div *ngIf="choosenMatch">
+  <app-menu></app-menu>
+  <router-outlet></router-outlet>
+</div>
