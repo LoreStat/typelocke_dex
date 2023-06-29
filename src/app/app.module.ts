@@ -17,6 +17,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { DataService } from './services/data.service';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DockModule } from 'primeng/dock';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     AutoCompleteModule,
-    FormsModule
+    DockModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

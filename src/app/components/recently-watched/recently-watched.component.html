@@ -1,4 +1,11 @@
-<div *ngFor="let pokemon of recentlyWatched; index as i" (click)="selectPokemon(pokemon)" [ngClass]="{'border-top': i>0}">
+<!-- <div *ngFor="let pokemon of mostRecentlyWatched; index as i" (click)="selectPokemon(pokemon)" [ngClass]="{'border-top': i>0}">
   <img class="text-center" [src]="'/assets/pokemon-images/' + pokemon + '.png'" alt="es" width="50" height="50">
   <div>{{ pokemon }}</div>
-</div>
+</div> -->
+
+<p-dock [model]="mostRecentlyWatched" [position]="'right'">
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item.icon" [alt]="item.label" width="80%" />
+    <div>{{ item.label }}</div>
+  </ng-template>
+</p-dock>

@@ -1,3 +1,8 @@
 .border-top {
   border-top: 1px solid #33333386;
 }
+
+::ng-deep .p-dock-action {
+  width: fit-content !important;
+  height: fit-content !important;
+}
