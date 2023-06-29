@@ -11,6 +11,7 @@ export class DataService {
   private pokemon = new BehaviorSubject<string>("undefined");
   public selectedPokemon = this.pokemon.asObservable();
 
+  private loadedData = {};
 
   public setPokemon(pokemon: string) {
     this.pokemon.next(pokemon);

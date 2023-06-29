@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
 
 @Component({
   selector: 'app-tracker',
@@ -10,6 +11,8 @@ export class TrackerComponent {
 
   public pokemon = "";
   public pokemonImage = "";
+
+  public availableTypes = TYPES_LIST;
 
   constructor(private dataService: DataService) {
     this.dataService.selectedPokemon.subscribe(pokemon => {
