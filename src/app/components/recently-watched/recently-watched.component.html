@@ -1,1 +1,4 @@
-<p>recently-watched works!</p>
+<div *ngFor="let pokemon of recentlyWatched; index as i" (click)="selectPokemon(pokemon)" [ngClass]="{'border-top': i>0}">
+  <img class="text-center" [src]="'/assets/pokemon-images/' + pokemon + '.png'" alt="es" width="50" height="50">
+  <div>{{ pokemon }}</div>
+</div>
