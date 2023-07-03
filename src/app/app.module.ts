@@ -19,6 +19,10 @@ import { DataService } from './services/data.service';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DockModule } from 'primeng/dock';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
   declarations: [
@@ -40,8 +44,11 @@ import { DockModule } from 'primeng/dock';
     AutoCompleteModule,
     ButtonModule,
     DockModule,
+    MessagesModule,
+    SpeedDialModule,
+    ToastModule
   ],
-  providers: [DataService],
+  providers: [DataService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,12 +1,23 @@
+<p-toast position="top-center"></p-toast>
 <div>
   <img [src]="pokemonImage" alt="es" width="200" height="200">
   <div>
-    <p-button class="poison" label="Primary" styleClass="p-button-rounded"></p-button>
-    <p-button class="normal" label="Primary" styleClass="p-button-rounded"></p-button>
+    <p-button *ngFor="let confirmedType of confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
+      [label]="confirmedType.toLowerCase()" styleClass="p-button-rounded" (click)="removeType(confirmedType)"
+      class="type-button"></p-button>
   </div>
 </div>
 <div class="d-flex flex-wrap">
-  <div *ngFor="let type of availableTypes">
-    <p-button [ngClass]="type.toLowerCase()" label="Primary" styleClass="p-button-rounded"></p-button>
+  <div *ngFor="let type of availableTypes" class="p-1">
+    <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase()" styleClass="p-button-rounded"
+      (click)="typeSelected = typeSelected !== type ? type : ''" class="type-button"></p-button>
+    <div *ngIf="typeSelected === type" class="position-absolute z-up">
+      <p-button class="position-absolute choice-button left-button" [ngClass]="type.toLowerCase()" icon="pi pi-check"
+        styleClass="p-button-rounded p-button-raised" (click)="confirm(type)"></p-button>
+      <p-button class="position-absolute choice-button right-button" [ngClass]="type.toLowerCase()" icon="pi pi-times"
+        styleClass="p-button-rounded p-button-raised" (click)="delete(type)"></p-button>
+      <p-button class="position-absolute choice-button bottom-button" [ngClass]="type.toLowerCase()"
+        icon="pi pi-question" styleClass="p-button-rounded p-button-raised" (click)="doubt(type)"></p-button>
+    </div>
   </div>
 </div>

@@ -1,0 +1,26 @@
+.choice-button {
+  z-index: 100;
+}
+
+.z-up {
+ z-index: 100;
+}
+
+.left-button {
+  top: -94px;
+  left: -26px;
+}
+
+.right-button {
+  top: -94px;
+  left: 95px;
+}
+
+.bottom-button {
+  top: 5px;
+  left: 38px;
+}
+
+::ng-deep .type-button {button{
+  width: 120px;
+}}
