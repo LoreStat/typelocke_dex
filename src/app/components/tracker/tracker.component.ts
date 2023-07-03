@@ -16,6 +16,8 @@ export class TrackerComponent {
 
   private allTypes = TYPES_LIST;
 
+  public dubiousTypes: string[] = [];
+  public removedTypes: string[] = [];
   public availableTypes: string[] = [];
   public confirmedTypes = ["UNDEFINED", "UNDEFINED"];
 
@@ -70,7 +72,7 @@ export class TrackerComponent {
     }
   }
 
-  public confirm(type: string) {
+  public moveToConfirmed(type: string) {
     const undefinedIndex = this.confirmedTypes.findIndex(e => e === "UNDEFINED");
     if (undefinedIndex === -1) this.messageService.add(
       {
@@ -87,31 +89,27 @@ export class TrackerComponent {
     this.typeSelected = "";
   }
 
-  public delete(type: string) {
-    const undefinedIndex = this.confirmedTypes.findIndex(e => e === "UNDEFINED");
-    if (undefinedIndex === -1) this.messageService.add(
-      {
-        key: 'bc',
-        severity: 'danger',
-        summary: 'Errore',
-        detail: 'Hai già aggiunto 2 tipi a questo pokemon'
-      }
-    );
-    else this.confirmedTypes[undefinedIndex] = type;
+  public moveToRemoved(type: string) {
+    const availableIndex = this.availableTypes.findIndex(e => e === type);
+    this.availableTypes.splice(availableIndex, 1);
+    this.removedTypes.push(type);
     this.typeSelected = "";
   }
 
-  public doubt(type: string) {
-    const undefinedIndex = this.confirmedTypes.findIndex(e => e === "UNDEFINED");
-    if (undefinedIndex === -1) this.messageService.add(
-      {
-        key: 'bc',
-        severity: 'danger',
-        summary: 'Errore',
-        detail: 'Hai già aggiunto 2 tipi a questo pokemon'
-      }
-    );
-    else this.confirmedTypes[undefinedIndex] = type;
+  public moveToDubious(type: string) {
+    const availableIndex = this.availableTypes.findIndex(e => e === type);
+    this.availableTypes.splice(availableIndex, 1);
+    this.dubiousTypes.push(type);
     this.typeSelected = "";
+  }
+
+  public moveToAvailable(list: string, type: string) {
+    const index = (list === 'dubious') ? this.dubiousTypes.findIndex(e => e === type) : this.removedTypes.findIndex(e => e === type);
+    if(list === 'dubious') {
+      this.dubiousTypes.splice(index, 1);
+    } else {
+      this.removedTypes.splice(index, 1);
+    }
+    this.availableTypes.push(type);
   }
 }

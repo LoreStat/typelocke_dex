@@ -18,6 +18,7 @@ import { DataService } from './services/data.service';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DockModule } from 'primeng/dock';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
@@ -43,6 +44,7 @@ import { MessagesModule } from 'primeng/messages';
     FormsModule,
     AutoCompleteModule,
     ButtonModule,
+    CardModule,
     DockModule,
     MessagesModule,
     SpeedDialModule,
