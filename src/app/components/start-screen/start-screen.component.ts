@@ -6,11 +6,11 @@ import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
-  selector: 'app-action-selection',
-  templateUrl: './action-selection.component.html',
-  styleUrls: ['./action-selection.component.scss']
+  selector: 'app-start-screen',
+  templateUrl: './start-screen.component.html',
+  styleUrls: ['./start-screen.component.scss']
 })
-export class ActionSelectionComponent {
+export class StartScreenComponent {
 
   public savedMatches: SavedMatch[] = [];
 

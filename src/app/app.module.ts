@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +16,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { MatchSelectionComponent } from './components/match-selection/match-selection.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
-import { ActionSelectionComponent } from './components/action-selection/action-selection.component';
+import { StartScreenComponent } from './components/start-screen/start-screen.component';
 
 import { DataService } from './services/data.service';
 
@@ -30,6 +32,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/');
+}
 
 @NgModule({
   declarations: [
@@ -42,7 +47,7 @@ import { InputTextModule } from 'primeng/inputtext';
     StatisticsComponent,
     MatchSelectionComponent,
     HomepageComponent,
-    ActionSelectionComponent
+    StartScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,14 @@ import { InputTextModule } from 'primeng/inputtext';
     MessagesModule,
     SpeedDialModule,
     ToastModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
   providers: [DataService, MessageService, HttpClient, ConfirmationService],
   bootstrap: [AppComponent]
