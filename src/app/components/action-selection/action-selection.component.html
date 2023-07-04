@@ -1,5 +1,16 @@
 <div class="text-center">
-  <p-card [ngClass]="savedMatches.length > 0 ? 'clickable' : 'disabled'" (click)="goToMatchSelection()">Continua</p-card>
-  <div class="my-5"><p-card class="clickable">Nuova partita</p-card></div>
+  <p-card [ngClass]="savedMatches.length > 0 ? 'clickable' : 'disabled'"
+    (click)="goToMatchSelection()">Continua</p-card>
+  <div class="my-5" (click)="openNewMatchModal()"><p-card class="clickable">Nuova partita</p-card></div>
   <p-card class="clickable">Impostazioni</p-card>
 </div>
+<p-dialog [(visible)]="showNewMatchModal" [style]="{width: '50vw'}" [draggable]="false" [showHeader]="false">
+  <div class="pt-5 d-flex justify-content-evenly">
+    <input type="text" pInputText class="p-inputtext-lg" [(ngModel)]="newMatchTitle" />
+    <img [src]="pokemonIconPath.replace('{id}', pokemonIcon.toString())" alt="es" width="64" height="64">
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button (click)="hideNewMatchModal()" label="Annulla" styleClass="p-button-text"></p-button>
+    <p-button (click)="createNewMatch()" label="Crea" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

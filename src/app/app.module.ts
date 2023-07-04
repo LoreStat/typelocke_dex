@@ -14,6 +14,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { MatchSelectionComponent } from './components/match-selection/match-selection.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { ActionSelectionComponent } from './components/action-selection/action-selection.component';
 
 import { DataService } from './services/data.service';
 
@@ -23,9 +24,12 @@ import { CardModule } from 'primeng/card';
 import { DockModule } from 'primeng/dock';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
-import { ActionSelectionComponent } from './components/action-selection/action-selection.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @NgModule({
   declarations: [
@@ -48,13 +52,16 @@ import { ActionSelectionComponent } from './components/action-selection/action-s
     AutoCompleteModule,
     ButtonModule,
     CardModule,
+    ConfirmDialogModule,
+    DialogModule,
     DockModule,
+    InputTextModule,
     MessagesModule,
     SpeedDialModule,
     ToastModule,
     HttpClientModule
   ],
-  providers: [DataService, MessageService, HttpClient],
+  providers: [DataService, MessageService, HttpClient, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

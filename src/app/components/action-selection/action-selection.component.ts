@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 
@@ -13,8 +14,13 @@ export class ActionSelectionComponent {
 
   public savedMatches: SavedMatch[] = [];
 
+  public showNewMatchModal: boolean = false;
+  public newMatchTitle: string = "";
+  public pokemonIconPath: string = "assets/images/pokemon-images/{id}.png";
+  public pokemonIcon: number = 0;
+  private generateIcons = false;
 
-  constructor(private httpClient: HttpClient, private dataService: DataService, private router: Router) {
+  constructor(private httpClient: HttpClient, private dataService: DataService, private router: Router, private confirmationService: ConfirmationService) {
     this.httpClient.get('assets/savedInstances/savedMatches.txt', { responseType: 'text' })
       .subscribe(data => {
         this.savedMatches = data.split("\n").filter(row => !!row).map((match) => {
@@ -40,5 +46,36 @@ export class ActionSelectionComponent {
 
   public goToSettings() {
     this.router.navigate(['/settings']);
+  }
+
+  public openNewMatchModal() {
+    this.generateIcons = true;
+    this.newMatchTitle = "";
+    this.showNewMatchModal = true;
+    this.generateIcon();
+  }
+
+  public hideNewMatchModal() {
+    this.generateIcons = false;
+    this.newMatchTitle = "";
+    this.pokemonIcon = 0;
+    this.showNewMatchModal = false;
+  }
+
+  private generateIcon() {
+    const min = Math.ceil(1);
+    const max = Math.floor(650);
+    this.pokemonIcon = Math.floor(Math.random() * (max - min) + min);
+    setTimeout(() => {if(this.generateIcons) this.generateIcon()}, 1000);
+  }
+
+  public createNewMatch() {
+    const formData = new FormData();
+    formData.append('savedMatches1.txt', "")
+    this.httpClient.post('/',formData, {headers: {
+      'Content-Type': 'multipart/form-data'
+     }})
+    this.showNewMatchModal = false;
+    this.generateIcons = false;
   }
 }
