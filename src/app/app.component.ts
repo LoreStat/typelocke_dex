@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'typelocke_dex';
-  public choosenMatch = 1;
+  public choosenMatch = 0;
 }

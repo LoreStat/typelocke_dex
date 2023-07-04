@@ -22,7 +22,7 @@ export class RecentlyWatchedComponent {
       this.mostRecentlyWatched = this.recentlyWatched.slice(0, 8).map(el => {
         return {
           label: el,
-          icon: `/assets/pokemon-images/${el}.png`,
+          icon: `/assets/images/pokemon-images/${el}.png`,
           command: () => {
             this.dataService.setPokemon(el);
           }

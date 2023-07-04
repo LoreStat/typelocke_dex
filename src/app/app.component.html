@@ -1,8 +1,7 @@
 <div *ngIf="!choosenMatch">
-  <app-match-selection></app-match-selection>
-
+  <h1 class="text-center">Typelocke Tracker</h1>
+  <router-outlet></router-outlet>
 </div>
-
 <div *ngIf="choosenMatch">
   <app-homepage></app-homepage>
 </div>

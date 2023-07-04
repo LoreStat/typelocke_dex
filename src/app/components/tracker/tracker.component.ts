@@ -23,45 +23,13 @@ export class TrackerComponent {
 
   public typeSelected = "";
 
-  public items: MenuItem[] = [
-    {
-      icon: 'pi pi-check',
-      command: () => {
-        this.moveTyping('confirm');
-      }
-    },
-    {
-      icon: 'pi pi-delete',
-      command: () => {
-        this.moveTyping('delete');
-      }
-    },
-    {
-      icon: 'pi pi-question',
-      command: () => {
-        this.moveTyping('doubt');
-      }
-    }];
-
   constructor(private dataService: DataService, private messageService: MessageService) {
     this.dataService.selectedPokemon.subscribe(pokemon => {
       this.pokemon = pokemon;
-      this.pokemonImage = `/assets/pokemon-images/${pokemon}.png`
+      this.pokemonImage = `/assets/images/pokemon-images/${pokemon}.png`
     });
 
     this.availableTypes = this.allTypes;
-  }
-
-  public moveTyping(choice: string) {
-    console.log("move");
-  }
-
-  public showChoices(type: string) {
-    const speeddialButton = document.getElementById(`${type}-sd`);
-    if (speeddialButton) {
-      const button = speeddialButton.getElementsByTagName('button')[0];
-      button.click();
-    }
   }
 
   public removeType(type: string) {
