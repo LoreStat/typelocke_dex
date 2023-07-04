@@ -5,6 +5,20 @@
 
 @import "./assets/styles/types-buttons.scss";
 
+body {
+  font-family: 'LetsGo', Fallback, sans-serif !important;
+  background-color: rgb(253, 241, 247);
+}
+
+* {
+  font-family: 'LetsGo', sans-serif;
+}
+
+@font-face {
+  font-family: 'LetsGo';
+  src: url('assets/fonts/letsgo.otf') format('opentype');
+}
+
 .text-center {
   text-align: center;
 }
