@@ -3,7 +3,7 @@ const url = require('url');
 const path = require('path');
 
 function onReady () {
-	win = new BrowserWindow({width: 900, height: 670})
+	win = new BrowserWindow({width: 900, height: 670, webPreferences: {nodeIntegration: true, contextIsolation: false}})
 	win.loadURL(url.format({
 		pathname: path.join(
 			__dirname,

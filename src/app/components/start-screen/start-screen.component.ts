@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
-  styleUrls: ['./start-screen.component.scss']
+  styleUrls: ['./start-screen.component.scss'],
+  providers: [FileService]
 })
 export class StartScreenComponent {
 
@@ -20,9 +22,17 @@ export class StartScreenComponent {
   public pokemonIcon: number = 0;
   private generateIcons = false;
 
-  constructor(private httpClient: HttpClient, private dataService: DataService, private router: Router, private confirmationService: ConfirmationService) {
+  constructor(
+    private httpClient: HttpClient,
+    private dataService: DataService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private fileService: FileService
+  ) {
     this.httpClient.get('assets/savedInstances/savedMatches.txt', { responseType: 'text' })
       .subscribe(data => {
+        console.log("a2");
+        console.log(data);
         this.savedMatches = data.split("\n").filter(row => !!row).map((match) => {
           const matchSplit = match.split(",");
           return {
@@ -66,15 +76,12 @@ export class StartScreenComponent {
     const min = Math.ceil(1);
     const max = Math.floor(650);
     this.pokemonIcon = Math.floor(Math.random() * (max - min) + min);
-    setTimeout(() => {if(this.generateIcons) this.generateIcon()}, 1000);
+    setTimeout(() => { if (this.generateIcons) this.generateIcon() }, 1000);
   }
 
   public createNewMatch() {
     const formData = new FormData();
-    formData.append('savedMatches1.txt', "")
-    this.httpClient.post('/',formData, {headers: {
-      'Content-Type': 'multipart/form-data'
-     }})
+    this.fileService.writeFile(this.newMatchTitle, "")
     this.showNewMatchModal = false;
     this.generateIcons = false;
   }
