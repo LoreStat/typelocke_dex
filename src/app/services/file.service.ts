@@ -4,17 +4,16 @@ import { Injectable } from "@angular/core";
 export class FileService {
   fs: any;
   constructor() {
-    // or this.fs = <any>window.fs
     this.fs = (window as any).fs;
   }
 
-  // read file synchronous
-  getFile(path: string) {
-    // return synchronous filestream
-    return this.fs.readFileSync(path);
+  getFile(name: string, singleMatch: boolean) {
+    return this.fs.readFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, { encoding: 'utf8'});
   }
 
-  writeFile(name: string, data: any) {
-    return this.fs.writeFileSync(`./saves/${name}.txt`, data)
+  writeFile(name: string, data: any, singleMatch: boolean) {
+    return this.fs.writeFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, data)
   }
+
+
 }

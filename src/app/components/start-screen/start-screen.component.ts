@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
@@ -23,35 +23,30 @@ export class StartScreenComponent {
   private generateIcons = false;
 
   constructor(
-    private httpClient: HttpClient,
     private dataService: DataService,
     private router: Router,
-    private confirmationService: ConfirmationService,
-    private fileService: FileService
+    private fileService: FileService,
+    private messageService: MessageService
   ) {
-    this.httpClient.get('assets/savedInstances/savedMatches.txt', { responseType: 'text' })
-      .subscribe(data => {
-        console.log("a2");
-        console.log(data);
-        this.savedMatches = data.split("\n").filter(row => !!row).map((match) => {
-          const matchSplit = match.split(",");
-          return {
-            fileId: matchSplit[0],
-            matchName: matchSplit[1],
-            startDate: matchSplit[2],
-            lastModified: matchSplit[3],
-          }
-        }).sort((a, b) => {
-          return (new Date(a.lastModified).getTime() > new Date(b.lastModified).getTime()) ? 1 : -1
+    const savedData = this.fileService.getFile('savedMatches.txt', false);
+    this.savedMatches = savedData.split("\n").filter((row: string) => !!row).map((match: string) => {
+      const matchSplit = match.split(",");
+      return {
+        matchName: matchSplit[0],
+        startDate: matchSplit[1],
+        lastModified: matchSplit[2],
+        iconName: matchSplit[3],
+      }
+    }).sort((a: SavedMatch, b: SavedMatch) => {
+      return (new Date(a.lastModified).getTime() > new Date(b.lastModified).getTime()) ? 1 : -1
 
-        })
+    })
 
-        dataService.setSavedMatches(this.savedMatches);
-      });
+    dataService.setSavedMatches(this.savedMatches);
   }
 
   public goToMatchSelection() {
-    this.router.navigate(['/match-selection']);
+    if(this.savedMatches.length > 0) this.router.navigate(['/match-selection']);
   }
 
   public goToSettings() {
@@ -80,9 +75,29 @@ export class StartScreenComponent {
   }
 
   public createNewMatch() {
-    const formData = new FormData();
-    this.fileService.writeFile(this.newMatchTitle, "")
-    this.showNewMatchModal = false;
-    this.generateIcons = false;
+    if(this.savedMatches.findIndex(x => x.matchName.split(".txt")[0] === this.newMatchTitle) >= 0) {
+      this.messageService.add(
+        {
+          severity: 'error',
+          summary: 'Errore',
+          detail: "Esiste gia' un salvataggio con questo nome"
+        }
+      );
+    } else {
+      this.savedMatches.push({
+        matchName: this.newMatchTitle + ".txt",
+        iconName: this.pokemonIcon + ".png",
+        startDate: new Date().toLocaleDateString(),
+        lastModified: new Date().toLocaleDateString(),
+      })
+      this.dataService.setSavedMatches(this.savedMatches);
+      const stringToSave = this.savedMatches.map(x => {
+        return x.matchName + "," + x.startDate + "," + x.lastModified + "," + x.iconName
+      }).join("\n");
+      this.fileService.writeFile("savedMatches.txt", stringToSave, false)
+      this.fileService.writeFile(this.newMatchTitle + ".txt", "", true)
+      this.showNewMatchModal = false;
+      this.generateIcons = false;
+    }
   }
 }
