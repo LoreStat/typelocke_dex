@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
+import { POKEMON_ICON_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-start-screen',
@@ -18,8 +18,8 @@ export class StartScreenComponent {
 
   public showNewMatchModal: boolean = false;
   public newMatchTitle: string = "";
-  public pokemonIconPath: string = "assets/images/pokemon-images/{id}.png";
   public pokemonIcon: number = 0;
+  public pokemonIconPath: string = "";
   private generateIcons = false;
 
   constructor(
@@ -28,14 +28,16 @@ export class StartScreenComponent {
     private fileService: FileService,
     private messageService: MessageService
   ) {
+    this.pokemonIconPath = POKEMON_ICON_PATH;
     const savedData = this.fileService.getFile('savedMatches.txt', false);
     this.savedMatches = savedData.split("\n").filter((row: string) => !!row).map((match: string) => {
       const matchSplit = match.split(",");
       return {
         matchName: matchSplit[0],
-        startDate: matchSplit[1],
-        lastModified: matchSplit[2],
-        iconName: matchSplit[3],
+        file: matchSplit[1],
+        startDate: matchSplit[2],
+        lastModified: matchSplit[3],
+        iconName: matchSplit[4],
       }
     }).sort((a: SavedMatch, b: SavedMatch) => {
       return (new Date(a.lastModified).getTime() > new Date(b.lastModified).getTime()) ? 1 : -1
@@ -85,14 +87,15 @@ export class StartScreenComponent {
       );
     } else {
       this.savedMatches.push({
-        matchName: this.newMatchTitle + ".txt",
+        matchName: this.newMatchTitle,
         iconName: this.pokemonIcon + ".png",
         startDate: new Date().toLocaleDateString(),
         lastModified: new Date().toLocaleDateString(),
+        file: this.newMatchTitle + ".txt"
       })
       this.dataService.setSavedMatches(this.savedMatches);
       const stringToSave = this.savedMatches.map(x => {
-        return x.matchName + "," + x.startDate + "," + x.lastModified + "," + x.iconName
+        return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastModified + "," + x.iconName
       }).join("\n");
       this.fileService.writeFile("savedMatches.txt", stringToSave, false)
       this.fileService.writeFile(this.newMatchTitle + ".txt", "", true)

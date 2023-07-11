@@ -73,7 +73,12 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
   ],
-  providers: [DataService, MessageService, HttpClient, ConfirmationService],
+  providers: [
+    DataService,
+    MessageService,
+    HttpClient,
+    ConfirmationService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

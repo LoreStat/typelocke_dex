@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,13 @@ export class AppComponent {
   title = 'typelocke_dex';
   public choosenMatch = 0;
 
-  constructor(translate: TranslateService) {
-    // this language will be used as a fallback when a translation isn't found in the current language
+  constructor(translate: TranslateService, private dataService: DataService) {
     translate.setDefaultLang('en');
-
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
     translate.use('it');
+
+    this.dataService.selectedMatch.subscribe(match => {
+      if(match) this.choosenMatch = 1;
+      else this.choosenMatch = 0;
+    });
   }
 }

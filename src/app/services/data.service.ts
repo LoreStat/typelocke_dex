@@ -14,6 +14,11 @@ export class DataService {
   private pokemon = new BehaviorSubject<string>("undefined");
   public selectedPokemon = this.pokemon.asObservable();
 
+  private match = new BehaviorSubject<string>("");
+  public selectedMatch = this.match.asObservable();
+
+  private matchData: string = "";
+
   private loadedData = {};
 
   public getSavedMatches() {
@@ -27,4 +32,17 @@ export class DataService {
   public setPokemon(pokemon: string) {
     this.pokemon.next(pokemon);
   }
+
+  public setLoadedMatch(match: string) {
+    this.match.next(match);
+  }
+
+  public getLoadedMatch() {
+    return this.matchData;
+  }
+
+  public setLoadedData(data: string) {
+    this.matchData = data;
+  }
+
 }
