@@ -1,5 +1,15 @@
 {
+  "General": {
+    "create": "Crea",
+    "cancel": "Annulla"
+  },
   "StartScreen": {
-    "newGame": "Nuovo gioco"
+    "newGame": "Nuovo gioco",
+    "continue": "Continua",
+    "settings": "Impostazioni"
+  },
+  "MatchSelection": {
+    "lastLogin": "Ultimo accesso",
+    "adventureStarted": "Inizio avventura"
   }
 }

@@ -4,8 +4,8 @@
       <img [src]="pokemonIconPath + match.iconName" alt="es" width="64" height="64">
       <div>
         <p>{{match.matchName}} </p>
-        <p>Ultimo accesso: {{ match.lastModified }}</p>
-        <p>Inizio avventura: {{ match.startDate }}</p>
+        <p>{{ 'MatchSelection.lastLogin' | translate }}: {{ match.lastModified }}</p>
+        <p>{{ 'MatchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
       </div>
     </div>
   </p-card>

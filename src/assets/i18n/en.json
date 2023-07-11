@@ -1,5 +1,15 @@
 {
+  "General": {
+    "create": "Create",
+    "cancel": "Cancel"
+  },
   "StartScreen": {
-    "newGame": "New game"
+    "newGame": "New game",
+    "continue": "Continue",
+    "settings": "Settings"
+  },
+  "MatchSelection": {
+    "lastLogin": "Last login",
+    "adventureStarted": "Adventure started"
   }
 }

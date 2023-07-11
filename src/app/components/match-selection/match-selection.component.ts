@@ -23,6 +23,6 @@ export class MatchSelectionComponent {
   public loadMatch(matchName: string) {
     this.dataService.setLoadedData(this.fileService.getFile(matchName, true));
     this.dataService.setLoadedMatch(matchName);
-    this.router.navigate(['/settings']);
+    this.router.navigate(['/tracker']);
   }
 }
