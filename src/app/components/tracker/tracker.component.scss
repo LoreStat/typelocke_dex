@@ -21,11 +21,19 @@
   left: 38px;
 }
 
-.flex-basis-33{
-  flex-basis: 33%;
+.flex-basis-28 {
+  flex-basis: 28%;
+}
+
+.flex-basis-44 {
+  flex-basis: 44%;
 }
 
 ::ng-deep .type-button {button{
   width: 120px;
 }}
 
+.borders-x {
+  border-left: 1px solid #2d3f47;
+  border-right: 1px solid #2d3f47;;
+}

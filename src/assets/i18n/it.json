@@ -29,6 +29,7 @@
     "psychic": "Psichico",
     "rock": "Roccia",
     "steel": "Acciaio",
-    "water": "Acqua"
+    "water": "Acqua",
+    "undefined": "???"
   }
 }

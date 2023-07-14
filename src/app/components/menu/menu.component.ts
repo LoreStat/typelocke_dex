@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { POKEMON } from 'src/assets/constants/PokemonData';
+import { LOGO_ICON_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-menu',
@@ -14,6 +15,8 @@ export class MenuComponent implements OnInit {
   public pokemonsList: string[] = POKEMON;
 
   public suggestions: string[] = []
+
+  public logoPath: string = LOGO_ICON_PATH;
 
   constructor(private dataService: DataService, private router: Router) { }
 

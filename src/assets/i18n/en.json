@@ -29,6 +29,7 @@
     "psychic": "Psychic",
     "rock": "Rock",
     "steel": "Steel",
-    "water": "Water"
+    "water": "Water",
+    "undefined": "???"
   }
 }

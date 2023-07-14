@@ -19,6 +19,29 @@
   height: 64px;
   list-style: none;
 
+  .logo {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+
+    .logo-title-text {
+      flex-direction: column;
+      margin-top: -2px;
+      margin-left: -4px;
+      justify-content: center;
+    }
+
+    .logo-title {
+      color: #ffffffd9;
+      font-size: 16px;
+      margin: 0;
+    }
+    .typelocke {
+      margin-left: -5px;
+    }
+  }
+
   ul {
     margin: 0;
     padding: 0;
