@@ -1,0 +1,38 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  height: 64px;
+  width: 100%;
+  background-color: #2d3f47;
+  background-image: -webkit-gradient(linear, left top, right top, from(#2d3f47), to(#2d3f47));
+  background-image: -webkit-linear-gradient(to right, #2d3f47, #2d3f47);
+  background-image: -moz-linear-gradient(to right, #2d3f47, #2d3f47);
+  background-image: -ms-linear-gradient(to right, #2d3f47, #2d3f47);
+  background-image: -o-linear-gradient(to right, #2d3f47, #2d3f47);
+  background-image: linear-gradient(to right, #2d3f47, #2d3f47);
+}
+
+
+.topbar-icons {
+  height: 64px;
+  list-style: none;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      position: relative;
+
+      .topbar-icon {
+        color: #f4f4f4;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+      }
+    }
+  }
+}

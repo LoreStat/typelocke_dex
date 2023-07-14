@@ -3,6 +3,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { DataService } from 'src/app/services/data.service';
 import { TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
+import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-tracker',
@@ -26,7 +27,7 @@ export class TrackerComponent {
   constructor(private dataService: DataService, private messageService: MessageService) {
     this.dataService.selectedPokemon.subscribe(pokemon => {
       this.pokemon = pokemon;
-      this.pokemonImage = `/assets/images/pokemon-images/${pokemon}.png`
+      this.pokemonImage = `${POKEMON_IMAGES_PATH + pokemon}.png`
     });
 
     this.availableTypes = this.allTypes;

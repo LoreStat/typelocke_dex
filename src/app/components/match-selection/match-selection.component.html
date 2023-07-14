@@ -1,12 +1,14 @@
 <div>
-  <p-card *ngFor="let match of savedMatches" (click)="loadMatch(match.file)">
-    <div class="d-flex">
-      <img [src]="pokemonIconPath + match.iconName" alt="es" width="64" height="64">
-      <div>
-        <p>{{match.matchName}} </p>
-        <p>{{ 'MatchSelection.lastLogin' | translate }}: {{ match.lastModified }}</p>
-        <p>{{ 'MatchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
+  <div *ngFor="let match of savedMatches" (click)="loadMatch(match.file)" class="clickable mt-2">
+    <p-card>
+      <div class="d-flex">
+        <img [src]="pokemonIconPath + match.iconName" alt="es" width="64" height="64">
+        <div>
+          <p>{{match.matchName}} </p>
+          <p>{{ 'matchSelection.lastLogin' | translate }}: {{ match.lastModified }}</p>
+          <p>{{ 'matchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
+        </div>
       </div>
-    </div>
-  </p-card>
+    </p-card>
+  </div>
 </div>

@@ -19,8 +19,20 @@ body {
   src: url('assets/fonts/letsgo.otf') format('opentype');
 }
 
+.clickable {
+  cursor: pointer;
+}
+
+.w-100 {
+  width: 100%;
+}
+
 .text-center {
   text-align: center;
+}
+
+.align-items-center {
+  align-items: center;
 }
 
 .d-flex {

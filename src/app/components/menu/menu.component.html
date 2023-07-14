@@ -1,1 +1,18 @@
-<p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" (completeMethod)="search($event)"></p-autoComplete>
+<div>
+  <div class="topbar d-flex justify-content-center">
+    <div class="topbar-icons w-100 d-flex">
+      <ul class="d-flex justify-content-center w-100 align-items-center">
+        <li>
+          <i class="pi pi-sign-out topbar-icon clickable" (click)="backToStart()"></i>
+        </li>
+        <li class="mx-5">
+          <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+            (completeMethod)="search($event)"></p-autoComplete>
+        </li>
+        <li>
+          <i class="pi pi-cog topbar-icon clickable"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

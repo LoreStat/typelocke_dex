@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { POKEMON } from 'src/assets/constants/PokemonData';
 
@@ -14,7 +15,7 @@ export class MenuComponent implements OnInit {
 
   public suggestions: string[] = []
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -25,5 +26,10 @@ export class MenuComponent implements OnInit {
     );
 
     if(this.suggestions.length === 1) this.dataService.setPokemon(this.suggestions[0]);
+  }
+
+  public backToStart() {
+    this.dataService.setLoadedMatch("");
+    this.router.navigate(["start"]);
   }
 }

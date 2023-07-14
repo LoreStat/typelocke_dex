@@ -1,15 +1,34 @@
 {
-  "General": {
+  "general": {
     "create": "Create",
     "cancel": "Cancel"
   },
-  "StartScreen": {
+  "startScreen": {
     "newGame": "New game",
     "continue": "Continue",
     "settings": "Settings"
   },
-  "MatchSelection": {
+  "matchSelection": {
     "lastLogin": "Last login",
     "adventureStarted": "Adventure started"
+  },
+  "types": {
+    "bug": "Bug",
+    "dark": "Dark",
+    "dragon": "Dragon",
+    "electric": "Electric",
+    "fighting": "Fighting",
+    "fire": "Fire",
+    "flying": "Flying",
+    "ghost": "Ghost",
+    "grass": "Grass",
+    "ground": "Ground",
+    "ice": "Ice",
+    "normal": "Normal",
+    "poison": "Poison",
+    "psychic": "Psychic",
+    "rock": "Rock",
+    "steel": "Steel",
+    "water": "Water"
   }
 }

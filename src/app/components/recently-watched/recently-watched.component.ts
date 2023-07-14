@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DataService } from 'src/app/services/data.service';
+import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-recently-watched',
@@ -22,7 +23,7 @@ export class RecentlyWatchedComponent {
       this.mostRecentlyWatched = this.recentlyWatched.slice(0, 8).map(el => {
         return {
           label: el,
-          icon: `/assets/images/pokemon-images/${el}.png`,
+          icon: `${POKEMON_IMAGES_PATH + el}.png`,
           command: () => {
             this.dataService.setPokemon(el);
           }

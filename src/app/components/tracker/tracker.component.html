@@ -4,7 +4,7 @@
       <img [src]="pokemonImage" alt="es" width="200" height="200">
       <div class="d-flex flex-column justify-content-evenly">
         <p-button *ngFor="let confirmedType of confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
-          [label]="confirmedType.toLowerCase()" styleClass="p-button-rounded" (click)="removeType(confirmedType)"
+          [label]="confirmedType.toLowerCase() | translate" styleClass="p-button-rounded" (click)="removeType(confirmedType)"
           class="type-button"></p-button>
       </div>
     </div>
@@ -12,16 +12,19 @@
 </div>
 
 <p-card>
+    <ng-template pTemplate="header">
+        Lista tipi
+    </ng-template>
   <div class="d-flex justify-content-center">
     <div class="d-flex flex-wrap flex-basis-33 justify-content-center">
       <div *ngFor="let type of dubiousTypes" class="p-1">
-        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase()" styleClass="p-button-rounded"
+        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase() | translate" styleClass="p-button-rounded"
           (click)="moveToAvailable('dubious', type)" class="type-button"></p-button>
       </div>
     </div>
     <div class="d-flex flex-wrap flex-basis-33 justify-content-center">
       <div *ngFor="let type of availableTypes" class="p-1">
-        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase()" styleClass="p-button-rounded"
+        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase() | translate" styleClass="p-button-rounded"
           (click)="typeSelected = typeSelected !== type ? type : ''" class="type-button"></p-button>
         <div *ngIf="typeSelected === type" class="position-absolute z-up">
           <p-button class="position-absolute choice-button left-button" [ngClass]="type.toLowerCase()" icon="pi pi-check"
@@ -35,7 +38,7 @@
     </div>
     <div class="d-flex flex-wrap flex-basis-33 justify-content-center">
       <div *ngFor="let type of removedTypes" class="p-1">
-        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase()" styleClass="p-button-rounded"
+        <p-button [ngClass]="type.toLowerCase()" [label]="type.toLowerCase() | translate" styleClass="p-button-rounded"
           (click)="moveToAvailable('removed', type)" class="type-button"></p-button>
       </div>
     </div>

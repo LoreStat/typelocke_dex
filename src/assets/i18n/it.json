@@ -1,15 +1,34 @@
 {
-  "General": {
+  "general": {
     "create": "Crea",
     "cancel": "Annulla"
   },
-  "StartScreen": {
+  "startScreen": {
     "newGame": "Nuovo gioco",
     "continue": "Continua",
     "settings": "Impostazioni"
   },
-  "MatchSelection": {
+  "matchSelection": {
     "lastLogin": "Ultimo accesso",
     "adventureStarted": "Inizio avventura"
+  },
+  "types": {
+    "bug": "Coleottero",
+    "dark": "Buio",
+    "dragon": "Drago",
+    "electric": "Elettro",
+    "fighting": "Lotta",
+    "fire": "Fuoco",
+    "flying": "Volante",
+    "ghost": "Spettro",
+    "grass": "Erba",
+    "ground": "Terra",
+    "ice": "Ghiaccio",
+    "normal": "Normale",
+    "poison": "Veleno",
+    "psychic": "Psichico",
+    "rock": "Roccia",
+    "steel": "Acciaio",
+    "water": "Acqua"
   }
 }
