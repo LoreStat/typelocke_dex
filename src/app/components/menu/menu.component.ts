@@ -11,6 +11,7 @@ import { LOGO_ICON_PATH } from 'src/assets/constants/devConstants';
 })
 export class MenuComponent implements OnInit {
 
+  public matchName: string = "";
   public selectedItem: string = "";
   public pokemonsList: string[] = POKEMON;
 
@@ -20,7 +21,10 @@ export class MenuComponent implements OnInit {
 
   constructor(private dataService: DataService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.dataService.selectedMatch.subscribe(match => {
+      this.matchName = match.split(".txt")[0];
+    })
   }
 
   public search(event: any) {
@@ -34,5 +38,9 @@ export class MenuComponent implements OnInit {
   public backToStart() {
     this.dataService.setLoadedMatch("");
     this.router.navigate(["start"]);
+  }
+
+  public navigateToDex() {
+    this.router.navigate(["dex"]);
   }
 }

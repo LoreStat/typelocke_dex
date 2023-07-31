@@ -31,6 +31,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { DexComponent } from './components/dex/dex.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -47,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatisticsComponent,
     MatchSelectionComponent,
     HomepageComponent,
-    StartScreenComponent
+    StartScreenComponent,
+    DexComponent
   ],
   imports: [
     BrowserModule,
