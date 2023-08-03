@@ -23,7 +23,9 @@ import { DataService } from './services/data.service';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DockModule } from 'primeng/dock';
+import { DropdownModule } from 'primeng/dropdown';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -59,9 +61,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AutoCompleteModule,
     ButtonModule,
     CardModule,
+    CheckboxModule,
     ConfirmDialogModule,
     DialogModule,
     DockModule,
+    DropdownModule,
     InputTextModule,
     MessagesModule,
     SpeedDialModule,

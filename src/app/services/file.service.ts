@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { SavedMatch, Settings } from "../models/models";
 
 @Injectable()
 export class FileService {
@@ -15,5 +16,11 @@ export class FileService {
     return this.fs.writeFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, data)
   }
 
-
+  public writeSavedMatches(savedMatches: SavedMatch[], settings: Settings) {
+    const settingsStringToSave = `${settings.suggestions},${settings.automatic},${settings.language}\n`
+    const matchesStringToSave = savedMatches.map(x => {
+      return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastModified + "," + x.iconName
+    }).join("\n");
+    this.writeFile("savedMatches.txt", settingsStringToSave + matchesStringToSave, false)
+  }
 }

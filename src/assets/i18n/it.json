@@ -1,7 +1,9 @@
 {
   "general": {
+    "back": "Indietro",
     "create": "Crea",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "save": "Salva"
   },
   "startScreen": {
     "newGame": "Nuovo gioco",
@@ -31,5 +33,10 @@
     "steel": "Acciaio",
     "water": "Acqua",
     "undefined": "???"
+  },
+  "settings": {
+    "suggestions": "Abilita il suggerimento dei tipi di mosse che puoi utilizzare per avere maggiori informazioni sui possibili tipi dei pokemon",
+    "automatic": "Abilita la finestra per inserire tipo ed efficacia dell'ultima mossa usata, per fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon",
+    "language": "Lingua"
   }
 }

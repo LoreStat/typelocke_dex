@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SavedMatch } from '../models/models';
+import { SavedMatch, Settings } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,8 @@ export class DataService {
   private matchData: string = "";
 
   private loadedData = {};
+
+  private settings!: Settings;
 
   public getSavedMatches() {
     return this.savedMatches;
@@ -45,4 +47,11 @@ export class DataService {
     this.matchData = data;
   }
 
+  public getSettings() {
+    return this.settings;
+  }
+
+  public setSettings(value: Settings) {
+    this.settings = value;
+  }
 }

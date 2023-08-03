@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
@@ -26,11 +27,23 @@ export class StartScreenComponent {
     private dataService: DataService,
     private router: Router,
     private fileService: FileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private translate: TranslateService,
   ) {
     this.pokemonIconPath = POKEMON_ICON_PATH;
     const savedData = this.fileService.getFile('savedMatches.txt', false);
-    this.savedMatches = savedData.split("\n").filter((row: string) => !!row).map((match: string) => {
+    const savedDataList = savedData.split("\n");
+    const settingsArray = savedDataList.shift().split(",");
+
+    const settings = {
+      suggestions: this.isTrue(settingsArray[0]),
+      automatic: this.isTrue(settingsArray[1]),
+      language: settingsArray[2]
+    }
+    dataService.setSettings(settings)
+    translate.use(settings.language);
+
+    this.savedMatches = savedDataList.filter((row: string) => !!row).map((match: string) => {
       const matchSplit = match.split(",");
       return {
         matchName: matchSplit[0],
@@ -40,7 +53,7 @@ export class StartScreenComponent {
         iconName: matchSplit[4],
       }
     }).sort((a: SavedMatch, b: SavedMatch) => {
-      return (new Date(a.lastModified).getTime() > new Date(b.lastModified).getTime()) ? 1 : -1
+      return (new Date(a.lastModified).getTime() < new Date(b.lastModified).getTime()) ? 1 : -1
 
     })
 
@@ -94,13 +107,15 @@ export class StartScreenComponent {
         file: this.newMatchTitle + ".txt"
       })
       this.dataService.setSavedMatches(this.savedMatches);
-      const stringToSave = this.savedMatches.map(x => {
-        return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastModified + "," + x.iconName
-      }).join("\n");
-      this.fileService.writeFile("savedMatches.txt", stringToSave, false)
+      this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
       this.fileService.writeFile(this.newMatchTitle + ".txt", "", true)
+
       this.showNewMatchModal = false;
       this.generateIcons = false;
     }
+  }
+
+  private isTrue(value: string) {
+    return value === "true";
   }
 }

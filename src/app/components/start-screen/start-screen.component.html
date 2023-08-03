@@ -2,7 +2,7 @@
   <p-card [ngClass]="savedMatches.length > 0 ? 'clickable' : 'disabled'"
     (click)="goToMatchSelection()">{{ 'startScreen.continue' | translate }}</p-card>
   <div class="my-5" (click)="openNewMatchModal()"><p-card class="clickable">{{ 'startScreen.newGame' | translate }}</p-card></div>
-  <p-card class="clickable">{{ 'startScreen.settings' | translate }}</p-card>
+  <p-card class="clickable" (click)="goToSettings()">{{ 'startScreen.settings' | translate }}</p-card>
 </div>
 <p-dialog [(visible)]="showNewMatchModal" [style]="{width: '50vw'}" [draggable]="false" [showHeader]="false">
   <div class="pt-5 d-flex justify-content-evenly">

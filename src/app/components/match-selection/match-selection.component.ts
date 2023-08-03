@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SavedMatch } from 'src/app/models/models';
@@ -15,7 +16,12 @@ export class MatchSelectionComponent {
   public savedMatches: SavedMatch[] = [];
   public pokemonIconPath: string = "";
 
-  constructor(private dataService: DataService, private router: Router, private fileService: FileService) {
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private fileService: FileService,
+    private location: Location
+    ) {
     this.savedMatches = dataService.getSavedMatches();
     this.pokemonIconPath = POKEMON_ICON_PATH;
   }
@@ -24,5 +30,9 @@ export class MatchSelectionComponent {
     this.dataService.setLoadedData(this.fileService.getFile(matchName, true));
     this.dataService.setLoadedMatch(matchName);
     this.router.navigate(['/tracker']);
+  }
+
+  public back() {
+    this.location.back();
   }
 }

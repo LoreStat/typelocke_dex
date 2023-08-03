@@ -1,7 +1,9 @@
 {
   "general": {
+    "back": "Back",
     "create": "Create",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "startScreen": {
     "newGame": "New game",
@@ -31,5 +33,10 @@
     "steel": "Steel",
     "water": "Water",
     "undefined": "???"
+  },
+  "settings": {
+    "suggestions": "Enable suggestions to be helped on what moves could be used to infer pokemon types",
+    "automatic": "Enable form to insert type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types",
+    "language": "Language"
   }
 }
