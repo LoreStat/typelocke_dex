@@ -43,4 +43,8 @@ export class MenuComponent implements OnInit {
   public navigateToDex() {
     this.router.navigate(["dex"]);
   }
+
+  public goToSettings() {
+    this.router.navigate(["settings"]);
+  }
 }

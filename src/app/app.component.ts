@@ -12,8 +12,7 @@ export class AppComponent {
   public choosenMatch = 0;
 
   constructor(translate: TranslateService, private dataService: DataService) {
-    translate.setDefaultLang('en');
-    translate.use('it');
+    translate.setDefaultLang('it');
 
     this.dataService.selectedMatch.subscribe(match => {
       if(match) this.choosenMatch = 1;

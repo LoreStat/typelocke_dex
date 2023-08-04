@@ -17,7 +17,7 @@
           <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
             (completeMethod)="search($event)"></p-autoComplete>
         </li>
-        <li>
+        <li (click)="goToSettings()">
           <i class="pi pi-cog topbar-icon clickable"></i>
         </li>
       </ul>
