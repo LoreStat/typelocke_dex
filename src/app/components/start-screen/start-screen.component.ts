@@ -108,7 +108,7 @@ export class StartScreenComponent {
       })
       this.dataService.setSavedMatches(this.savedMatches);
       this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-      this.fileService.writeFile(this.newMatchTitle + ".txt", "", true)
+      this.fileService.createMatchFile(this.newMatchTitle);
 
       this.showNewMatchModal = false;
       this.generateIcons = false;
