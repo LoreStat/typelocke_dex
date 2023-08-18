@@ -37,6 +37,7 @@ export class MenuComponent implements OnInit {
 
   public backToStart() {
     this.dataService.setLoadedMatch("");
+    this.dataService.setPokemon("undefined");
     this.router.navigate(["start"]);
   }
 

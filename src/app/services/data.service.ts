@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SavedMatch, Settings } from '../models/models';
+import { PokemonInfo, SavedMatch, Settings } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +17,7 @@ export class DataService {
   private match = new BehaviorSubject<string>("");
   public selectedMatch = this.match.asObservable();
 
-  private matchData: string = "";
-
-  private loadedData = {};
+  private matchData: Record<string, PokemonInfo> = {};
 
   private settings!: Settings;
 
@@ -39,11 +37,15 @@ export class DataService {
     this.match.next(match);
   }
 
-  public getLoadedMatch() {
+  public getLoadedData() {
     return this.matchData;
   }
 
-  public setLoadedData(data: string) {
+  public getSinglePokemonData(name: string) {
+    return this.matchData[name];
+  }
+
+  public setLoadedData(data: Record<string, PokemonInfo>) {
     this.matchData = data;
   }
 

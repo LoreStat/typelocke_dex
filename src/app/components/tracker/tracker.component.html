@@ -1,57 +1,64 @@
-<div class="mb-2">
-  <p-card header="{{pokemon}}">
-    <div class="d-flex">
-      <img [src]="pokemonImage" alt="es" width="200" height="200">
-      <div class="d-flex flex-column justify-content-evenly">
-        <p-button *ngFor="let confirmedType of confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
-          [label]="'types.' + confirmedType.toLowerCase() | translate" styleClass="p-button-rounded" (click)="removeType(confirmedType)"
-          class="type-button"></p-button>
-      </div>
-    </div>
-  </p-card>
-</div>
-
-<p-card>
-    <ng-template pTemplate="header">
-        Lista tipi
-    </ng-template>
-  <div class="d-flex justify-content-center">
-    <div class="flex-basis-28 text-center">
-      Possibili
-      <div class="d-flex flex-wrap justify-content-center">
-        <div *ngFor="let type of dubiousTypes" class="p-1">
-          <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate" styleClass="p-button-rounded"
-            (click)="moveToAvailable('dubious', type)" class="type-button"></p-button>
+<div *ngIf="pokemon">
+  <div class="mb-2">
+    <p-card header="{{pokemon.name}}">
+      <div class="d-flex">
+        <img [src]="pokemonImage" alt="es" width="200" height="200">
+        <div class="d-flex flex-column justify-content-evenly">
+          <p-button *ngFor="let confirmedType of pokemon.confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
+            [label]="'types.' + confirmedType.toLowerCase() | translate" styleClass="p-button-rounded"
+            (click)="removeType(confirmedType)" class="type-button"></p-button>
         </div>
       </div>
-    </div>
+    </p-card>
+  </div>
 
-    <div class="flex-basis-44 borders-x text-center">
-      Disponibili
-      <div class="d-flex flex-wrap justify-content-center">
-        <div *ngFor="let type of availableTypes" class="p-1">
-          <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate" styleClass="p-button-rounded"
-            (click)="typeSelected = typeSelected !== type ? type : ''" class="type-button"></p-button>
-          <div *ngIf="typeSelected === type" class="position-absolute z-up">
-            <p-button class="position-absolute choice-button left-button" [ngClass]="type.toLowerCase()" icon="pi pi-check"
-              styleClass="p-button-rounded p-button-raised" (click)="moveToConfirmed(type)"></p-button>
-            <p-button class="position-absolute choice-button right-button" [ngClass]="type.toLowerCase()" icon="pi pi-times"
-              styleClass="p-button-rounded p-button-raised" (click)="moveToRemoved(type)"></p-button>
-            <p-button class="position-absolute choice-button bottom-button" [ngClass]="type.toLowerCase()"
-              icon="pi pi-question" styleClass="p-button-rounded p-button-raised" (click)="moveToDubious(type)"></p-button>
+  <p-card>
+    <div class="d-flex justify-content-center">
+      <div class="flex-basis-28 text-center">
+        Possibili
+        <div class="d-flex flex-wrap justify-content-center">
+          <div *ngFor="let type of pokemon.dubiousTypes" class="p-1">
+            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded" (click)="moveToAvailable('dubious', type)" class="type-button"></p-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-basis-44 borders-x text-center">
+        Disponibili
+        <div class="d-flex flex-wrap justify-content-center">
+          <div *ngFor="let type of pokemon.availableTypes" class="p-1">
+            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded" (click)="typeSelected = typeSelected !== type ? type : ''"
+              class="type-button"></p-button>
+            <div *ngIf="typeSelected === type" class="position-absolute z-up">
+              <p-button class="position-absolute choice-button left-button" [ngClass]="type.toLowerCase()"
+                icon="pi pi-check" styleClass="p-button-rounded p-button-raised"
+                (click)="moveToConfirmed(type)"></p-button>
+              <p-button class="position-absolute choice-button right-button" [ngClass]="type.toLowerCase()"
+                icon="pi pi-times" styleClass="p-button-rounded p-button-raised"
+                (click)="moveToRemoved(type)"></p-button>
+              <p-button class="position-absolute choice-button bottom-button" [ngClass]="type.toLowerCase()"
+                icon="pi pi-question" styleClass="p-button-rounded p-button-raised"
+                (click)="moveToDubious(type)"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-basis-28 text-center">
+        Esclusi
+        <div class="d-flex flex-wrap justify-content-center">
+          <div *ngFor="let type of pokemon.removedTypes" class="p-1">
+            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded" (click)="moveToAvailable('removed', type)" class="type-button"></p-button>
           </div>
         </div>
       </div>
     </div>
+  </p-card>
 
-    <div class="flex-basis-28 text-center">
-      Esclusi
-      <div class="d-flex flex-wrap justify-content-center">
-        <div *ngFor="let type of removedTypes" class="p-1">
-          <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate" styleClass="p-button-rounded"
-            (click)="moveToAvailable('removed', type)" class="type-button"></p-button>
-        </div>
-      </div>
-    </div>
-  </div>
-</p-card>
+</div>
+<div *ngIf="!pokemon">
+  Seleziona un pokemon per visualizzare le informazioni relative ad esso
+</div>

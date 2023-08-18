@@ -1,8 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Button } from 'primeng/button';
+import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { PokemonInfo } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
-import { TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
+import { TYPES_LIST } from 'src/assets/constants/PokemonData';
 import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
@@ -12,73 +12,74 @@ import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 })
 export class TrackerComponent {
 
-  public pokemon = "";
+  public pokemon!: PokemonInfo;
   public pokemonImage = "";
-
-  private allTypes = TYPES_LIST;
-
-  public dubiousTypes: string[] = [];
-  public removedTypes: string[] = [];
-  public availableTypes: string[] = [];
-  public confirmedTypes = ["UNDEFINED", "UNDEFINED"];
 
   public typeSelected = "";
 
   constructor(private dataService: DataService, private messageService: MessageService) {
-    this.dataService.selectedPokemon.subscribe(pokemon => {
-      this.pokemon = pokemon;
-      this.pokemonImage = `${POKEMON_IMAGES_PATH + pokemon}.png`
+    this.dataService.selectedPokemon.subscribe(pokemonName => {
+      this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
+      this.pokemonImage = `${POKEMON_IMAGES_PATH + pokemonName}.png`
     });
-
-    this.availableTypes = this.allTypes;
   }
 
   public removeType(type: string) {
-    if (type !== 'UNDEFINED') {
-      this.availableTypes.push(type);
-      const typeIndex = this.confirmedTypes.findIndex(e => e === type);
-      this.confirmedTypes[typeIndex] = "UNDEFINED";
+    if (type !== '?') {
+      this.pokemon.availableTypes.push(type);
+      const typeIndex = this.pokemon.confirmedTypes.findIndex(e => e === type);
+      this.pokemon.confirmedTypes[typeIndex] = "?";
     }
   }
 
   public moveToConfirmed(type: string) {
-    const undefinedIndex = this.confirmedTypes.findIndex(e => e === "UNDEFINED");
+    const undefinedIndex = this.pokemon.confirmedTypes.findIndex(e => e === "?");
     if (undefinedIndex === -1) this.messageService.add(
       {
         severity: 'error',
         summary: 'Errore',
-        detail: 'Hai già aggiunto 2 tipi a questo pokemon'
+        detail: "Hai gia' aggiunto 2 tipi a questo pokemon"
       }
     );
     else {
-      this.confirmedTypes[undefinedIndex] = type;
-      const availableIndex = this.availableTypes.findIndex(e => e === type);
-      this.availableTypes.splice(availableIndex, 1);
+      this.pokemon.confirmedTypes[undefinedIndex] = type;
+      const availableIndex = this.pokemon.availableTypes.findIndex(e => e === type);
+      this.pokemon.availableTypes.splice(availableIndex, 1);
     }
     this.typeSelected = "";
   }
 
   public moveToRemoved(type: string) {
-    const availableIndex = this.availableTypes.findIndex(e => e === type);
-    this.availableTypes.splice(availableIndex, 1);
-    this.removedTypes.push(type);
+    const availableIndex = this.pokemon.availableTypes.findIndex(e => e === type);
+    this.pokemon.availableTypes.splice(availableIndex, 1);
+    this.pokemon.removedTypes.push(type);
     this.typeSelected = "";
   }
 
   public moveToDubious(type: string) {
-    const availableIndex = this.availableTypes.findIndex(e => e === type);
-    this.availableTypes.splice(availableIndex, 1);
-    this.dubiousTypes.push(type);
+    const availableIndex = this.pokemon.availableTypes.findIndex(e => e === type);
+    this.pokemon.availableTypes.splice(availableIndex, 1);
+    this.pokemon.dubiousTypes.push(type);
     this.typeSelected = "";
   }
 
   public moveToAvailable(list: string, type: string) {
-    const index = (list === 'dubious') ? this.dubiousTypes.findIndex(e => e === type) : this.removedTypes.findIndex(e => e === type);
+    const index = (list === 'dubious') ? this.pokemon.dubiousTypes.findIndex(e => e === type) : this.pokemon.removedTypes.findIndex(e => e === type);
     if(list === 'dubious') {
-      this.dubiousTypes.splice(index, 1);
+      this.pokemon.dubiousTypes.splice(index, 1);
     } else {
-      this.removedTypes.splice(index, 1);
+      this.pokemon.removedTypes.splice(index, 1);
     }
-    this.availableTypes.push(type);
+    this.pokemon.availableTypes.push(type);
+  }
+
+  public getDummyPokemonInfo(): PokemonInfo {
+    return {
+      name: "",
+      confirmedTypes: ["?", "?"],
+      availableTypes: TYPES_LIST,
+      dubiousTypes: [],
+      removedTypes: []
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SavedMatch } from 'src/app/models/models';
+import { PokemonInfo, SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { POKEMON_ICON_PATH } from 'src/assets/constants/devConstants';
@@ -27,8 +27,25 @@ export class MatchSelectionComponent {
   }
 
   public loadMatch(matchName: string) {
-    this.dataService.setLoadedData(this.fileService.getFile(matchName, true));
     this.dataService.setLoadedMatch(matchName);
+
+    const pokemonMap: Record<string, PokemonInfo> = {};
+    const stringedInfo = this.fileService.getFile(matchName, true);
+    const pokemonInfoList = stringedInfo.split("\n");
+
+    (pokemonInfoList as string[]).forEach(pokeInfo => {
+      const splittedPokeInfo = pokeInfo.split("/");
+      pokemonMap[splittedPokeInfo[0]] = {
+        name: splittedPokeInfo[0],
+        confirmedTypes: [splittedPokeInfo[1], splittedPokeInfo[2]],
+        availableTypes: splittedPokeInfo[3].split(",").filter(x => x !== ""),
+        dubiousTypes: splittedPokeInfo[4].split(",").filter(x => x !== ""),
+        removedTypes: splittedPokeInfo[5].split(",").filter(x => x !== ""),
+      }
+    })
+
+    this.dataService.setLoadedData(pokemonMap);
+    console.log(pokemonMap);
     this.router.navigate(['/tracker']);
   }
 
