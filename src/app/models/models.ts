@@ -16,3 +16,11 @@ export interface DropdownItem {
   label: string,
   value: string
 }
+
+export interface PokemonInfo {
+  name: string,
+  confirmedTypes: string[],
+  availableTypes: string [],
+  dubiousTypes: string[],
+  removedTypes: string[]
+}
