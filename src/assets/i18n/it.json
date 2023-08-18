@@ -32,7 +32,7 @@
     "rock": "Roccia",
     "steel": "Acciaio",
     "water": "Acqua",
-    "undefined": "???"
+    "?": "???"
   },
   "settings": {
     "suggestions": "Abilita il suggerimento dei tipi di mosse che puoi utilizzare per avere maggiori informazioni sui possibili tipi dei pokemon",

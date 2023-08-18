@@ -32,7 +32,7 @@
     "rock": "Rock",
     "steel": "Steel",
     "water": "Water",
-    "undefined": "???"
+    "?": "???"
   },
   "settings": {
     "suggestions": "Enable suggestions to be helped on what moves could be used to infer pokemon types",
