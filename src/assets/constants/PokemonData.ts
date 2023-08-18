@@ -16,7 +16,6 @@ export enum TYPE {
     "ROCK",
     "STEEL",
     "WATER"
-
 }
 
 export const TYPES_LIST = [
@@ -545,5 +544,4 @@ export const POKEMON = [
   "Shaymin Land",
   "Shaymin Sky",
   "Arceus",
-  "Victini"
 ]

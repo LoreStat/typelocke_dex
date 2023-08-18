@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { SavedMatch, Settings } from "../models/models";
+import { POKEMON, TYPES_LIST } from "src/assets/constants/PokemonData";
 
 @Injectable()
 export class FileService {
@@ -22,5 +23,15 @@ export class FileService {
       return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastModified + "," + x.iconName
     }).join("\n");
     this.writeFile("savedMatches.txt", settingsStringToSave + matchesStringToSave, false)
+  }
+
+  public createMatchFile(matchTitle: string) {
+    const allPoke = POKEMON;
+    const allTypes = TYPES_LIST.join(",");
+
+    const divididerString = `/?/?/${allTypes}//`;
+
+    const data = allPoke.join(`${divididerString}\n`) + divididerString;
+    this.writeFile(matchTitle + ".txt", data, true);
   }
 }
