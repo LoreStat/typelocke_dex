@@ -482,7 +482,7 @@ export const POKEMON = [
   "Bronzor",
   "Bronzong",
   "Bonsly",
-  "Mime-jr.",
+  "Mime-jr",
   "Happiny",
   "Chatot",
   "Spiritomb",
