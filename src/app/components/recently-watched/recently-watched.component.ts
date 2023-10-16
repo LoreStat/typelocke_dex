@@ -16,19 +16,21 @@ export class RecentlyWatchedComponent {
 
   constructor(private dataService: DataService) {
     this.dataService.selectedPokemon.subscribe(pokemon => {
-      const pokemonIndex = this.recentlyWatched.findIndex(recentlyPoke => recentlyPoke === pokemon);
-      if(pokemonIndex !== -1) this.recentlyWatched.splice(pokemonIndex, 1)
-      this.recentlyWatched.unshift(pokemon);
+      if(pokemon !== "undefined") {
+        const pokemonIndex = this.recentlyWatched.findIndex(recentlyPoke => recentlyPoke === pokemon);
+        if(pokemonIndex !== -1) this.recentlyWatched.splice(pokemonIndex, 1)
+        this.recentlyWatched.unshift(pokemon);
 
-      this.mostRecentlyWatched = this.recentlyWatched.slice(0, 8).map(el => {
-        return {
-          label: el,
-          icon: `${POKEMON_IMAGES_PATH + el}.png`,
-          command: () => {
-            this.dataService.setPokemon(el);
+        this.mostRecentlyWatched = this.recentlyWatched.slice(0, 8).map(el => {
+          return {
+            label: el,
+            icon: `${POKEMON_IMAGES_PATH + el}.png`,
+            command: () => {
+              this.dataService.setPokemon(el);
+            }
           }
-        }
-      })
+        })
+      }
     });
   }
 }
