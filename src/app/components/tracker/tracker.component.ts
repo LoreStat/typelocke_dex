@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { PokemonInfo } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
-import { TYPES_LIST } from 'src/assets/constants/PokemonData';
+import { POKEMON_EVOS, TYPES_LIST } from 'src/assets/constants/PokemonData';
 import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
@@ -16,12 +16,20 @@ export class TrackerComponent {
   public pokemonImage = "";
 
   public typeSelected = "";
+  public evolutionsGroup: string[] = [];
 
   constructor(private dataService: DataService, private messageService: MessageService) {
     this.dataService.selectedPokemon.subscribe(pokemonName => {
       this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
+
+      this.evolutionsGroup = POKEMON_EVOS[pokemonName];
+
       this.pokemonImage = `${POKEMON_IMAGES_PATH + pokemonName}.png`
     });
+  }
+
+  public getPokemonImagePath(pokemonName: string) {
+    return `${POKEMON_IMAGES_PATH + pokemonName}.png`
   }
 
   public removeType(type: string) {
