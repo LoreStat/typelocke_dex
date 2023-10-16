@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
+import { POKEMON_IMAGES_LIST } from 'src/assets/constants/PokemonData';
 import { POKEMON_ICON_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
@@ -19,7 +20,7 @@ export class StartScreenComponent {
 
   public showNewMatchModal: boolean = false;
   public newMatchTitle: string = "";
-  public pokemonIcon: number = 0;
+  public pokemonIcon: string = "";
   public pokemonIconPath: string = "";
   private generateIcons = false;
 
@@ -78,18 +79,29 @@ export class StartScreenComponent {
   public hideNewMatchModal() {
     this.generateIcons = false;
     this.newMatchTitle = "";
-    this.pokemonIcon = 0;
+    this.pokemonIcon = "";
     this.showNewMatchModal = false;
   }
 
   private generateIcon() {
-    const min = Math.ceil(1);
-    const max = Math.floor(650);
-    this.pokemonIcon = Math.floor(Math.random() * (max - min) + min);
-    setTimeout(() => { if (this.generateIcons) this.generateIcon() }, 1000);
+    const min = Math.ceil(0);
+    const max = Math.floor(502);
+    const value = Math.floor(Math.random() * (max - min) + min);
+    this.pokemonIcon = POKEMON_IMAGES_LIST[value];
+    setTimeout(() => { if (this.generateIcons) this.generateIcon() }, 200);
   }
 
   public createNewMatch() {
+    if(this.newMatchTitle === "") {
+      this.messageService.add(
+        {
+          severity: 'error',
+          summary: 'Errore',
+          detail: "E' necessario inserire almeno un carattere"
+        }
+      );
+      return;
+    }
     if(this.savedMatches.findIndex(x => x.matchName.split(".txt")[0] === this.newMatchTitle) >= 0) {
       this.messageService.add(
         {

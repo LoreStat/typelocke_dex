@@ -7,7 +7,7 @@
 <p-dialog [(visible)]="showNewMatchModal" [style]="{width: '50vw'}" [draggable]="false" [showHeader]="false">
   <div class="pt-5 d-flex justify-content-evenly">
     <input type="text" pInputText class="p-inputtext-lg" [(ngModel)]="newMatchTitle" />
-    <img [src]="pokemonIconPath + pokemonIcon + '.png'" alt="es" width="64" height="64">
+    <img *ngIf="pokemonIcon" [src]="pokemonIconPath + pokemonIcon + '.png'" alt="es" width="64" height="64">
   </div>
   <ng-template pTemplate="footer">
     <p-button (click)="hideNewMatchModal()" [label]="'general.cancel' | translate" styleClass="p-button-text"></p-button>
