@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PokemonInfo, SavedMatch, Settings } from '../models/models';
+import { POKEMON_EVOS } from 'src/assets/constants/PokemonData';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class DataService {
 
   private match = new BehaviorSubject<string>("");
   public selectedMatch = this.match.asObservable();
+  public lastSelectedMatch = "";
 
   private matchData: Record<string, PokemonInfo> = {};
 
@@ -35,6 +37,7 @@ export class DataService {
 
   public setLoadedMatch(match: string) {
     this.match.next(match);
+    this.lastSelectedMatch = match;
   }
 
   public getLoadedData() {
@@ -43,6 +46,15 @@ export class DataService {
 
   public getSinglePokemonData(name: string) {
     return this.matchData[name];
+  }
+
+  public copySpeciesEvoPokemonData(name: string) {
+    const evolutionsGroup = POKEMON_EVOS[name];
+    evolutionsGroup.forEach(e => {
+      if(e !== name) {
+        this.matchData[e] = {...this.matchData[name], name: e}
+      }
+    })
   }
 
   public setLoadedData(data: Record<string, PokemonInfo>) {

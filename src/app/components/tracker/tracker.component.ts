@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { PokemonInfo } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
+import { FileService } from 'src/app/services/file.service';
 import { POKEMON_EVOS, TYPES_LIST } from 'src/assets/constants/PokemonData';
 import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-tracker',
   templateUrl: './tracker.component.html',
-  styleUrls: ['./tracker.component.scss']
+  styleUrls: ['./tracker.component.scss'],
+  providers: [FileService]
 })
 export class TrackerComponent {
 
@@ -18,7 +20,7 @@ export class TrackerComponent {
   public typeSelected = "";
   public evolutionsGroup: string[] = [];
 
-  constructor(private dataService: DataService, private messageService: MessageService) {
+  constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService) {
     this.dataService.selectedPokemon.subscribe(pokemonName => {
       this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
 
@@ -38,6 +40,7 @@ export class TrackerComponent {
       const typeIndex = this.pokemon.confirmedTypes.findIndex(e => e === type);
       this.pokemon.confirmedTypes[typeIndex] = "?";
     }
+    this.fillDataAndSave();
   }
 
   public moveToConfirmed(type: string) {
@@ -55,6 +58,7 @@ export class TrackerComponent {
       this.pokemon.availableTypes.splice(availableIndex, 1);
     }
     this.typeSelected = "";
+    this.fillDataAndSave();
   }
 
   public moveToRemoved(type: string) {
@@ -62,6 +66,7 @@ export class TrackerComponent {
     this.pokemon.availableTypes.splice(availableIndex, 1);
     this.pokemon.removedTypes.push(type);
     this.typeSelected = "";
+    this.fillDataAndSave();
   }
 
   public moveToDubious(type: string) {
@@ -69,6 +74,7 @@ export class TrackerComponent {
     this.pokemon.availableTypes.splice(availableIndex, 1);
     this.pokemon.dubiousTypes.push(type);
     this.typeSelected = "";
+    this.fillDataAndSave();
   }
 
   public moveToAvailable(list: string, type: string) {
@@ -79,6 +85,7 @@ export class TrackerComponent {
       this.pokemon.removedTypes.splice(index, 1);
     }
     this.pokemon.availableTypes.push(type);
+    this.fillDataAndSave();
   }
 
   public getDummyPokemonInfo(): PokemonInfo {
@@ -89,5 +96,11 @@ export class TrackerComponent {
       dubiousTypes: [],
       removedTypes: []
     }
+  }
+
+  private fillDataAndSave() {
+    this.dataService.copySpeciesEvoPokemonData(this.pokemon.name);
+
+    this.fileService.saveChanges();
   }
 }
