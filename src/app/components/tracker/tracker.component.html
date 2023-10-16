@@ -2,7 +2,7 @@
   <div class="mb-2">
     <p-card header="{{pokemon.name}}">
       <div class="d-flex">
-        <img *ngFor="let pokeForImg of evolutionsGroup" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg" width="200" height="200">
+        <img *ngFor="let pokeForImg of evolutionsGroup" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg" width="150" height="150">
         <div class="d-flex flex-column justify-content-evenly">
           <p-button *ngFor="let confirmedType of pokemon.confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
             [label]="'types.' + confirmedType.toLowerCase() | translate" styleClass="p-button-rounded"

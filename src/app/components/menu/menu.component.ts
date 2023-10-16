@@ -32,7 +32,10 @@ export class MenuComponent implements OnInit {
       e.toLowerCase().indexOf((event.query as string).toLowerCase()) >= 0
     );
 
-    if(this.suggestions.length === 1) this.dataService.setPokemon(this.suggestions[0]);
+    if(this.suggestions.length === 1) {
+      this.dataService.setPokemon(this.suggestions[0]);
+      this.router.navigate(["tracker"]);
+    }
   }
 
   public backToStart() {
