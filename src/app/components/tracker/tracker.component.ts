@@ -39,8 +39,8 @@ export class TrackerComponent {
       this.pokemon.availableTypes.push(type);
       const typeIndex = this.pokemon.confirmedTypes.findIndex(e => e === type);
       this.pokemon.confirmedTypes[typeIndex] = "?";
+      this.fillDataAndSave();
     }
-    this.fillDataAndSave();
   }
 
   public moveToConfirmed(type: string) {
@@ -56,9 +56,9 @@ export class TrackerComponent {
       this.pokemon.confirmedTypes[undefinedIndex] = type;
       const availableIndex = this.pokemon.availableTypes.findIndex(e => e === type);
       this.pokemon.availableTypes.splice(availableIndex, 1);
+      this.fillDataAndSave();
     }
     this.typeSelected = "";
-    this.fillDataAndSave();
   }
 
   public moveToRemoved(type: string) {
