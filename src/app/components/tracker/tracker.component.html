@@ -2,11 +2,40 @@
   <div class="mb-2">
     <p-card header="{{pokemon.name}}">
       <div class="d-flex">
-        <img *ngFor="let pokeForImg of evolutionsGroup" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg" width="150" height="150">
+        <img *ngFor="let pokeForImg of evolutionsGroup" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg" width="130" height="130">
         <div class="d-flex flex-column justify-content-evenly">
           <p-button *ngFor="let confirmedType of pokemon.confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
             [label]="'types.' + confirmedType.toLowerCase() | translate" styleClass="p-button-rounded"
             (click)="removeType(confirmedType)" class="type-button"></p-button>
+        </div>
+        <div>
+          <p-button (click)="toggleOverlayPanel(op, $event)" styleClass="p-button-rounded p-button-text p-button-raised">Attack result</p-button>
+          <p-overlayPanel #op [style]="{'width': '550px'}" [showCloseIcon]="true">
+            <ng-template pTemplate="content">
+              <div class="suggestion-box d-flex justify-content-center flex-column" *ngIf="allTypes && effectivenessesList">
+                <div class="types-box d-flex flex-wrap justify-content-evenly mb-2">
+                  <div *ngFor="let type of allTypes" class="mb-2">
+                    <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
+                    styleClass="p-button-rounded" (click)="selectedSuggestionType = type" class="type-button"></p-button>
+                  </div>
+                  <!-- o bottone piccolo oppure button a cerchio con tooltip -->
+                </div>
+                <div class="effectiveness-box d-flex flex-wrap justify-content-between mb-5" *ngIf="selectedSuggestionType">
+                  <div *ngFor="let effectiveness of effectivenessesList">
+                    <p-button [label]="'effectiveness.' + effectiveness | translate"
+                    styleClass="p-button-rounded p-button-raised p-button-text" (click)="selectedSuggestionEffectiveness = effectiveness" class="type-button"></p-button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between" *ngIf="selectedSuggestionEffectiveness && selectedSuggestionType">
+                  <p-button [ngClass]="selectedSuggestionType.toLowerCase()" [label]="'types.' + selectedSuggestionType.toLowerCase() | translate"
+                    styleClass="p-button-rounded" class="type-button"></p-button>
+                  <p-button icon="pi pi-check" styleClass="p-button-rounded p-button-text p-button-raised" (click)="confirmUsedMove()"></p-button>
+                  <p-button [label]="'effectiveness.' + selectedSuggestionEffectiveness | translate"
+                    styleClass="p-button-rounded p-button-raised p-button-text" class="type-button"></p-button>
+                </div>
+              </div>
+            </ng-template>
+        </p-overlayPanel>
         </div>
       </div>
     </p-card>

@@ -34,6 +34,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DexComponent } from './components/dex/dex.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -68,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DropdownModule,
     InputTextModule,
     MessagesModule,
+    OverlayPanelModule,
     SpeedDialModule,
     ToastModule,
     HttpClientModule,

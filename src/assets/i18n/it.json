@@ -1,20 +1,32 @@
 {
+  "effectiveness": {
+    "effective": "Efficace",
+    "immune": "Immune",
+    "notEffective": "Non efficace",
+    "superEffective": "Superefficace"
+  },
   "general": {
     "back": "Indietro",
-    "create": "Crea",
     "cancel": "Annulla",
+    "create": "Crea",
     "save": "Salva"
   },
+  "matchSelection": {
+    "adventureStarted": "Inizio avventura",
+    "lastLogin": "Ultimo accesso"
+  },
+  "settings": {
+    "automatic": "Abilita la finestra per inserire tipo ed efficacia dell'ultima mossa usata, per fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà comunque sulle informazioni già rilevate dall'utente che, se sbagliate, possono portare fuori strada il sistema di suggerimenti.",
+    "language": "Lingua",
+    "suggestions": "Abilita il suggerimento dei tipi di mosse che puoi utilizzare per avere maggiori informazioni sui possibili tipi dei pokemon"
+  },
   "startScreen": {
-    "newGame": "Nuovo gioco",
     "continue": "Continua",
+    "newGame": "Nuovo gioco",
     "settings": "Impostazioni"
   },
-  "matchSelection": {
-    "lastLogin": "Ultimo accesso",
-    "adventureStarted": "Inizio avventura"
-  },
   "types": {
+    "?": "???",
     "bug": "Coleottero",
     "dark": "Buio",
     "dragon": "Drago",
@@ -31,12 +43,6 @@
     "psychic": "Psichico",
     "rock": "Roccia",
     "steel": "Acciaio",
-    "water": "Acqua",
-    "?": "???"
-  },
-  "settings": {
-    "suggestions": "Abilita il suggerimento dei tipi di mosse che puoi utilizzare per avere maggiori informazioni sui possibili tipi dei pokemon",
-    "automatic": "Abilita la finestra per inserire tipo ed efficacia dell'ultima mossa usata, per fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon",
-    "language": "Lingua"
+    "water": "Acqua"
   }
 }

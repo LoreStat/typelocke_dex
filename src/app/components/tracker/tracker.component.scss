@@ -37,3 +37,25 @@
   border-left: 1px solid #2d3f47;
   border-right: 1px solid #2d3f47;;
 }
+
+.suggestion-box {
+  font-family: 'pokemongb', sans-serif;
+}
+
+::ng-deep .types-box {
+  button {
+    width: 100px;
+  }
+  .p-button {
+    font-size: 11px;
+  }
+}
+
+::ng-deep .effectiveness-box {
+  button {
+    width: 120px;
+  }
+  .p-button {
+    font-size: 11px;
+  }
+}

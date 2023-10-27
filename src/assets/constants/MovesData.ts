@@ -1,4 +1,4 @@
-export const Effectiveness = {
+export const EFFECTIVENESSES: Record<string, Record<string, number>> = {
 	NORMAL: {ROCK: 0.5, GHOST: 0, STEEL: 0.5},
 	FIRE: {FIRE: 0.5, WATER: 0.5, GRASS: 2, ICE: 2, BUG: 2, ROCK: 0.5, DRAGON: 0.5, STEEL: 2},
 	WATER: {FIRE: 2, WATER: 0.5, GRASS: 0.5, GROUND: 2, ROCK: 2, DRAGON: 0.5},

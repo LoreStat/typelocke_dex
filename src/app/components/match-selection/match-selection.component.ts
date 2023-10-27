@@ -34,13 +34,15 @@ export class MatchSelectionComponent {
     const pokemonInfoList = stringedInfo.split("\n");
 
     (pokemonInfoList as string[]).forEach(pokeInfo => {
-      const splittedPokeInfo = pokeInfo.split("/");
-      pokemonMap[splittedPokeInfo[0]] = {
-        name: splittedPokeInfo[0],
-        confirmedTypes: [splittedPokeInfo[1], splittedPokeInfo[2]],
-        availableTypes: splittedPokeInfo[3].split(",").filter(x => x !== ""),
-        dubiousTypes: splittedPokeInfo[4].split(",").filter(x => x !== ""),
-        removedTypes: splittedPokeInfo[5].split(",").filter(x => x !== ""),
+      if(pokeInfo) {
+        const splittedPokeInfo = pokeInfo.split("/");
+        pokemonMap[splittedPokeInfo[0]] = {
+          name: splittedPokeInfo[0],
+          confirmedTypes: [splittedPokeInfo[1], splittedPokeInfo[2]],
+          availableTypes: splittedPokeInfo[3].split(",").filter(x => x !== ""),
+          dubiousTypes: splittedPokeInfo[4].split(",").filter(x => x !== ""),
+          removedTypes: splittedPokeInfo[5].split(",").filter(x => x !== ""),
+        }
       }
     })
 
