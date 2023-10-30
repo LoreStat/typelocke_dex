@@ -11,7 +11,7 @@ export class FileService {
   }
 
   getFile(name: string, singleMatch: boolean) {
-    return this.fs.readFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, { encoding: 'utf8'});
+    return this.fs.readFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, { encoding: 'utf8' });
   }
 
   writeFile(name: string, data: any, singleMatch: boolean) {
@@ -30,7 +30,7 @@ export class FileService {
     const allPoke = POKEMON;
     const allTypes = TYPES_LIST.join(",");
 
-    const divididerString = `/?/?/${allTypes}//`;
+    const divididerString = `/?/?/${allTypes}///`;
 
     const data = allPoke.join(`${divididerString}\n`) + divididerString;
     this.writeFile(matchTitle + ".txt", data, true);
@@ -43,7 +43,7 @@ export class FileService {
     const pokes = Object.values(data);
 
     pokes.forEach(p => {
-      stringedData += `${p.name}/${p.confirmedTypes[0]}/${p.confirmedTypes[1]}/${p.availableTypes.join(",")}/${p.dubiousTypes.join(",")}/${p.removedTypes.join(",")}\n`;
+      stringedData += `${p.name}/${p.confirmedTypes[0]}/${p.confirmedTypes[1]}/${p.availableTypes.join(",")}/${p.dubiousTypes.join(",")}/${p.removedTypes.join(",")}/${p.registeredMoves.join(",")}\n`;
     });
 
     stringedData = stringedData.substring(0, stringedData.length - 1);

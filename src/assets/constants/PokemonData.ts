@@ -1,21 +1,21 @@
 export enum TYPE {
-  "BUG",
-  "DARK",
-  "DRAGON",
-  "ELECTRIC",
-  "FIGHTING",
-  "FIRE",
-  "FLYING",
-  "GHOST",
-  "GRASS",
-  "GROUND",
-  "ICE",
-  "NORMAL",
-  "POISON",
-  "PSYCHIC",
-  "ROCK",
-  "STEEL",
-  "WATER"
+  "BUG" = "BUG",
+  "DARK" = "DARK",
+  "DRAGON" = "DRAGON",
+  "ELECTRIC" = "ELECTRIC",
+  "FIGHTING" = "FIGHTING",
+  "FIRE" = "FIRE",
+  "FLYING" = "FLYING",
+  "GHOST" = "GHOST",
+  "GRASS" = "GRASS",
+  "GROUND" = "GROUND",
+  "ICE" = "ICE",
+  "NORMAL" = "NORMAL",
+  "POISON" = "POISON",
+  "PSYCHIC" = "PSYCHIC",
+  "ROCK" = "ROCK",
+  "STEEL" = "STEEL",
+  "WATER" = "WATER"
 }
 
 export const TYPES_LIST = [

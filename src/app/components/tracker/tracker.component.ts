@@ -5,7 +5,7 @@ import { PokemonInfo } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { EFFECTIVENESSES } from 'src/assets/constants/MovesData';
-import { POKEMON_EVOS, TYPES_LIST } from 'src/assets/constants/PokemonData';
+import { POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
 import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 enum SuggestionResponseType {
@@ -45,6 +45,7 @@ export class TrackerComponent {
 
   public suggestionResponse?: SuggestionResponse;
 
+  public blockEnabled: boolean = false;
   private op?: OverlayPanel;
 
   constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService) {
@@ -131,7 +132,8 @@ export class TrackerComponent {
       confirmedTypes: ["?", "?"],
       availableTypes: TYPES_LIST,
       dubiousTypes: [],
-      removedTypes: []
+      removedTypes: [],
+      registeredMoves: []
     }
   }
 
@@ -142,9 +144,12 @@ export class TrackerComponent {
   }
 
   public confirmUsedMove() {
+    this.blockEnabled = true;
+    this.pokemon.registeredMoves.unshift((this.composeRecentMoveFromType() + this.composeRecentMoveFromEffectiveness()));
     this.calculateAttackEffectivenesses();
 
     this.resetSelectedTypeAndEffectiveness();
+    this.blockEnabled = false;
   }
 
   public resetSelectedTypeAndEffectiveness() {
@@ -196,7 +201,7 @@ export class TrackerComponent {
         (this.selectedSuggestionEffectiveness === "superEffective" && availableTypesEffectiveness[t] < 1) ||
         (this.selectedSuggestionEffectiveness === "notEffective" && availableTypesEffectiveness[t] > 1) ||
         (this.selectedSuggestionEffectiveness !== "immune" && availableTypesEffectiveness[t] === 0) ||
-        (this.selectedSuggestionType === "NORMAL" && this.selectedSuggestionEffectiveness === "effective" && availableTypesEffectiveness[t] < 1) ||
+        (this.selectedSuggestionType === TYPE.NORMAL && this.selectedSuggestionEffectiveness === "effective" && availableTypesEffectiveness[t] < 1) ||
         (this.selectedSuggestionEffectiveness !== "immune" && confirmedType && !this.checkValueEffectivenessEquality(actualEffectivenessValue * availableTypesEffectiveness[t]))
       )
         this.moveToRemoved(t);
@@ -282,5 +287,118 @@ export class TrackerComponent {
     this.op = op;
     op.toggle(event);
     this.resetSelectedTypeAndEffectiveness();
+  }
+
+  public getBackgroundClassFromRecentMove(value: string) {
+    switch (value) {
+      case "bu":
+        return TYPE.BUG;
+      case "da":
+        return TYPE.DARK;
+      case "dr":
+        return TYPE.DRAGON;
+      case "el":
+        return TYPE.ELECTRIC;
+      case "fg":
+        return TYPE.FIGHTING;
+      case "fr":
+        return TYPE.FIRE;
+      case "fl":
+        return TYPE.FLYING;
+      case "gh":
+        return TYPE.GHOST;
+      case "gs":
+        return TYPE.GRASS;
+      case "gr":
+        return TYPE.GROUND;
+      case "ic":
+        return TYPE.ICE;
+      case "no":
+        return TYPE.NORMAL;
+      case "po":
+        return TYPE.POISON;
+      case "ps":
+        return TYPE.PSYCHIC;
+      case "ro":
+        return TYPE.ROCK;
+      case "st":
+        return TYPE.STEEL;
+      case "wa":
+        return TYPE.WATER;
+      default:
+        return "";
+    }
+  }
+
+  public getEffectivenessFromRecentMove(value: string) {
+    switch (value) {
+      case "+":
+        return "effectiveness.superEffective";
+      case "-":
+        return "effectiveness.notEffective";
+      case "x":
+        return "effectiveness.immune";
+      case "=":
+        return "effectiveness.effective";
+      default:
+        return "";
+    }
+  }
+
+
+  private composeRecentMoveFromEffectiveness() {
+    switch (this.selectedSuggestionEffectiveness) {
+      case "superEffective":
+        return "+";
+      case "notEffective":
+        return "-";
+      case "immune":
+        return "x";
+      case "effective":
+        return "=";
+      default:
+        return "";
+    }
+  }
+
+  private composeRecentMoveFromType() {
+    switch (this.selectedSuggestionType) {
+      case TYPE.BUG:
+        return "bu";
+      case TYPE.DARK:
+        return "da";
+      case TYPE.DRAGON:
+        return "dr";
+      case TYPE.ELECTRIC:
+        return "el";
+      case TYPE.FIGHTING:
+        return "fg";
+      case TYPE.FIRE:
+        return "fr";
+      case TYPE.FLYING:
+        return "fl";
+      case TYPE.GHOST:
+        return "gh";
+      case TYPE.GRASS:
+        return "gs";
+      case TYPE.GROUND:
+        return "gr";
+      case TYPE.ICE:
+        return "ic";
+      case TYPE.NORMAL:
+        return "no";
+      case TYPE.POISON:
+        return "po";
+      case TYPE.PSYCHIC:
+        return "ps";
+      case TYPE.ROCK:
+        return "ro";
+      case TYPE.STEEL:
+        return "st";
+      case TYPE.WATER:
+        return "wa";
+      default:
+        return "";
+    }
   }
 }

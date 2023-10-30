@@ -42,6 +42,7 @@ export class MatchSelectionComponent {
           availableTypes: splittedPokeInfo[3].split(",").filter(x => x !== ""),
           dubiousTypes: splittedPokeInfo[4].split(",").filter(x => x !== ""),
           removedTypes: splittedPokeInfo[5].split(",").filter(x => x !== ""),
+          registeredMoves: splittedPokeInfo[6].split(",").filter(x => x !== ""),
         }
       }
     })

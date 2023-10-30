@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
+import { driver } from 'driver.js';
 import { DataService } from 'src/app/services/data.service';
 import { POKEMON } from 'src/assets/constants/PokemonData';
 import { LOGO_ICON_PATH } from 'src/assets/constants/devConstants';
 
+enum MenuRoutes {
+  DEX = "dex",
+  TRACKER = "tracker",
+  SETTINGS = "settings",
+  NONE = "none"
+}
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+
+  public menuRoutes = MenuRoutes;
+  public isCurrentRouteTracker: boolean = false;
 
   public matchName: string = "";
   public selectedItem: string = "";
@@ -19,7 +29,14 @@ export class MenuComponent implements OnInit {
 
   public logoPath: string = LOGO_ICON_PATH;
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(private dataService: DataService, private router: Router, private route: ActivatedRoute) {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.isCurrentRouteTracker = event.url === "/tracker";
+
+    }
+    })
+  }
 
   ngOnInit() {
     this.dataService.selectedMatch.subscribe(match => {
@@ -50,5 +67,21 @@ export class MenuComponent implements OnInit {
 
   public goToSettings() {
     this.router.navigate(["settings"]);
+  }
+
+  public activateDriver() {
+    const driverObj = driver({
+      popoverClass: "driverjs-theme",
+      stagePadding: 4,
+    });
+
+    driverObj.highlight({
+      element: "#highlight-me",
+      popover: {
+        side: "bottom",
+        title: "This is a title",
+        description: "This is a description",
+      }
+    })
   }
 }

@@ -17,6 +17,7 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { MatchSelectionComponent } from './components/match-selection/match-selection.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { StartScreenComponent } from './components/start-screen/start-screen.component';
+import { DexComponent } from './components/dex/dex.component';
 
 import { DataService } from './services/data.service';
 
@@ -33,8 +34,11 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { DexComponent } from './components/dex/dex.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ScrollerModule } from 'primeng/scroller';
+import { TooltipModule } from 'primeng/tooltip';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -60,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     FormsModule,
     AutoCompleteModule,
+    BlockUIModule,
     ButtonModule,
     CardModule,
     CheckboxModule,
@@ -70,8 +75,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     InputTextModule,
     MessagesModule,
     OverlayPanelModule,
+    ProgressSpinnerModule,
+    ScrollerModule,
     SpeedDialModule,
     ToastModule,
+    TooltipModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

@@ -22,5 +22,6 @@ export interface PokemonInfo {
   confirmedTypes: string[],
   availableTypes: string [],
   dubiousTypes: string[],
-  removedTypes: string[]
+  removedTypes: string[],
+  registeredMoves: string[]
 }
