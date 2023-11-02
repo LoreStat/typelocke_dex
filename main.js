@@ -3,7 +3,8 @@ const url = require('url');
 const path = require('path');
 
 function onReady () {
-	win = new BrowserWindow({width: 900, height: 670, webPreferences: {nodeIntegration: true, contextIsolation: false}})
+  //titleBarStyle: hidden, width, height, icon: "", frame: false, autoHideMenuBar: true,
+	win = new BrowserWindow({width: 1200, height: 800, webPreferences: {nodeIntegration: true, contextIsolation: false}})
 	win.loadURL(url.format({
 		pathname: path.join(
 			__dirname,

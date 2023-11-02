@@ -3,7 +3,7 @@
 }
 
 .z-up {
- z-index: 100;
+  z-index: 100;
 }
 
 .left-button {
@@ -29,13 +29,16 @@
   flex-basis: 44%;
 }
 
-::ng-deep .type-button {button{
-  width: 120px;
-}}
+::ng-deep .type-button {
+  button {
+    width: 120px;
+  }
+}
 
 .borders-x {
   border-left: 1px solid #2d3f47;
-  border-right: 1px solid #2d3f47;;
+  border-right: 1px solid #2d3f47;
+  ;
 }
 
 .suggestion-box {
@@ -46,6 +49,7 @@
   button {
     width: 100px;
   }
+
   .p-button {
     font-size: 11px;
   }
@@ -55,7 +59,45 @@
   button {
     width: 120px;
   }
+
   .p-button {
     font-size: 11px;
   }
+}
+
+.notes-title {
+  ::ng-deep .p-card-title {
+    font-size: 20px;
+    margin-bottom: 0px;
+  }
+}
+
+::ng-deep .used-moves {
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2d3f47;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #465b64;
+  }
+
+}
+
+::ng-deep .p-scroller {
+  height: 135px !important;
+  border-radius: 4px;
+}
+
+.fill-available {
+  width: -webkit-fill-available;
 }

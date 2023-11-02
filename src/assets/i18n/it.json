@@ -28,7 +28,8 @@
     "settings": "Impostazioni"
   },
   "tracker": {
-    "usedMove": "s"
+    "usedMove": "s",
+    "notes": "Note"
   },
   "types": {
     "?": "???",
