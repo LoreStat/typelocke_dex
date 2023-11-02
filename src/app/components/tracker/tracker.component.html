@@ -24,6 +24,7 @@
                 style="height: 50px;">{{ getEffectivenessFromRecentMove(item.substring(2,3)) | translate }}</div>
             </ng-template>
           </p-scroller>
+          <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="this.pokemon.notes" (blur)="fillDataAndSave()"></textarea>
           <p-overlayPanel #op [style]="{'width': '550px'}" [showCloseIcon]="true">
             <ng-template pTemplate="content">
               <div class="suggestion-box d-flex justify-content-center flex-column"
@@ -44,13 +45,19 @@
                       (click)="selectedSuggestionEffectiveness = effectiveness" class="type-button"></p-button>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between"
+                <div class="d-flex justify-content-between fadein animation-duration-500"
                   *ngIf="selectedSuggestionEffectiveness && selectedSuggestionType">
                   <p-button [ngClass]="selectedSuggestionType.toLowerCase()"
                     [label]="'types.' + selectedSuggestionType.toLowerCase() | translate" styleClass="p-button-rounded"
                     class="type-button"></p-button>
-                  <p-button icon="pi pi-check" styleClass="p-button-rounded p-button-text p-button-raised"
-                    (click)="confirmUsedMove()"></p-button>
+                  <div class="d-flex">
+                    <p-button *ngIf="settings?.automatic" class="me-1" icon="pi pi-calculator" [pTooltip]="'general.calculate' | translate"
+                      styleClass="p-button-rounded p-button-text p-button-raised"
+                      (click)="confirmUsedMove(selectedSuggestionType, selectedSuggestionEffectiveness, 0)"></p-button>
+                    <p-button class="ms-1" icon="pi pi-plus" styleClass="p-button-rounded p-button-text p-button-raised"
+                      [pTooltip]="'general.add' | translate"
+                      (click)="addMoveToRegistered(selectedSuggestionType, selectedSuggestionEffectiveness)"></p-button>
+                  </div>
                   <p-button [label]="'effectiveness.' + selectedSuggestionEffectiveness | translate"
                     styleClass="p-button-rounded p-button-raised p-button-text" class="type-button"></p-button>
                 </div>

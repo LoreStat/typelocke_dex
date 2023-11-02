@@ -9,7 +9,9 @@
     "back": "Indietro",
     "cancel": "Annulla",
     "create": "Crea",
-    "save": "Salva"
+    "save": "Salva",
+    "calculate": "Calcola",
+    "add": "Aggiungi"
   },
   "matchSelection": {
     "adventureStarted": "Inizio avventura",
@@ -24,6 +26,9 @@
     "continue": "Continua",
     "newGame": "Nuovo gioco",
     "settings": "Impostazioni"
+  },
+  "tracker": {
+    "usedMove": "s"
   },
   "types": {
     "?": "???",

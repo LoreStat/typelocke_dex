@@ -30,7 +30,7 @@ export class FileService {
     const allPoke = POKEMON;
     const allTypes = TYPES_LIST.join(",");
 
-    const divididerString = `/?/?/${allTypes}///`;
+    const divididerString = `/?/?/${allTypes}////`;
 
     const data = allPoke.join(`${divididerString}\n`) + divididerString;
     this.writeFile(matchTitle + ".txt", data, true);
@@ -43,7 +43,7 @@ export class FileService {
     const pokes = Object.values(data);
 
     pokes.forEach(p => {
-      stringedData += `${p.name}/${p.confirmedTypes[0]}/${p.confirmedTypes[1]}/${p.availableTypes.join(",")}/${p.dubiousTypes.join(",")}/${p.removedTypes.join(",")}/${p.registeredMoves.join(",")}\n`;
+      stringedData += `${p.name}/${p.confirmedTypes[0]}/${p.confirmedTypes[1]}/${p.availableTypes.join(",")}/${p.dubiousTypes.join(",")}/${p.removedTypes.join(",")}/${p.registeredMoves.join(",")}/${(p.notes ? btoa(p.notes) : "")}\n`;
     });
 
     stringedData = stringedData.substring(0, stringedData.length - 1);

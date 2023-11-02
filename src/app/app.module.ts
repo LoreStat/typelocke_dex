@@ -39,6 +39,8 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScrollerModule } from 'primeng/scroller';
 import { TooltipModule } from 'primeng/tooltip';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -64,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     FormsModule,
     AutoCompleteModule,
+    AutoFocusModule,
     BlockUIModule,
     ButtonModule,
     CardModule,
@@ -72,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     DockModule,
     DropdownModule,
+    InputTextareaModule,
     InputTextModule,
     MessagesModule,
     OverlayPanelModule,

@@ -43,6 +43,7 @@ export class MatchSelectionComponent {
           dubiousTypes: splittedPokeInfo[4].split(",").filter(x => x !== ""),
           removedTypes: splittedPokeInfo[5].split(",").filter(x => x !== ""),
           registeredMoves: splittedPokeInfo[6].split(",").filter(x => x !== ""),
+          notes: atob(splittedPokeInfo[7] || "")
         }
       }
     })
