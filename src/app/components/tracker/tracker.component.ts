@@ -148,6 +148,9 @@ export class TrackerComponent {
   public addMoveToRegistered(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
     if (this.selectedSuggestionEffectiveness && this.selectedSuggestionType) {
       this.pokemon.registeredMoves.unshift((this.composeRecentMoveFromType(selectedSuggestionType) + this.composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness)));
+      this.resetSelectedTypeAndEffectiveness();
+      if (this.op) this.op.hide();
+
       this.fillDataAndSave();
     }
   }

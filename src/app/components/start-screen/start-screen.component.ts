@@ -92,12 +92,12 @@ export class StartScreenComponent {
   }
 
   public createNewMatch() {
-    if(this.newMatchTitle === "") {
+    if(this.newMatchTitle === "" || this.newMatchTitle.length > 12) {
       this.messageService.add(
         {
           severity: 'error',
           summary: 'Errore',
-          detail: "E' necessario inserire almeno un carattere"
+          detail: "Il titolo deve avere minimo 1 e massimo 12 caratteri"
         }
       );
       return;

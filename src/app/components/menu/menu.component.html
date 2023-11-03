@@ -12,7 +12,7 @@
         <li>
           <i class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
         </li>
-        <li class="mx-5">
+        <li class="search-bar mx-5">
           <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
             (completeMethod)="search($event)"></p-autoComplete>
         </li>
