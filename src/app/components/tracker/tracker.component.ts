@@ -176,7 +176,7 @@ export class TrackerComponent {
     if (!this.pokemon.confirmedTypes.find(x => x === "?")) {
       this.suggestionResponse = {
         type: SuggestionResponseType.CHECK,
-        result: this.checkConfirmedTypesCorrectness(selectedSuggestionEffectiveness, selectedSuggestionType),
+        result: this.checkConfirmedTypesCorrectness(selectedSuggestionType, selectedSuggestionEffectiveness),
         typesResult: undefined
       } // l'efficacia della mossa utilizzata non può essere corretta con la combinazione di tipi selezionata se result è false
     } else {

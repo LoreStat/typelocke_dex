@@ -93,11 +93,40 @@
 
 }
 
+::ng-deep .p-inputtextarea {
+  height: 148px !important;
+}
+
 ::ng-deep .p-scroller {
-  height: 135px !important;
+  height: 133px !important;
   border-radius: 4px;
 }
 
 .fill-available {
   width: -webkit-fill-available;
+}
+
+@media screen and (min-width: 809px) {
+  .max-card-height {
+    ::ng-deep .p-card {
+      max-height: 255px;
+    }
+  }
+}
+
+.max-card-height {
+  margin-bottom: 2%;
+  margin-right: 1px;
+  margin-left: 1px;
+  ;
+
+  ::ng-deep .p-card {
+    background: rgba(255, 255, 255, 0.479) !important;
+  }
+}
+
+.main-card {
+  ::ng-deep .p-card {
+    background: #ffffff7e;
+  }
 }
