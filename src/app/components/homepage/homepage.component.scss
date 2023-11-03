@@ -1,3 +1,15 @@
 .menu-margin {
   margin-top: 64px;
 }
+
+
+@media screen and (max-width: 809px) {
+  .menu-margin {
+    margin-top: 110px;
+  }
+  .content-margin {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0px;
+  }
+}

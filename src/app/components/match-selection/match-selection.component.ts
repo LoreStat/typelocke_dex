@@ -50,7 +50,7 @@ export class MatchSelectionComponent {
 
     this.dataService.setLoadedData(pokemonMap);
     console.log(pokemonMap);
-    this.router.navigate(['/tracker']);
+    this.router.navigate(['/dex']);
   }
 
   public back() {

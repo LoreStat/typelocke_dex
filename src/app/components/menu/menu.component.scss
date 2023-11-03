@@ -14,6 +14,11 @@
   background-image: linear-gradient(to right, #2d3f47, #2d3f47);
 }
 
+@media screen and (max-width: 809px) {
+  .topbar {
+    height: 110px;
+  }
+}
 
 .topbar-icons {
   height: 64px;
@@ -53,6 +58,14 @@
       margin-right: 12px;
     }
   }
+
+  @media screen and (max-width: 809px) {
+    ul {
+      position: absolute;
+      top: 50px;
+    }
+  }
+
 
   ul {
     margin: 0;

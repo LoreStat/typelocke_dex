@@ -11,6 +11,13 @@ body {
   background-color: #5b859734;
 }
 
+@media screen and (max-width: 809px) {
+  body {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 * {
   font-family: 'LetsGo', sans-serif;
 }

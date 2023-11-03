@@ -121,6 +121,7 @@
   ;
 
   ::ng-deep .p-card {
+    min-width: 260px;
     background: rgba(255, 255, 255, 0.479) !important;
   }
 }
@@ -129,4 +130,16 @@
   ::ng-deep .p-card {
     background: #ffffff7e;
   }
+}
+
+
+@media screen and (max-width: 809px) {
+  ::ng-deep .p-card-body {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}
+
+.align-center {
+  align-items: center;
 }

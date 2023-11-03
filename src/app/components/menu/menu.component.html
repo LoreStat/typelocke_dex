@@ -9,9 +9,6 @@
         </div>
       </div>
       <ul class="d-flex justify-content-center w-100 align-items-center">
-        <li *ngIf="isCurrentRouteTracker">
-          <i class="pi pi-question-circle topbar-icon clickable" (click)="activateDriver()"></i>
-        </li>
         <li>
           <i class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
         </li>
@@ -21,6 +18,9 @@
         </li>
         <li (click)="goToSettings()">
           <i class="pi pi-cog topbar-icon clickable"></i>
+        </li>
+        <li class="ms-2" *ngIf="isCurrentRouteTracker">
+          <i class="pi pi-question-circle topbar-icon clickable" (click)="activateDriver()"></i>
         </li>
       </ul>
       <div class="loaded-match d-flex">
