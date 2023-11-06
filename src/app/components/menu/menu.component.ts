@@ -33,8 +33,7 @@ export class MenuComponent implements OnInit {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.isCurrentRouteTracker = event.url === "/tracker";
-
-    }
+      }
     })
   }
 
@@ -49,10 +48,14 @@ export class MenuComponent implements OnInit {
       e.toLowerCase().indexOf((event.query as string).toLowerCase()) >= 0
     );
 
-    if(this.suggestions.length === 1) {
-      this.dataService.setPokemon(this.suggestions[0]);
-      this.router.navigate(["tracker"]);
+    if (this.suggestions.length === 1) {
+      this.selectSearchedPokemon(this.suggestions[0]);
     }
+  }
+
+  public selectSearchedPokemon(value: string) {
+    this.dataService.setPokemon(value);
+    this.router.navigate(["tracker"]);
   }
 
   public backToStart() {

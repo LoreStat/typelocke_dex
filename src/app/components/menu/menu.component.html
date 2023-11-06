@@ -14,7 +14,7 @@
         </li>
         <li class="search-bar mx-5">
           <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
-            (completeMethod)="search($event)"></p-autoComplete>
+            (completeMethod)="search($event)" (onSelect)="selectSearchedPokemon($event)"></p-autoComplete>
         </li>
         <li (click)="goToSettings()">
           <i class="pi pi-cog topbar-icon clickable"></i>
