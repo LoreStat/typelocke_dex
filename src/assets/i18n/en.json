@@ -1,20 +1,38 @@
 {
+  "effectiveness": {
+    "effective": "Effective",
+    "immune": "Immune",
+    "notEffective": "Not very effective",
+    "superEffective": "Super effective"
+  },
   "general": {
+    "add": "Add",
     "back": "Back",
-    "create": "Create",
+    "calculate": "Calculate",
     "cancel": "Cancel",
+    "create": "Create",
     "save": "Save"
   },
+  "matchSelection": {
+    "adventureStarted": "Adventure started",
+    "lastLogin": "Last login"
+  },
+  "settings": {
+    "automatic": "Enable form to insert type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types",
+    "language": "Language",
+    "suggestions": "Enable suggestions to be helped on what moves could be used to infer pokemon types"
+  },
   "startScreen": {
-    "newGame": "New game",
     "continue": "Continue",
+    "newGame": "New game",
     "settings": "Settings"
   },
-  "matchSelection": {
-    "lastLogin": "Last login",
-    "adventureStarted": "Adventure started"
+  "tracker": {
+    "addResult": "Add result",
+    "notes": "Notes"
   },
   "types": {
+    "?": "???",
     "bug": "Bug",
     "dark": "Dark",
     "dragon": "Dragon",
@@ -31,12 +49,6 @@
     "psychic": "Psychic",
     "rock": "Rock",
     "steel": "Steel",
-    "water": "Water",
-    "?": "???"
-  },
-  "settings": {
-    "suggestions": "Enable suggestions to be helped on what moves could be used to infer pokemon types",
-    "automatic": "Enable form to insert type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types",
-    "language": "Language"
+    "water": "Water"
   }
 }

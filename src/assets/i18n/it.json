@@ -2,16 +2,16 @@
   "effectiveness": {
     "effective": "Efficace",
     "immune": "Immune",
-    "notEffective": "Non efficace",
+    "notEffective": "Non molto efficace",
     "superEffective": "Superefficace"
   },
   "general": {
+    "add": "Aggiungi",
     "back": "Indietro",
+    "calculate": "Calcola",
     "cancel": "Annulla",
     "create": "Crea",
-    "save": "Salva",
-    "calculate": "Calcola",
-    "add": "Aggiungi"
+    "save": "Salva"
   },
   "matchSelection": {
     "adventureStarted": "Inizio avventura",
@@ -28,7 +28,7 @@
     "settings": "Impostazioni"
   },
   "tracker": {
-    "usedMove": "s",
+    "addResult": "Aggiungi risultato",
     "notes": "Note"
   },
   "types": {

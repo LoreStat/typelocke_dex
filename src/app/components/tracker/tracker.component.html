@@ -20,7 +20,7 @@
         <p-card class="used-moves max-card-height">
           <div class="d-flex flex-column align-center">
             <div (click)="toggleOverlayPanel(op, $event)" class="add-result clickable pb-2  pt-2 text-center">
-              Aggiungi risultato
+              {{ 'tracker.addResult' | translate }}
             </div>
             <p-scroller [items]="pokemon.registeredMoves" [itemSize]="pokemon.registeredMoves.length"
               scrollHeight="10000px" styleClass="border-1 surface-border" [style]="{'width': '200px'}">
@@ -47,7 +47,6 @@
                     styleClass="p-button-rounded" (click)="selectedSuggestionType = type"
                     class="type-button"></p-button>
                 </div>
-                <!-- o bottone piccolo oppure button a cerchio con tooltip -->
               </div>
               <div class="effectiveness-box d-flex flex-wrap justify-content-between mb-5"
                 *ngIf="selectedSuggestionType">
