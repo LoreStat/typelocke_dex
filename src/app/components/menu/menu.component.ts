@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
-import { driver } from 'driver.js';
+import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/services/data.service';
 import { POKEMON } from 'src/assets/constants/PokemonData';
 import { LOGO_ICON_PATH } from 'src/assets/constants/devConstants';
@@ -17,6 +17,7 @@ enum MenuRoutes {
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  @Output() toggleRecentSelectedPokemonsEvent = new EventEmitter();
 
   public menuRoutes = MenuRoutes;
   public isCurrentRouteTracker: boolean = false;
@@ -29,7 +30,7 @@ export class MenuComponent implements OnInit {
 
   public logoPath: string = LOGO_ICON_PATH;
 
-  constructor(private dataService: DataService, private router: Router, private route: ActivatedRoute) {
+  constructor(private dataService: DataService, private router: Router, private route: ActivatedRoute, private t: TranslateService) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.isCurrentRouteTracker = event.url === "/tracker";
@@ -44,7 +45,7 @@ export class MenuComponent implements OnInit {
   }
 
   public search(event: any) {
-    this.suggestions = this.pokemonsList.filter(e =>
+    this.suggestions = this.pokemonsList.map(x => this.t.instant("pokemon." + x)).filter(e =>
       e.toLowerCase().indexOf((event.query as string).toLowerCase()) >= 0
     );
 
@@ -54,7 +55,13 @@ export class MenuComponent implements OnInit {
   }
 
   public selectSearchedPokemon(value: string) {
-    this.dataService.setPokemon(value);
+    const pokemonKey = this.pokemonsList.find(x => {
+      if (this.t.instant("pokemon." + x) === value) return x
+      else return "";
+    }) as string;
+    console.log(pokemonKey);
+
+    this.dataService.setPokemon(pokemonKey);
     this.router.navigate(["tracker"]);
   }
 
@@ -72,19 +79,11 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["settings"]);
   }
 
-  public activateDriver() {
-    const driverObj = driver({
-      popoverClass: "driverjs-theme",
-      stagePadding: 4,
-    });
+  public toggleRecentSelectedPokemons() {
+    this.toggleRecentSelectedPokemonsEvent.emit();
+  }
 
-    driverObj.highlight({
-      element: "#highlight-me",
-      popover: {
-        side: "bottom",
-        title: "This is a title",
-        description: "This is a description",
-      }
-    })
+  public showHowToUse() {
+
   }
 }

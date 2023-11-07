@@ -6,6 +6,6 @@
 <p-dock [model]="mostRecentlyWatched" [position]="'right'">
   <ng-template pTemplate="item" let-item>
     <img [src]="item.icon" [alt]="item.label" width="80%" />
-    <div>{{ item.label }}</div>
+    <div>{{ 'pokemon.' + item.label | translate }}</div>
   </ng-template>
 </p-dock>

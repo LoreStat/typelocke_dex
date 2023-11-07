@@ -1,7 +1,7 @@
 <div>
-  <app-menu></app-menu>
+  <app-menu (toggleRecentSelectedPokemonsEvent)="showRecentSelectedPokemons = !showRecentSelectedPokemons"></app-menu>
 </div>
 <div class="d-flex menu-margin">
   <div class="px-5 py-3 content-margin"><router-outlet></router-outlet></div>
-  <app-recently-watched></app-recently-watched>
+  <app-recently-watched [hidden]="!showRecentSelectedPokemons"></app-recently-watched>
 </div>

@@ -3,7 +3,7 @@
 </p-blockUI>
 <div *ngIf="pokemon" class="fadein animation-duration-500">
   <div class="mb-2">
-    <p-card id="main-card" header="{{pokemon.name}}" class="main-card">
+    <p-card id="main-card" header="{{'pokemon.' + pokemon.name | translate}}" class="main-card">
       <div class="d-flex flex-wrap justify-content-center">
         <p-card class="max-card-height">
           <div class="text-center">
