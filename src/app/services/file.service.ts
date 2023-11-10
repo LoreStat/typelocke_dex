@@ -15,6 +15,8 @@ export class FileService {
   }
 
   writeFile(name: string, data: any, singleMatch: boolean) {
+    if(singleMatch && (!this.fs.existsSync('./saves/games'))) this.fs.mkdirSync('./saves/games');
+
     return this.fs.writeFileSync(`./saves/${singleMatch ? "games/" : ""}${name}`, data)
   }
 
