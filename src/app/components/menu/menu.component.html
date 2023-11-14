@@ -10,20 +10,20 @@
       </div>
       <ul class="d-flex justify-content-center w-100 align-items-center">
         <li class="me-2">
-          <i class="pi pi-question-circle topbar-icon clickable" (click)="showHowToUse()"></i>
+          <i [pTooltip]="'menu.help' | translate" class="pi pi-question-circle topbar-icon clickable" (click)="showHowToUse()"></i>
         </li>
         <li>
-          <i class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
+          <i [pTooltip]="'Dex'" class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
         </li>
         <li class="search-bar mx-5">
           <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
             (completeMethod)="search($event)" (onSelect)="selectSearchedPokemon($event)"></p-autoComplete>
         </li>
-        <li (click)="goToSettings()">
-          <i class="pi pi-cog topbar-icon clickable"></i>
+        <li>
+          <i [pTooltip]="'menu.settings' | translate" class="pi pi-cog topbar-icon clickable" (click)="goToSettings()"></i>
         </li>
-        <li class="ms-2">
-          <i class="pi pi-eye topbar-icon clickable" (click)="toggleRecentSelectedPokemons()"></i>
+        <li class="ms-2" *ngIf="!settings.hideRecentPokemon">
+          <i [pTooltip]="'menu.toggleRecent' | translate" class="pi pi-eye topbar-icon clickable" (click)="toggleRecentSelectedPokemons()"></i>
         </li>
       </ul>
       <div class="loaded-match d-flex">

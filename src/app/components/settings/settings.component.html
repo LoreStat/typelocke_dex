@@ -1,15 +1,23 @@
 <div class="px-5 fadein animation-duration-500">
   <div class="d-flex flex-column pt-2">
-    <div>
-      <p-checkbox [(ngModel)]="settings['suggestions']" [binary]="true" inputId="suggestions"></p-checkbox>
-      <label for="suggestions"> {{ "settings.suggestions" | translate }}</label>
-    </div>
-    <div class="pt-2">
-      <p-checkbox [(ngModel)]="settings['automatic']" [binary]="true" inputId="suggestions"></p-checkbox>
-      <label for="suggestions"> {{ "settings.automatic" | translate }}</label>
-    </div>
-    <div class="pt-2">
+    <div class="pt-3 text-center">
       <p-dropdown [options]="languages" [(ngModel)]="settings['language']"></p-dropdown>
+    </div>
+    <div class="pt-3">
+      <p-checkbox [(ngModel)]="settings['automatic']" [binary]="true" (onChange)="setAutomaticSummaryToFalse()" inputId="automatic"></p-checkbox>
+      <label for="automatic"> {{ "settings.automatic" | translate }}</label>
+    </div>
+    <div class="pt-3">
+      <p-checkbox [disabled]="settings['automatic'] === false" [(ngModel)]="settings['automaticSummary']" [binary]="true" inputId="automaticSummary"></p-checkbox>
+      <label for="automaticSummary"> {{ "settings.automaticSummary" | translate }}</label>
+    </div>
+    <div class="pt-3">
+      <p-checkbox [(ngModel)]="settings['hideRecentPokemon']" [binary]="true" inputId="hideRecentPokemon"></p-checkbox>
+      <label for="hideRecentPokemon"> {{ "settings.hideRecentPokemon" | translate }}</label>
+    </div>
+    <div class="py-3">
+      <p-checkbox [(ngModel)]="settings['hdImages']" [binary]="true" inputId="hdImages"></p-checkbox>
+      <label for="hdImages"> {{ "settings.hdImages" | translate }}</label>
     </div>
   </div>
   <div class="d-flex justify-content-center">

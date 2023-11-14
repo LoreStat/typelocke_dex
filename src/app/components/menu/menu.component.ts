@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { POKEMON } from 'src/assets/constants/PokemonData';
 import { LOGO_ICON_PATH } from 'src/assets/constants/devConstants';
@@ -21,6 +22,7 @@ export class MenuComponent implements OnInit {
 
   public menuRoutes = MenuRoutes;
   public isCurrentRouteTracker: boolean = false;
+  public settings: Settings;
 
   public matchName: string = "";
   public selectedItem: string = "";
@@ -31,6 +33,7 @@ export class MenuComponent implements OnInit {
   public logoPath: string = LOGO_ICON_PATH;
 
   constructor(private dataService: DataService, private router: Router, private route: ActivatedRoute, private t: TranslateService) {
+    this.settings = dataService.getSettings();
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.isCurrentRouteTracker = event.url === "/tracker";

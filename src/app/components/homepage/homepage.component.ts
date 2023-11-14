@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Settings } from 'src/app/models/models';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-homepage',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class HomepageComponent {
   public showRecentSelectedPokemons: boolean = true;
+  public settings: Settings;
+
+  constructor(dataservice: DataService) {
+    this.settings = dataservice.getSettings();
+  }
 }

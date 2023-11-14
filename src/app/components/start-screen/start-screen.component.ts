@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
-import { SavedMatch } from 'src/app/models/models';
+import { SavedMatch, Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { POKEMON_IMAGES_LIST } from 'src/assets/constants/PokemonData';
@@ -36,10 +36,12 @@ export class StartScreenComponent {
     const savedDataList = savedData.split("\n");
     const settingsArray = savedDataList.shift().split(",");
 
-    const settings = {
-      suggestions: this.isTrue(settingsArray[0]),
-      automatic: this.isTrue(settingsArray[1]),
-      language: settingsArray[2]
+    const settings: Settings = {
+      automatic: this.isTrue(settingsArray[0]),
+      automaticSummary: this.isTrue(settingsArray[1]),
+      hideRecentPokemon: this.isTrue(settingsArray[2]),
+      hdImages: this.isTrue(settingsArray[3]),
+      language: settingsArray[4]
     }
     dataService.setSettings(settings)
     translate.use(settings.language);
@@ -50,11 +52,11 @@ export class StartScreenComponent {
         matchName: matchSplit[0],
         file: matchSplit[1],
         startDate: matchSplit[2],
-        lastModified: matchSplit[3],
+        lastLogin: matchSplit[3],
         iconName: matchSplit[4],
       }
     }).sort((a: SavedMatch, b: SavedMatch) => {
-      return (new Date(a.lastModified).getTime() < new Date(b.lastModified).getTime()) ? 1 : -1
+      return (new Date(a.lastLogin).getTime() <= new Date(b.lastLogin).getTime()) ? 1 : -1
 
     })
 
@@ -115,7 +117,7 @@ export class StartScreenComponent {
         matchName: this.newMatchTitle,
         iconName: this.pokemonIcon + ".png",
         startDate: new Date().toLocaleDateString(),
-        lastModified: new Date().toLocaleDateString(),
+        lastLogin: new Date().toLocaleDateString(),
         file: this.newMatchTitle + ".txt"
       })
       this.dataService.setSavedMatches(this.savedMatches);

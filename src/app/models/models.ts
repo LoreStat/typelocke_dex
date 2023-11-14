@@ -2,14 +2,16 @@ export interface SavedMatch {
   matchName: string,
   file: string,
   startDate: string,
-  lastModified: string,
+  lastLogin: string,
   iconName: string
 }
 
 export interface Settings {
-  suggestions: boolean,
+  automaticSummary: boolean,
   automatic: boolean,
-  language: string
+  language: string,
+  hideRecentPokemon: boolean,
+  hdImages: boolean
 }
 
 export interface DropdownItem {

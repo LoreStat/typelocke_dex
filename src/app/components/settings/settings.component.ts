@@ -25,8 +25,6 @@ export class SettingsComponent implements OnInit {
     private fileService: FileService
     ) {
     this.settings = this.dataService.getSettings();
-    console.log(this.settings);
-    console.log(this.languages);
   }
 
   ngOnInit() {
@@ -41,5 +39,9 @@ export class SettingsComponent implements OnInit {
 
   public back() {
     this.location.back();
+  }
+
+  public setAutomaticSummaryToFalse() {
+    this.settings.automaticSummary = false;
   }
 }
