@@ -21,7 +21,7 @@ export class RecentlyWatchedComponent {
         if(pokemonIndex !== -1) this.recentlyWatched.splice(pokemonIndex, 1)
         this.recentlyWatched.unshift(pokemon);
 
-        this.mostRecentlyWatched = this.recentlyWatched.slice(0, 8).map(el => {
+        this.mostRecentlyWatched = this.recentlyWatched.slice(0, 5).map(el => {
           return {
             label: el,
             icon: `${POKEMON_IMAGES_PATH + el}.png`,

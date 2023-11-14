@@ -8,7 +8,7 @@
       {{ 'tracker.check-true' | translate }}
     </p>
     <p *ngIf="!suggestionResponse.result && suggestionResponse.typesResult">
-      {{ 'tracker.check-false' | translate }} {{ suggestionResponse.typesResult.dubiousTypes[0] | translate }}
+      {{ 'tracker.check-false' | translate }} {{ (('effectiveness.' + suggestionResponse.typesResult.dubiousTypes[0]) | translate).toLowerCase() }}
     </p>
   </div>
   <div *ngIf="suggestionResponse.type === 'TRACK'">

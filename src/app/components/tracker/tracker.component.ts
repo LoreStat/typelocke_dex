@@ -156,9 +156,15 @@ export class TrackerComponent {
     this.fileService.saveChanges();
   }
 
+  private addToRegisteredIfDontExist(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
+    const composedRecentMove = (this.composeRecentMoveFromType(selectedSuggestionType) + this.composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness));
+    if(!this.pokemon.registeredMoves.find(x => x === composedRecentMove))
+      this.pokemon.registeredMoves.unshift(composedRecentMove);
+  }
+
   public addMoveToRegistered(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
     if (this.selectedSuggestionEffectiveness && this.selectedSuggestionType) {
-      this.pokemon.registeredMoves.unshift((this.composeRecentMoveFromType(selectedSuggestionType) + this.composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness)));
+      this.addToRegisteredIfDontExist(selectedSuggestionType, selectedSuggestionEffectiveness);
       this.resetSelectedTypeAndEffectiveness();
       if (this.op) this.op.hide();
 
@@ -173,16 +179,26 @@ export class TrackerComponent {
     this.calculateUsedMove(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     this.blockEnabled = false;
-    if(this.settings?.automaticSummary ||
-      this.suggestionResponse.type !== SuggestionResponseType.TRACK &&
-      !this.suggestionResponse.result) this.sidebarVisible = true;
+    if(this.suggestionResponse.type !== SuggestionResponseType.TRACK ||
+        this.suggestionResponse.type === SuggestionResponseType.TRACK && !this.suggestionResponse.result ||
+        (this.settings?.automaticSummary && this.suggestionResponse.type === SuggestionResponseType.TRACK && (
+          this.suggestionResponse.typesResult.confirmedTypes.length > 0 ||
+          this.suggestionResponse.typesResult.dubiousTypes.length > 0 ||
+          this.suggestionResponse.typesResult.removedTypes.length > 0
+        ))) {
+        this.sidebarVisible = true;
+        if(this.suggestionResponse.result === false) {
+          this.pokemon.registeredMoves.shift();
+          this.fillDataAndSave();
+        }
+      }
   }
 
   public calculateUsedMove(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
     this.calculateAttackEffectivenesses(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     if (this.selectedSuggestionType === selectedSuggestionType) {
-      this.pokemon.registeredMoves.unshift((this.composeRecentMoveFromType(selectedSuggestionType) + this.composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness)));
+      this.addToRegisteredIfDontExist(selectedSuggestionType, selectedSuggestionEffectiveness);
       this.fillDataAndSave();
       this.resetSelectedTypeAndEffectiveness();
     }
@@ -198,7 +214,12 @@ export class TrackerComponent {
 
     if (!this.pokemon.confirmedTypes.find(x => x === "?")) {
 
-      const effectivenessValue = selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] * selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]];
+      const selectedTypeEffectiveness1 = selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] !== undefined
+        ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] : 1;
+      const selectedTypeEffectiveness2 = selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] !== undefined
+        ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] : 1;
+
+      const effectivenessValue =  selectedTypeEffectiveness1 * selectedTypeEffectiveness2;
       const effectivenessLabel = (effectivenessValue === 0) ? 'immune' :
                                   (effectivenessValue < 1) ? 'notEffective' :
                                   (effectivenessValue === 1) ? 'effective' :

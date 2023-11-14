@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap justify-content-center dex-view text-center">
-  <p-card *ngFor="let speciesGroup of speciesGroups | keyvalue: originalOrder" class="m-px-3 fadein animation-duration-500">
+  <p-card *ngFor="let speciesGroup of speciesGroups | keyvalue: originalOrder" class="m-px-3 fadein animation-duration-500 clickable">
     <div (click)="goToTracker(speciesGroup.value)" class ="text-center">
       <img *ngFor="let pokeForImg of speciesGroup.value" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg"
       width="80" height="80" class="negative-margin-left">

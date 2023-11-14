@@ -9,8 +9,8 @@
         </div>
       </div>
       <ul class="d-flex justify-content-center w-100 align-items-center">
-        <li class="me-2">
-          <i [pTooltip]="'menu.help' | translate" class="pi pi-question-circle topbar-icon clickable" (click)="showHowToUse()"></i>
+        <li class="me-2" *ngIf="!settings.hideRecentPokemon">
+          <i [pTooltip]="'menu.toggleRecent' | translate" class="pi pi-eye topbar-icon clickable" (click)="toggleRecentSelectedPokemons()"></i>
         </li>
         <li>
           <i [pTooltip]="'Dex'" class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
@@ -22,8 +22,8 @@
         <li>
           <i [pTooltip]="'menu.settings' | translate" class="pi pi-cog topbar-icon clickable" (click)="goToSettings()"></i>
         </li>
-        <li class="ms-2" *ngIf="!settings.hideRecentPokemon">
-          <i [pTooltip]="'menu.toggleRecent' | translate" class="pi pi-eye topbar-icon clickable" (click)="toggleRecentSelectedPokemons()"></i>
+        <li class="ms-2">
+          <i [pTooltip]="'menu.help' | translate" class="pi pi-question-circle topbar-icon clickable" (click)="showHowToUse()"></i>
         </li>
       </ul>
       <div class="loaded-match d-flex">
