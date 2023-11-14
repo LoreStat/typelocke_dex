@@ -38,6 +38,10 @@ export class DataService {
   public setLoadedMatch(match: string) {
     this.match.next(match);
     this.lastSelectedMatch = match;
+    if(match) {
+      const saveIndex = this.savedMatches.findIndex(x => x.matchName +  '.txt' === match);
+      this.savedMatches[saveIndex].lastLogin = new Date().toLocaleDateString();
+    }
   }
 
   public getLoadedData() {

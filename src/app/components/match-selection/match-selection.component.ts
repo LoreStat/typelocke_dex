@@ -28,6 +28,7 @@ export class MatchSelectionComponent {
 
   public loadMatch(matchName: string) {
     this.dataService.setLoadedMatch(matchName);
+    this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
 
     const pokemonMap: Record<string, PokemonInfo> = {};
     const stringedInfo = this.fileService.getFile(matchName, true);
