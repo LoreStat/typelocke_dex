@@ -11,9 +11,7 @@ import { AppComponent } from './app.component';
 import { RecentlyWatchedComponent } from './components/recently-watched/recently-watched.component';
 import { TrackerComponent } from './components/tracker/tracker.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { SuggestionsComponent } from './components/suggestions/suggestions.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { StatisticsComponent } from './components/statistics/statistics.component';
 import { MatchSelectionComponent } from './components/match-selection/match-selection.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { StartScreenComponent } from './components/start-screen/start-screen.component';
@@ -53,9 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RecentlyWatchedComponent,
     TrackerComponent,
     MenuComponent,
-    SuggestionsComponent,
     SettingsComponent,
-    StatisticsComponent,
     MatchSelectionComponent,
     HomepageComponent,
     StartScreenComponent,
