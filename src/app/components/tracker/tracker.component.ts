@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { PokemonInfo, Settings } from 'src/app/models/models';
@@ -9,14 +10,15 @@ import { POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData
 import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 enum SuggestionResponseType {
-  CHECK,
-  TRACK
+  CHECK = "CHECK",
+  TRACK = "TRACK",
+  NULL = "NULL"
 }
 
 interface SuggestionResponse {
   type: SuggestionResponseType,
   result: boolean,
-  typesResult?: {
+  typesResult: {
     confirmedTypes: string[],
     dubiousTypes: string[],
     removedTypes: string[]
@@ -44,12 +46,21 @@ export class TrackerComponent {
   public selectedSuggestionType?: string;
   public selectedSuggestionEffectiveness?: string;
 
-  public suggestionResponse?: SuggestionResponse;
+  public suggestionResponse: SuggestionResponse = {
+    type: SuggestionResponseType.NULL,
+    result: true,
+    typesResult: {
+      confirmedTypes: [],
+      dubiousTypes: [],
+      removedTypes: []
+    }
+  };
 
   public blockEnabled: boolean = false;
+  public sidebarVisible: boolean = false;
   private op?: OverlayPanel;
 
-  constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService) {
+  constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService, private translate: TranslateService) {
     this.dataService.selectedPokemon.subscribe(pokemonName => {
       this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
       this.settings = dataService.getSettings();
@@ -156,7 +167,18 @@ export class TrackerComponent {
   }
 
   public confirmUsedMove(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
+    this.resetSuggestionResponse();
     this.blockEnabled = true;
+
+    this.calculateUsedMove(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
+
+    this.blockEnabled = false;
+    if(this.settings?.automaticSummary ||
+      this.suggestionResponse.type !== SuggestionResponseType.TRACK &&
+      !this.suggestionResponse.result) this.sidebarVisible = true;
+  }
+
+  public calculateUsedMove(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
     this.calculateAttackEffectivenesses(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     if (this.selectedSuggestionType === selectedSuggestionType) {
@@ -164,7 +186,6 @@ export class TrackerComponent {
       this.fillDataAndSave();
       this.resetSelectedTypeAndEffectiveness();
     }
-    this.blockEnabled = false;
   }
 
   public resetSelectedTypeAndEffectiveness() {
@@ -173,16 +194,23 @@ export class TrackerComponent {
   }
 
   private calculateAttackEffectivenesses(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
-    this.suggestionResponse = undefined;
     const selectedTypeEffectivenesses = Object.assign({}, EFFECTIVENESSES[selectedSuggestionType as string]);
 
     if (!this.pokemon.confirmedTypes.find(x => x === "?")) {
+
+      const effectivenessValue = selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] * selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]];
+      const effectivenessLabel = (effectivenessValue === 0) ? 'immune' :
+                                  (effectivenessValue < 1) ? 'notEffective' :
+                                  (effectivenessValue === 1) ? 'effective' :
+                                  'superEffective';
+
       this.suggestionResponse = {
         type: SuggestionResponseType.CHECK,
         result: this.checkConfirmedTypesCorrectness(selectedSuggestionType, selectedSuggestionEffectiveness),
-        typesResult: undefined
+        typesResult: {dubiousTypes: [effectivenessLabel], confirmedTypes: [], removedTypes: []}
       } // l'efficacia della mossa utilizzata non può essere corretta con la combinazione di tipi selezionata se result è false
     } else {
+      this.suggestionResponse.type = SuggestionResponseType.TRACK;
       this.calculate(selectedTypeEffectivenesses, selectedSuggestionType, selectedSuggestionEffectiveness, actualMove) // move all logic into this function
       // se c'è già un tipo confermato moltiplico tutte le efficace per quella del tipo confermato, e poi confronto i risultati con l'efficacia
       // es. grass - fire , attacco water = 1.0 => avevo già fire confermato quindi moltiplico tutto per 2, grass diventa 1.0, ground 4.0, ghost: 2.0
@@ -218,8 +246,10 @@ export class TrackerComponent {
         (selectedSuggestionEffectiveness !== "immune" && availableTypesEffectiveness[t] === 0) ||
         (selectedSuggestionType === TYPE.NORMAL && selectedSuggestionEffectiveness === "effective" && availableTypesEffectiveness[t] < 1) ||
         (selectedSuggestionEffectiveness !== "immune" && confirmedType && !this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, actualEffectivenessValue * availableTypesEffectiveness[t]))
-      )
+      ) {
         this.moveToRemoved(t);
+        this.suggestionResponse.typesResult.removedTypes.push(t);
+      }
     });
 
     availableTypesEffectiveness = {};
@@ -229,11 +259,12 @@ export class TrackerComponent {
       Object.keys(availableTypesEffectiveness).forEach(t => {
         // eviterei di spostare su dubbio una mossa normalmente efficace se non ho già informazioni su un secondo tipo
         // potrebbe essere fuorviante..erba fuoco, lancio acqua ed erba fuoco rimangono disponibili, mentre tra i dubbi andrebbero spettro, normale...
-        if (this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, availableTypesEffectiveness[t]))
+        if (this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, availableTypesEffectiveness[t])) {
           this.moveToDubious(t);
+          this.suggestionResponse.typesResult.dubiousTypes.push(t);
+        }
       })
     }
-
     this.dubiousTypesReasoning(selectedSuggestionType, selectedSuggestionEffectiveness, selectedTypeEffectivenesses, actualEffectivenessValue, actualMove, confirmedType);
 
   }
@@ -244,6 +275,7 @@ export class TrackerComponent {
       if (this.pokemon.dubiousTypes.length === 2) {
         this.pokemon.confirmedTypes = this.pokemon.dubiousTypes;
         this.pokemon.dubiousTypes = [];
+        this.suggestionResponse.typesResult.confirmedTypes.push(...this.pokemon.confirmedTypes)
       } else {
         const combinations: string[][] = this.pokemon.dubiousTypes.flatMap(
           (v, i) => this.pokemon.dubiousTypes.slice(i + 1).map(w => [v, w])
@@ -256,14 +288,16 @@ export class TrackerComponent {
         })
         if (possibleConfirmations.length === 1) {
           this.moveToConfirmed(possibleConfirmations[0][0]);
+          this.suggestionResponse.typesResult.confirmedTypes.push(possibleConfirmations[0][0]);
           this.moveToConfirmed(possibleConfirmations[0][1]);
+          this.suggestionResponse.typesResult.confirmedTypes.push(possibleConfirmations[0][1]);
         }
         if (possibleConfirmations.length === 0) {
           //se non si trova nessuna combinazione che combacia con l'efficacia bisogna restituire errore
           this.suggestionResponse = {
             type: SuggestionResponseType.TRACK,
-            result: this.checkConfirmedTypesCorrectness(selectedSuggestionType, selectedSuggestionEffectiveness),
-            typesResult: undefined
+            result: false,
+            typesResult: {confirmedTypes: [], dubiousTypes: [], removedTypes: []}
           } // impossibile trovare una combinazione corretta corrispondente alle informazioni dichiarate
         }
       }
@@ -284,12 +318,16 @@ export class TrackerComponent {
     });
     // qua si potrebbe implementare un motore che verifica tutte le mosse vecchie oltre all'ultima usata
     // se fra tutte le combinazioni di tipi rimaste ce n'è una che soddisfa tutta la storia delle mosse usate allora aggiungi quei tipi
-    if (remainingTypesEffectiveness.length === 1) this.moveToConfirmed(remainingTypesEffectiveness[0]);
+    if (remainingTypesEffectiveness.length === 1) {
+      this.moveToConfirmed(remainingTypesEffectiveness[0]);
+      this.suggestionResponse.typesResult.confirmedTypes.push(remainingTypesEffectiveness[0]);
+    }
 
+    this.suggestionResponse.result = true;
     const missingType = this.pokemon.confirmedTypes.find(x => x === "?");
     if (missingType && this.pokemon.registeredMoves.length > actualMove) {
       const nextRecentMove = this.pokemon.registeredMoves[actualMove];
-      this.confirmUsedMove(
+      this.calculateUsedMove(
         this.getBackgroundClassFromRecentMove(nextRecentMove.substring(0, 2)),
         this.getEffectivenessFromRecentMove(nextRecentMove.substring(2, 3)).split(".")[1],
         actualMove + 1);
@@ -311,6 +349,14 @@ export class TrackerComponent {
     this.op = op;
     op.toggle(event);
     this.resetSelectedTypeAndEffectiveness();
+  }
+
+  public resetSuggestionResponse() {
+    this.suggestionResponse = {type: SuggestionResponseType.NULL, result: true, typesResult: {confirmedTypes: [], dubiousTypes: [], removedTypes: []}};
+  }
+
+  public getTranslatedTypesArray(value: string[]) {
+    return value.map(x => this.translate.instant("types." + x.toLowerCase())).join(", ");
   }
 
   public getBackgroundClassFromRecentMove(value: string) {

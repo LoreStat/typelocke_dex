@@ -41,6 +41,7 @@ import { ScrollerModule } from 'primeng/scroller';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoFocusModule } from 'primeng/autofocus';
+import { SidebarModule } from 'primeng/sidebar';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -81,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     OverlayPanelModule,
     ProgressSpinnerModule,
     ScrollerModule,
+    SidebarModule,
     SpeedDialModule,
     ToastModule,
     TooltipModule,

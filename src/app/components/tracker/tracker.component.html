@@ -1,6 +1,39 @@
 <p-blockUI [blocked]="blockEnabled">
   <p-progressSpinner></p-progressSpinner>
 </p-blockUI>
+<p-sidebar [(visible)]="sidebarVisible" (onHide)="resetSuggestionResponse">
+  <h3>{{ 'tracker.result' | translate }}</h3>
+  <div *ngIf="(suggestionResponse.type) === 'CHECK'">
+    <p *ngIf="suggestionResponse.result">
+      {{ 'tracker.check-true' | translate }}
+    </p>
+    <p *ngIf="!suggestionResponse.result && suggestionResponse.typesResult">
+      {{ 'tracker.check-false' | translate }} {{ suggestionResponse.typesResult.dubiousTypes[0] | translate }}
+    </p>
+  </div>
+  <div *ngIf="suggestionResponse.type === 'TRACK'">
+    <div *ngIf="suggestionResponse.typesResult">
+      <p *ngIf="suggestionResponse.typesResult.confirmedTypes.length > 0">
+        {{ 'tracker.track-true' | translate}}{{ ('tracker.confirmed' | translate).toLocaleLowerCase() }}:
+        {{ getTranslatedTypesArray(suggestionResponse.typesResult.confirmedTypes) }}
+      </p>
+      <p *ngIf="suggestionResponse.typesResult.dubiousTypes.length > 0">
+        {{ 'tracker.track-true' | translate}}{{ ('tracker.dubious' | translate).toLocaleLowerCase() }}:
+        {{ getTranslatedTypesArray(suggestionResponse.typesResult.dubiousTypes) }}
+
+      </p>
+      <p *ngIf="suggestionResponse.typesResult.removedTypes.length > 0">
+        {{ 'tracker.track-true' | translate}}{{ ('tracker.removed' | translate).toLocaleLowerCase() }}:
+        {{ getTranslatedTypesArray(suggestionResponse.typesResult.removedTypes) }}
+
+      </p>
+    </div>
+    <p *ngIf="!suggestionResponse.result">
+      {{ 'tracker.track-false' | translate }}
+    </p>
+  </div>
+  <h4></h4>
+</p-sidebar>
 <div *ngIf="pokemon" class="fadein animation-duration-500">
   <div class="mb-2">
     <p-card id="main-card" header="{{'pokemon.' + pokemon.name | translate}}" class="main-card">
@@ -22,8 +55,7 @@
             <div (click)="toggleOverlayPanel(op, $event)" class="add-result clickable pb-2  pt-2 text-center">
               {{ 'tracker.addResult' | translate }}
             </div>
-            <p-scroller [items]="pokemon.registeredMoves" [itemSize]="pokemon.registeredMoves.length"
-              scrollHeight="10000px" styleClass="border-1 surface-border" [style]="{'width': '200px'}">
+            <p-scroller [items]="pokemon.registeredMoves" [itemSize]="pokemon.registeredMoves.length" styleClass="border-1 surface-border" [style]="{'width': '200px'}">
               <ng-template pTemplate="item" let-item let-options="options">
                 <div class="flex align-items-center p-2"
                   [pTooltip]="('types.' + getBackgroundClassFromRecentMove(item.substring(0,2)).toLocaleLowerCase())| translate"
@@ -83,7 +115,7 @@
   <p-card class="main-card" id="type-card">
     <div class="d-flex justify-content-center">
       <div class="flex-basis-28 text-center">
-        Possibili
+        {{ 'tracker.dubious' | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.dubiousTypes" class="p-1">
             <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
@@ -93,7 +125,7 @@
       </div>
 
       <div class="flex-basis-44 borders-x text-center">
-        Disponibili
+        {{ 'tracker.available' | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.availableTypes" class="p-1">
             <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
@@ -115,7 +147,7 @@
       </div>
 
       <div class="flex-basis-28 text-center">
-        Esclusi
+        {{ 'tracker.removed' | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.removedTypes" class="p-1">
             <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
