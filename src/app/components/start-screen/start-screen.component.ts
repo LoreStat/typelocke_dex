@@ -55,9 +55,10 @@ export class StartScreenComponent {
         lastLogin: matchSplit[3],
         iconName: matchSplit[4],
       }
-    }).sort((a: SavedMatch, b: SavedMatch) => {
-      return (new Date(a.lastLogin).getTime() <= new Date(b.lastLogin).getTime()) ? 1 : -1
-
+    })
+    
+    this.savedMatches.sort((a: SavedMatch, b: SavedMatch) => {
+      return (new Date(a.lastLogin).getTime() < new Date(b.lastLogin).getTime()) ? 1 : -1
     })
 
     dataService.setSavedMatches(this.savedMatches);
@@ -113,7 +114,7 @@ export class StartScreenComponent {
         }
       );
     } else {
-      this.savedMatches.push({
+      this.savedMatches.unshift({
         matchName: this.newMatchTitle,
         iconName: this.pokemonIcon + ".png",
         startDate: new Date().toLocaleDateString(),
