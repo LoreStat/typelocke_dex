@@ -40,7 +40,7 @@ export class DataService {
     this.lastSelectedMatch = match;
     if(match) {
       const saveIndex = this.savedMatches.findIndex(x => x.matchName +  '.txt' === match);
-      this.savedMatches[saveIndex].lastLogin = new Date().toLocaleDateString();
+      this.savedMatches[saveIndex].lastLogin = new Date().toISOString();
     }
   }
 

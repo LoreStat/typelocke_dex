@@ -57,4 +57,8 @@ export class MatchSelectionComponent {
   public back() {
     this.location.back();
   }
+
+  public getLocaleDateString(value: string) {
+    return new Date(value).toLocaleDateString();
+  }
 }

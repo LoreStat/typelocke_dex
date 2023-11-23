@@ -56,7 +56,7 @@ export class StartScreenComponent {
         iconName: matchSplit[4],
       }
     })
-    
+
     this.savedMatches.sort((a: SavedMatch, b: SavedMatch) => {
       return (new Date(a.lastLogin).getTime() < new Date(b.lastLogin).getTime()) ? 1 : -1
     })
@@ -118,7 +118,7 @@ export class StartScreenComponent {
         matchName: this.newMatchTitle,
         iconName: this.pokemonIcon + ".png",
         startDate: new Date().toLocaleDateString(),
-        lastLogin: new Date().toLocaleDateString(),
+        lastLogin: new Date().toISOString(),
         file: this.newMatchTitle + ".txt"
       })
       this.dataService.setSavedMatches(this.savedMatches);
