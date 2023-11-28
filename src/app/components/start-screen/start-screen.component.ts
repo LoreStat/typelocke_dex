@@ -126,6 +126,7 @@ export class StartScreenComponent {
 
       this.showNewMatchModal = false;
       this.generateIcons = false;
+      this.goToMatchSelection();
     }
   }
 
