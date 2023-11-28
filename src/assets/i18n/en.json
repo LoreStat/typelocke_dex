@@ -5,6 +5,11 @@
     "notEffective": "Not very effective",
     "superEffective": "Super effective"
   },
+  "errors": {
+    "alreadyConfirmedTypes": "You already added 2 types to this pokemon",
+    "alreadySavedTitle": "A saved match with this name already exists",
+    "titleLength": " Min title characters is 1, max is 12"
+  },
   "general": {
     "add": "Add",
     "back": "Back",

@@ -100,7 +100,7 @@ export class StartScreenComponent {
         {
           severity: 'error',
           summary: 'Errore',
-          detail: "Il titolo deve avere minimo 1 e massimo 12 caratteri"
+          detail: this.translate.instant('errors.titleLength')
         }
       );
       return;
@@ -110,7 +110,7 @@ export class StartScreenComponent {
         {
           severity: 'error',
           summary: 'Errore',
-          detail: "Esiste gia' un salvataggio con questo nome"
+          detail: this.translate.instant('errors.alreadySavedTitle')
         }
       );
     } else {

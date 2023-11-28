@@ -89,7 +89,7 @@ export class TrackerComponent {
       {
         severity: 'error',
         summary: 'Errore',
-        detail: "Hai gia' aggiunto 2 tipi a questo pokemon"
+        detail: this.translate.instant("errors.alreadyConfirmedTypes")
       }
     );
     else {

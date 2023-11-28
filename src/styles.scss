@@ -8,9 +8,12 @@
 @import "./assets/styles/types-background.scss";
 
 body {
-  font-family: 'LetsGo', Fallback, sans-serif !important;
+  font-family: 'Tex Gyre Adventor', Fallback, sans-serif;
   background-color: #5b859734;
   word-break: break-word;
+  .letsgofont {
+    font-family: 'LetsGo', Fallback, sans-serif;
+  }
 }
 
 @media screen and (max-width: 809px) {
@@ -20,8 +23,9 @@ body {
   }
 }
 
-* {
-  font-family: 'LetsGo', sans-serif;
+@font-face {
+  font-family: 'Tex Gyre Adventor';
+  src: url('assets/fonts/textgyreadventor/texgyreadventor-regular.otf');
 }
 
 @font-face {

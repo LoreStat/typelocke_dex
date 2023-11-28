@@ -47,10 +47,6 @@
   ;
 }
 
-.suggestion-box {
-  font-family: 'pokemongb', sans-serif;
-}
-
 ::ng-deep .types-box {
   button {
     width: 100px;
@@ -157,6 +153,10 @@
 @media screen and (max-width: 700px) {
   ::ng-deep .p-overlaypanel {
     width: 350px;
+    right: 0 !important;
+    left: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
