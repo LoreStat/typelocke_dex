@@ -72,4 +72,11 @@ export class DataService {
   public setSettings(value: Settings) {
     this.settings = value;
   }
+
+  public getIconsPath() {
+    if(this.settings.hdImages)
+      return 'assets/images/hd-pokemon/';
+    else
+      return 'assets/images/pokemon-images/';
+  }
 }

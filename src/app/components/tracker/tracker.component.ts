@@ -7,7 +7,6 @@ import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { EFFECTIVENESSES } from 'src/assets/constants/MovesData';
 import { POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
-import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 enum SuggestionResponseType {
   CHECK = "CHECK",
@@ -36,6 +35,7 @@ export class TrackerComponent {
   public pokemon!: PokemonInfo;
   public pokemonImage = "";
   public settings?: Settings;
+  public iconPath: string = "";
 
   public typeSelected = "";
   public evolutionsGroup: string[] = [];
@@ -61,17 +61,18 @@ export class TrackerComponent {
   private op?: OverlayPanel;
 
   constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService, private translate: TranslateService) {
+    this.iconPath = this.dataService.getIconsPath();
     this.dataService.selectedPokemon.subscribe(pokemonName => {
       this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
       this.settings = dataService.getSettings();
       this.evolutionsGroup = POKEMON_EVOS[pokemonName];
 
-      this.pokemonImage = `${POKEMON_IMAGES_PATH + pokemonName}.png`
+      this.pokemonImage = `${this.iconPath + pokemonName}.png`
     });
   }
 
   public getPokemonImagePath(pokemonName: string) {
-    return `${POKEMON_IMAGES_PATH + pokemonName}.png`
+    return `${this.iconPath + pokemonName}.png`
   }
 
   public removeType(type: string) {

@@ -6,7 +6,6 @@ import { SavedMatch, Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { POKEMON_IMAGES_LIST } from 'src/assets/constants/PokemonData';
-import { POKEMON_ICON_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-start-screen',
@@ -31,7 +30,6 @@ export class StartScreenComponent {
     private messageService: MessageService,
     private translate: TranslateService,
   ) {
-    this.pokemonIconPath = POKEMON_ICON_PATH;
     const savedData = this.fileService.getFile('savedMatches.txt', false);
     const savedDataList = savedData.split("\n");
     const settingsArray = savedDataList.shift().split(",");
@@ -44,6 +42,7 @@ export class StartScreenComponent {
       language: settingsArray[4]
     }
     dataService.setSettings(settings)
+    this.pokemonIconPath = this.dataService.getIconsPath();
     translate.use(settings.language);
 
     this.savedMatches = savedDataList.filter((row: string) => !!row).map((match: string) => {

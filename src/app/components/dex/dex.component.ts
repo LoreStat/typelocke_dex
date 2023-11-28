@@ -1,10 +1,9 @@
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PokemonInfo } from 'src/app/models/models';
+import { PokemonInfo, Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { EVOLUTIONS_GROUPS } from 'src/assets/constants/PokemonData';
-import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 
 @Component({
   selector: 'app-dex',
@@ -14,6 +13,7 @@ import { POKEMON_IMAGES_PATH } from 'src/assets/constants/devConstants';
 export class DexComponent {
 
   public speciesGroups: Record<string, string[]> = EVOLUTIONS_GROUPS;
+  private imagesPath = "";
 
   public originalOrder = (a: KeyValue<string,string[]>, b: KeyValue<string,string[]>): number => {
     return 0;
@@ -23,10 +23,11 @@ export class DexComponent {
 
   constructor(private dataService: DataService, private router: Router) {
     this.matchData = this.dataService.getLoadedData();
+    this.imagesPath = this.dataService.getIconsPath();
   }
 
   public getPokemonImagePath(pokemonName: string) {
-    return `${POKEMON_IMAGES_PATH + pokemonName}.png`
+    return `${this.imagesPath + pokemonName}.png`
   }
 
   public goToTracker(speciesGroup: string[]) {

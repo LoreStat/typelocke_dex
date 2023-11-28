@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { PokemonInfo, SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
-import { POKEMON_ICON_PATH } from 'src/assets/constants/devConstants';
 @Component({
   selector: 'app-match-selection',
   templateUrl: './match-selection.component.html',
@@ -23,7 +22,7 @@ export class MatchSelectionComponent {
     private location: Location
     ) {
     this.savedMatches = dataService.getSavedMatches();
-    this.pokemonIconPath = POKEMON_ICON_PATH;
+    this.pokemonIconPath = this.dataService.getIconsPath();
   }
 
   public loadMatch(matchName: string) {
