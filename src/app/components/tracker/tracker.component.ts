@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { EFFECTIVENESSES } from 'src/assets/constants/MovesData';
 import { POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
-
+import { composeRecentMoveFromEffectiveness, composeRecentMoveFromType, getBackgroundClassFromRecentMove, getEffectivenessFromRecentMove } from 'src/app/services/utils'
 enum SuggestionResponseType {
   CHECK = "CHECK",
   TRACK = "TRACK",
@@ -158,8 +158,8 @@ export class TrackerComponent {
   }
 
   private addToRegisteredIfDontExist(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
-    const composedRecentMove = (this.composeRecentMoveFromType(selectedSuggestionType) + this.composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness));
-    if(!this.pokemon.registeredMoves.find(x => x === composedRecentMove))
+    const composedRecentMove = (composeRecentMoveFromType(selectedSuggestionType) + composeRecentMoveFromEffectiveness(selectedSuggestionEffectiveness));
+    if (!this.pokemon.registeredMoves.find(x => x === composedRecentMove))
       this.pokemon.registeredMoves.unshift(composedRecentMove);
   }
 
@@ -180,23 +180,24 @@ export class TrackerComponent {
     this.calculateUsedMove(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     this.blockEnabled = false;
-    if(this.suggestionResponse.type !== SuggestionResponseType.TRACK ||
-        this.suggestionResponse.type === SuggestionResponseType.TRACK && !this.suggestionResponse.result ||
-        (this.settings?.automaticSummary && this.suggestionResponse.type === SuggestionResponseType.TRACK && (
-          this.suggestionResponse.typesResult.confirmedTypes.length > 0 ||
-          this.suggestionResponse.typesResult.dubiousTypes.length > 0 ||
-          this.suggestionResponse.typesResult.removedTypes.length > 0
-        ))) {
-        this.sidebarVisible = true;
-        if(this.suggestionResponse.result === false) {
-          this.pokemon.registeredMoves.shift();
-          this.fillDataAndSave();
-        }
+    if (this.suggestionResponse.type !== SuggestionResponseType.TRACK ||
+      this.suggestionResponse.type === SuggestionResponseType.TRACK && !this.suggestionResponse.result ||
+      (this.settings?.automaticSummary && this.suggestionResponse.type === SuggestionResponseType.TRACK && (
+        this.suggestionResponse.typesResult.confirmedTypes.length > 0 ||
+        this.suggestionResponse.typesResult.dubiousTypes.length > 0 ||
+        this.suggestionResponse.typesResult.removedTypes.length > 0
+      ))) {
+      this.sidebarVisible = true;
+      if (this.suggestionResponse.result === false) {
+        this.pokemon.registeredMoves.shift();
+        this.fillDataAndSave();
       }
+    }
   }
 
   public calculateUsedMove(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
-    this.calculateAttackEffectivenesses(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
+    if (this.pokemon.name === "Shedinja") this.calculateShedinja(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
+    else this.calculateAttackEffectivenesses(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     if (this.selectedSuggestionType === selectedSuggestionType) {
       this.addToRegisteredIfDontExist(selectedSuggestionType, selectedSuggestionEffectiveness);
@@ -220,16 +221,16 @@ export class TrackerComponent {
       const selectedTypeEffectiveness2 = selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] !== undefined
         ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] : 1;
 
-      const effectivenessValue =  selectedTypeEffectiveness1 * selectedTypeEffectiveness2;
+      const effectivenessValue = selectedTypeEffectiveness1 * selectedTypeEffectiveness2;
       const effectivenessLabel = (effectivenessValue === 0) ? 'immune' :
-                                  (effectivenessValue < 1) ? 'notEffective' :
-                                  (effectivenessValue === 1) ? 'effective' :
-                                  'superEffective';
+        (effectivenessValue < 1) ? 'notEffective' :
+          (effectivenessValue === 1) ? 'effective' :
+            'superEffective';
 
       this.suggestionResponse = {
         type: SuggestionResponseType.CHECK,
         result: this.checkConfirmedTypesCorrectness(selectedSuggestionType, selectedSuggestionEffectiveness),
-        typesResult: {dubiousTypes: [effectivenessLabel], confirmedTypes: [], removedTypes: []}
+        typesResult: { dubiousTypes: [effectivenessLabel], confirmedTypes: [], removedTypes: [] }
       } // l'efficacia della mossa utilizzata non può essere corretta con la combinazione di tipi selezionata se result è false
     } else {
       this.suggestionResponse.type = SuggestionResponseType.TRACK;
@@ -319,7 +320,7 @@ export class TrackerComponent {
           this.suggestionResponse = {
             type: SuggestionResponseType.TRACK,
             result: false,
-            typesResult: {confirmedTypes: [], dubiousTypes: [], removedTypes: []}
+            typesResult: { confirmedTypes: [], dubiousTypes: [], removedTypes: [] }
           } // impossibile trovare una combinazione corretta corrispondente alle informazioni dichiarate
         }
       }
@@ -348,8 +349,8 @@ export class TrackerComponent {
     if (missingType && this.pokemon.registeredMoves.length > actualMove) {
       const nextRecentMove = this.pokemon.registeredMoves[actualMove];
       this.calculateUsedMove(
-        this.getBackgroundClassFromRecentMove(nextRecentMove.substring(0, 2)),
-        this.getEffectivenessFromRecentMove(nextRecentMove.substring(2, 3)).split(".")[1],
+        getBackgroundClassFromRecentMove(nextRecentMove.substring(0, 2)),
+        getEffectivenessFromRecentMove(nextRecentMove.substring(2, 3)).split(".")[1],
         actualMove + 1);
     }
   }
@@ -372,123 +373,15 @@ export class TrackerComponent {
   }
 
   public resetSuggestionResponse() {
-    this.suggestionResponse = {type: SuggestionResponseType.NULL, result: true, typesResult: {confirmedTypes: [], dubiousTypes: [], removedTypes: []}};
+    this.suggestionResponse = { type: SuggestionResponseType.NULL, result: true, typesResult: { confirmedTypes: [], dubiousTypes: [], removedTypes: [] } };
   }
 
   public getTranslatedTypesArray(value: string[]) {
     return value.map(x => this.translate.instant("types." + x.toLowerCase())).join(", ");
   }
 
-  public getBackgroundClassFromRecentMove(value: string) {
-    switch (value) {
-      case "bu":
-        return TYPE.BUG;
-      case "da":
-        return TYPE.DARK;
-      case "dr":
-        return TYPE.DRAGON;
-      case "el":
-        return TYPE.ELECTRIC;
-      case "fg":
-        return TYPE.FIGHTING;
-      case "fr":
-        return TYPE.FIRE;
-      case "fl":
-        return TYPE.FLYING;
-      case "gh":
-        return TYPE.GHOST;
-      case "gs":
-        return TYPE.GRASS;
-      case "gr":
-        return TYPE.GROUND;
-      case "ic":
-        return TYPE.ICE;
-      case "no":
-        return TYPE.NORMAL;
-      case "po":
-        return TYPE.POISON;
-      case "ps":
-        return TYPE.PSYCHIC;
-      case "ro":
-        return TYPE.ROCK;
-      case "st":
-        return TYPE.STEEL;
-      case "wa":
-        return TYPE.WATER;
-      default:
-        return "";
-    }
+  private calculateShedinja(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
+
   }
 
-  public getEffectivenessFromRecentMove(value: string) {
-    switch (value) {
-      case "+":
-        return "effectiveness.superEffective";
-      case "-":
-        return "effectiveness.notEffective";
-      case "x":
-        return "effectiveness.immune";
-      case "=":
-        return "effectiveness.effective";
-      default:
-        return "";
-    }
-  }
-
-
-  private composeRecentMoveFromEffectiveness(value: string) {
-    switch (value) {
-      case "superEffective":
-        return "+";
-      case "notEffective":
-        return "-";
-      case "immune":
-        return "x";
-      case "effective":
-        return "=";
-      default:
-        return "";
-    }
-  }
-
-  private composeRecentMoveFromType(value: string) {
-    switch (value) {
-      case TYPE.BUG:
-        return "bu";
-      case TYPE.DARK:
-        return "da";
-      case TYPE.DRAGON:
-        return "dr";
-      case TYPE.ELECTRIC:
-        return "el";
-      case TYPE.FIGHTING:
-        return "fg";
-      case TYPE.FIRE:
-        return "fr";
-      case TYPE.FLYING:
-        return "fl";
-      case TYPE.GHOST:
-        return "gh";
-      case TYPE.GRASS:
-        return "gs";
-      case TYPE.GROUND:
-        return "gr";
-      case TYPE.ICE:
-        return "ic";
-      case TYPE.NORMAL:
-        return "no";
-      case TYPE.POISON:
-        return "po";
-      case TYPE.PSYCHIC:
-        return "ps";
-      case TYPE.ROCK:
-        return "ro";
-      case TYPE.STEEL:
-        return "st";
-      case TYPE.WATER:
-        return "wa";
-      default:
-        return "";
-    }
-  }
 }
