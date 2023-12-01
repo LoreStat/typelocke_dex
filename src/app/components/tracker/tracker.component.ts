@@ -338,8 +338,6 @@ export class TrackerComponent {
         remainingTypesEffectiveness.push(t);
       }
     });
-    // qua si potrebbe implementare un motore che verifica tutte le mosse vecchie oltre all'ultima usata
-    // se fra tutte le combinazioni di tipi rimaste ce n'è una che soddisfa tutta la storia delle mosse usate allora aggiungi quei tipi
     if (remainingTypesEffectiveness.length === 1) {
       this.moveToConfirmed(remainingTypesEffectiveness[0]);
       this.suggestionResponse.typesResult.confirmedTypes.push(remainingTypesEffectiveness[0]);

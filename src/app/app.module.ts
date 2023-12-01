@@ -16,6 +16,7 @@ import { MatchSelectionComponent } from './components/match-selection/match-sele
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { StartScreenComponent } from './components/start-screen/start-screen.component';
 import { DexComponent } from './components/dex/dex.component';
+import { TypesCombinationsComponent } from './components/types-combinations/types-combinations.component';
 
 import { DataService } from './services/data.service';
 
@@ -23,6 +24,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { DockModule } from 'primeng/dock';
 import { DropdownModule } from 'primeng/dropdown';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -55,7 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatchSelectionComponent,
     HomepageComponent,
     StartScreenComponent,
-    DexComponent
+    DexComponent,
+    TypesCombinationsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ButtonModule,
     CardModule,
     CheckboxModule,
+    ChipModule,
     ConfirmDialogModule,
     DialogModule,
     DockModule,

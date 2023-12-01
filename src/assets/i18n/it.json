@@ -16,6 +16,8 @@
     "calculate": "Calcola",
     "cancel": "Annulla",
     "create": "Crea",
+    "filter": "Filtra",
+    "reset": "Reset",
     "save": "Salva"
   },
   "matchSelection": {
@@ -25,7 +27,8 @@
   "menu": {
     "help": "Aiuto",
     "settings": "Impostazioni",
-    "toggleRecent": "Mostra/nascondi pokemon recenti"
+    "toggleRecent": "Mostra/nascondi pokemon recenti",
+    "typesCombinations": "Combinazioni tipi"
   },
   "pokemon": {
     "Abomasnow": "Abomasnow",
@@ -535,7 +538,7 @@
     "Zubat": "Zubat"
   },
   "settings": {
-    "automatic": "Abilita la finestra per inserire tipo ed efficacia dell'ultima mossa usata, per fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà comunque sulle informazioni già rilevate dall'utente che, se sbagliate, possono portare fuori strada il sistema di suggerimenti.",
+    "automatic": "Abilita il bottone per calccolare tipo ed efficacia dell'ultima mossa usata e fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà sui cambiamenti già effettuati che, se sbagliati, lo potrebbero portare fuori strada",
     "automaticSummary": "Mostra il riassunto dei tipi spostati durante il tracciamento automatico",
     "hdImages": "Utilizza le immagini dei pokemon in HD",
     "hideRecentPokemon": "Nascondi sempre i pokemon recenti",
@@ -578,5 +581,9 @@
     "rock": "Roccia",
     "steel": "Acciaio",
     "water": "Acqua"
+  },
+  "typesCombinations": {
+    "selectEffectiveness": "Seleziona un'efficacia...",
+    "selectType": "Seleziona un tipo..."
   }
 }

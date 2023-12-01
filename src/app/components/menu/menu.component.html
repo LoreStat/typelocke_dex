@@ -9,8 +9,8 @@
         </div>
       </div>
       <ul class="d-flex justify-content-center w-100 align-items-center">
-        <li class="me-2" *ngIf="!settings.hideRecentPokemon">
-          <i [pTooltip]="'menu.toggleRecent' | translate" class="pi pi-eye topbar-icon clickable" (click)="toggleRecentSelectedPokemons()"></i>
+        <li  class="me-2">
+          <i [pTooltip]="'menu.settings' | translate" class="pi pi-cog topbar-icon clickable" (click)="goToSettings()"></i>
         </li>
         <li>
           <i [pTooltip]="'Dex'" class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
@@ -20,7 +20,7 @@
             (completeMethod)="search($event)" (onSelect)="selectSearchedPokemon($event)"></p-autoComplete>
         </li>
         <li>
-          <i [pTooltip]="'menu.settings' | translate" class="pi pi-cog topbar-icon clickable" (click)="goToSettings()"></i>
+          <i [pTooltip]="'menu.typesCombinations' | translate" class="pi pi-sitemap topbar-icon clickable" (click)="goToTypesCombinations()"></i>
         </li>
         <li class="ms-2">
           <i [pTooltip]="'menu.help' | translate" class="pi pi-question-circle topbar-icon clickable" (click)="showHowToUse()"></i>

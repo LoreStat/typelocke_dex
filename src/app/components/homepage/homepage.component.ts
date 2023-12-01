@@ -8,7 +8,6 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent {
-  public showRecentSelectedPokemons: boolean = true;
   public settings: Settings;
 
   constructor(dataservice: DataService) {

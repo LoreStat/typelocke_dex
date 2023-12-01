@@ -38,6 +38,10 @@ body {
   src: url('assets/fonts/pokemongb.ttf') format('truetype');
 }
 
+.m-px-3 {
+  margin: 3px;
+}
+
 .p-button {
   font-size: 14px;
 }
@@ -54,8 +58,16 @@ body {
   text-align: center;
 }
 
+.text-end {
+  text-align: end;
+}
+
 .align-items-center {
   align-items: center;
+}
+
+.d-block {
+  display: block;
 }
 
 .d-flex {

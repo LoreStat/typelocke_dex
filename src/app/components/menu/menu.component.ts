@@ -18,7 +18,6 @@ enum MenuRoutes {
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  @Output() toggleRecentSelectedPokemonsEvent = new EventEmitter();
 
   public menuRoutes = MenuRoutes;
   public isCurrentRouteTracker: boolean = false;
@@ -82,8 +81,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(["settings"]);
   }
 
-  public toggleRecentSelectedPokemons() {
-    this.toggleRecentSelectedPokemonsEvent.emit();
+  public goToTypesCombinations() {
+    this.router.navigate(["types-combinations"])
   }
 
   public showHowToUse() {

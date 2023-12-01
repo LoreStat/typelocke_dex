@@ -16,6 +16,8 @@
     "calculate": "Calculate",
     "cancel": "Cancel",
     "create": "Create",
+    "filter": "Filter",
+    "reset": "Reset",
     "save": "Save"
   },
   "matchSelection": {
@@ -25,7 +27,8 @@
   "menu": {
     "help": "Help",
     "settings": "Settings",
-    "toggleRecent": "Show/hide recent pokemon"
+    "toggleRecent": "Show/hide recent pokemon",
+    "typesCombinations": "Types combination"
   },
   "pokemon": {
     "Abomasnow": "Abomasnow",
@@ -535,7 +538,7 @@
     "Zubat": "Zubat"
   },
   "settings": {
-    "automatic": "Enable form to insert type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types",
+    "automatic": "Enable button to calculate type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types. Calculations are affected by existing changes. If these changes are incorrect, the system could follow a wrong way",
     "automaticSummary": "Show the summary of moved types during automatic track",
     "hdImages": "Use HD pokemon images",
     "hideRecentPokemon": "Always hide recent pokemons",
@@ -578,5 +581,9 @@
     "rock": "Rock",
     "steel": "Steel",
     "water": "Water"
+  },
+  "typesCombinations": {
+    "selectEffectiveness": "Select an effectiveness...",
+    "selectType": "Select a type..."
   }
 }

@@ -1,3 +1,10 @@
+export enum EffectivenessesCodes {
+  SUPEREFFECTIVE = 'superEffective',
+  EFFECTIVE = 'effective',
+  NOT_EFFECTIVE = 'notEffective',
+  IMMUNE = 'immune'
+}
+
 export interface SavedMatch {
   matchName: string,
   file: string,
@@ -27,4 +34,15 @@ export interface PokemonInfo {
   removedTypes: string[],
   registeredMoves: string[],
   notes: string
+}
+
+export interface DoubleType {
+  type1: string,
+  type2: string,
+  vulnerabilities: Record<string, EffectivenessesCodes>
+}
+
+export interface UsedMoveFilter {
+  type: string,
+  effectiveness: string
 }

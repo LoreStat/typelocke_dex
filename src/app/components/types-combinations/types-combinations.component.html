@@ -1,0 +1,31 @@
+<p-card class="filters">
+  <div class="d-flex justify-content-between">
+    <div>
+      <p-dropdown class="mx-2 my-1" [options]="typesList" [filter]="true" filterBy="name" optionLabel="name" optionValue="code"
+        [(ngModel)]="selectedType" [placeholder]="'typesCombinations.selectType' | translate"></p-dropdown>
+      <p-dropdown class="mx-2 my-1" [options]="effectivenessesList" optionLabel="name" optionValue="code" [(ngModel)]="selectedEffectiveness"
+        [placeholder]="'typesCombinations.selectEffectiveness' | translate"></p-dropdown>
+    </div>
+    <div class="text-end">
+      <p-button (click)="filter()" [label]="'general.filter' | translate" styleClass="p-button-text" class="mx-2"></p-button>
+      <p-button (click)="resetFilters()" [label]="'general.reset' | translate" styleClass="p-button-text" class="mx-2"></p-button>
+    </div>
+  </div>
+</p-card>
+<div class="d-flex flex-wrap justify-content-center dex-view text-center py-1">
+  <p-card *ngFor="let element of typesCombinations" class="m-px-3 fadein animation-duration-500 clickable">
+    <div class="text-center d-flex flex-column">
+      <p-button [ngClass]="element.type1.toLowerCase()" [label]="'types.' + element.type1.toLowerCase() | translate"
+        styleClass="p-button-rounded" class="type-button mb-1"></p-button>
+      <p-button [ngClass]="element.type2.toLowerCase()" [label]="'types.' + element.type2.toLowerCase() | translate"
+        styleClass="p-button-rounded" class="type-button"></p-button>
+    </div>
+  </p-card>
+</div>
+<p-card class="filters" *ngIf="typesCombinationsFilters && typesCombinationsFilters.length > 0">
+  <div class="d-flex flex-wrap">
+    <span *ngFor="let filter of typesCombinationsFilters" class="px-2 py-1">
+      <p-chip [label]="getChipLabelByFilter(filter)"></p-chip>
+    </span>
+  </div>
+</p-card>
