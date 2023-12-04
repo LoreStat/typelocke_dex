@@ -384,4 +384,11 @@ export class TrackerComponent {
 
   }
 
+  public getBackgroundClassFromRecentMoveCaller(value: string) {
+    return getBackgroundClassFromRecentMove(value);
+  }
+
+  public getEffectivenessFromRecentMoveCaller(value: string) {
+    return getEffectivenessFromRecentMove(value)
+  }
 }
