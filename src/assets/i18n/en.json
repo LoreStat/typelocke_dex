@@ -545,6 +545,7 @@
     "language": "Language"
   },
   "startScreen": {
+    "contacts": "Contacts",
     "continue": "Continue",
     "newGame": "New game",
     "settings": "Settings"
