@@ -71,6 +71,10 @@ export class StartScreenComponent {
     this.router.navigate(['/settings']);
   }
 
+  public goToContacts() {
+    this.router.navigate(['/contacts']);
+  }
+
   public openNewMatchModal() {
     this.generateIcons = true;
     this.newMatchTitle = "";

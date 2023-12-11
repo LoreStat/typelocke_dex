@@ -42,6 +42,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { SidebarModule } from 'primeng/sidebar';
+import { CreditsComponent } from './components/credits/credits.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -58,7 +60,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomepageComponent,
     StartScreenComponent,
     DexComponent,
-    TypesCombinationsComponent
+    TypesCombinationsComponent,
+    CreditsComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,

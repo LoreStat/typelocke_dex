@@ -6,6 +6,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { StartScreenComponent } from './components/start-screen/start-screen.component';
 import { DexComponent } from './components/dex/dex.component';
 import { TypesCombinationsComponent } from './components/types-combinations/types-combinations.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
 
 const routes: Routes = [
   { path: "", pathMatch: 'full', redirectTo: "start" },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: "settings", component: SettingsComponent },
   { path: "match-selection", component: MatchSelectionComponent },
   { path: "dex", component: DexComponent },
-  { path: "types-combinations", component: TypesCombinationsComponent }
+  { path: "types-combinations", component: TypesCombinationsComponent },
+  { path: "contacts", component: ContactsComponent }
 ];
 
 @NgModule({
