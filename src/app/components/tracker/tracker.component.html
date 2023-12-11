@@ -58,9 +58,9 @@
             <p-scroller [items]="pokemon.registeredMoves" [itemSize]="pokemon.registeredMoves.length" styleClass="border-1 surface-border" [style]="{'width': '200px'}">
               <ng-template pTemplate="item" let-item let-options="options">
                 <div class="flex align-items-center p-2"
-                  [pTooltip]="('types.' + getBackgroundClassFromRecentMove(item.substring(0,2)).toLocaleLowerCase())| translate"
-                  [showDelay]="500" [ngClass]="getBackgroundClassFromRecentMove(item.substring(0,2))"
-                  style="height: 50px;">{{ getEffectivenessFromRecentMove(item.substring(2,3)) | translate }}</div>
+                  [pTooltip]="('types.' + getBackgroundClassFromRecentMoveCaller(item.substring(0,2)).toLocaleLowerCase())| translate"
+                  [showDelay]="500" [ngClass]="getBackgroundClassFromRecentMoveCaller(item.substring(0,2))"
+                  style="height: 50px;">{{ getEffectivenessFromRecentMoveCaller(item.substring(2,3)) | translate }}</div>
               </ng-template>
             </p-scroller>
           </div>

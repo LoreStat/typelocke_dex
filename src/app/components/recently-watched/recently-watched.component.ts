@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DataService } from 'src/app/services/data.service';
 
@@ -8,7 +8,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./recently-watched.component.scss']
 })
 
-export class RecentlyWatchedComponent {
+export class RecentlyWatchedComponent implements AfterContentChecked {
 
   public mostRecentlyWatched: MenuItem[] = [];
   private recentlyWatched: string[] = [];
@@ -33,5 +33,13 @@ export class RecentlyWatchedComponent {
         })
       }
     });
+  }
+  ngAfterContentChecked(): void {
+    if(this.iconsPath !== this.dataService.getIconsPath()) {
+      this.mostRecentlyWatched.forEach(p => {
+        if(p.icon) p.icon = p.icon.replace(this.iconsPath, this.dataService.getIconsPath())
+      });
+      this.iconsPath = this.dataService.getIconsPath();
+    }
   }
 }
