@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
   public menuRoutes = MenuRoutes;
   public isCurrentRouteTracker: boolean = false;
   public settings: Settings;
+  public modalVisible: boolean = false;
 
   public matchName: string = "";
   public selectedItem: string = "";
@@ -86,6 +87,6 @@ export class MenuComponent implements OnInit {
   }
 
   public showHowToUse() {
-
+    this.modalVisible = true;
   }
 }

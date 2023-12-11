@@ -20,6 +20,21 @@
     "reset": "Reset",
     "save": "Salva"
   },
+  "howToUse": {
+    "title": "Guida",
+    "menu": "Menù",
+    "settings": "Premendo su questa icona vedrete le impostazioni dell'applicazione, dalle quali potrete modificare la lingua, le icone dei pokemon e altro..",
+    "dex": "Premendo su questa icona sarà visualizzata la lista di tutte le linee evolutive che hanno differenti tipi, con i relativi tipi da voi confermati. Cliccando su una casella sarete portati direttamente alla schermata del tracker di quella linea evolutiva.",
+    "search": "In questo spazio è possibile scrivere i nomi dei pokemon per essere portati alla loro pagina del tracker.",
+    "typesCombinations": "Con questo pulsante vedrete la lista di tutte le combinazioni di tipi possibili. Utilizzando il filtro potete aggiungere una lista di tipi e la loro efficacia, in modo da visualizzare solo le combinazioni di tipi che si adattano alle informazioni date.",
+    "tracker": "Tracker",
+    "manual": "Manuale",
+    "manualInfo": "Il principale metodo di tracciamento è quello manuale. Premendo sui vari tipi potrete spostarli nella sezione dei tipi che preferite tra cui: confermati, possibili, esclusi. I tipi esclusi sono quelli che ritenete non possano essere associati alla specie che state tracciando (es. usando una mossa di tipo normale fate danno, in quel caso il pokemon è impossibile che sia di tipo spettro). I tipi possibili sono quelli che potenzialmente potrebbero essere corrispondenti a quella specie (es. se utilizzate una mossa spettro ed essa è superefficace, evidentemente il pokemon sarà sicuramente o di tipo psico o spettro). I tipi confermati li assegnerete nel momento in cui sarete sicuri che un pokemon sia di quel tipo. Se in una di queste tre sezioni premete su un tipo, esso tornerà immediatamente tra quelli disponibili. Per ricordarsi delle mosse utilizzate e della loro efficacia su quella specie, è possibile aggiungerle utilizzando il pulsante \"Aggiungi risultato\" e, all'interno della finestra che vi apparirà, dopo aver inserito i dati dovrete premere il bottone +",
+    "automatic": "Automatico",
+    "automaticInfo": "Se attivato nelle impostazioni, sarà possibile utilizzare il metodo di tracciamento automatico. Premendo su aggiungi \"Aggiungi risultato\" infatti, dopo aver compilato i dati, sarà visibile anche il bottone \"Calcola\". Utilizzando quella funzionalità il sistema calcola automaticamente quali tipi possono essere associati a quella specie e quali no. Questo metodo salta alcuni ragionamenti che renderebbero più veloce il riconoscimento dei tipi. ATTENZIONE: il sistema si baserà anche sui cambiamenti manuali già effettuati che, se sbagliati, lo potrebbero portare fuori strada ",
+    "notes": "Note",
+    "notesInfo": "In questa sezione potete scrivere qualunque informazione che ritenete rilevante da ricordare durante la vostra partita (mosse, abilità,...)"
+  },
   "matchSelection": {
     "adventureStarted": "Inizio avventura",
     "lastLogin": "Ultimo accesso"
@@ -538,7 +553,7 @@
     "Zubat": "Zubat"
   },
   "settings": {
-    "automatic": "Abilita il bottone per calccolare tipo ed efficacia dell'ultima mossa usata e fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà sui cambiamenti già effettuati che, se sbagliati, lo potrebbero portare fuori strada",
+    "automatic": "Abilita il bottone per calcolare tipo ed efficacia dell'ultima mossa usata e fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà sui cambiamenti già effettuati che, se sbagliati, lo potrebbero portare fuori strada",
     "automaticSummary": "Mostra il riassunto dei tipi spostati durante il tracciamento automatico",
     "hdImages": "Utilizza le immagini dei pokemon in HD",
     "hideRecentPokemon": "Nascondi sempre i pokemon recenti",

@@ -20,6 +20,9 @@
     "reset": "Reset",
     "save": "Save"
   },
+  "howToUse": {
+    "title": "How to use"
+  },
   "matchSelection": {
     "adventureStarted": "Adventure started",
     "lastLogin": "Last login"

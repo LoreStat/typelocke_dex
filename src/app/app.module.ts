@@ -18,6 +18,7 @@ import { StartScreenComponent } from './components/start-screen/start-screen.com
 import { DexComponent } from './components/dex/dex.component';
 import { TypesCombinationsComponent } from './components/types-combinations/types-combinations.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
+import { HowToUseComponent } from './components/how-to-use/how-to-use.component';
 
 import { DataService } from './services/data.service';
 
@@ -60,7 +61,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StartScreenComponent,
     DexComponent,
     TypesCombinationsComponent,
-    ContactsComponent
+    ContactsComponent,
+    HowToUseComponent
   ],
   imports: [
     BrowserModule,
