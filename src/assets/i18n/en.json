@@ -27,7 +27,19 @@
     "save": "Save"
   },
   "howToUse": {
-    "title": "How to use"
+    "title": "How to use",
+    "menu": "Top bar",
+    "settings": "Click on this icon to see application settings. Here you can modify language, pokemon icons and more...",
+    "dex": "Click on this icon to see evolution families grouped by different types, within already confirmed types. By clicking on a box you'll redirected to the tracker page of that evolution family.",
+    "search": "In the central box you can write pokemon names and you'll be redirected to their tracker page.",
+    "typesCombinations": "Click on this icon to see all types combinations list. Using the filter you can add a list of types and their effectivenesses, so that only corresponding combinations will be showed." ,
+    "tracker": "Tracker",
+    "manual": "Manual",
+    "manualInfo": "The main tracking method is the manual one. By clicking on types, you can move them to the desired section for you to choose from: confirmed, dubious, removed. Removed types are the ones that can't be associated to the tracked species (e.g. using a normal move you deal damage, so foe can't be ghost type). A type is dubious when it could be associated to the tracker evolution family (e.g. using a ghost move, if it's supereffective then the pokemon is ghost or psychic type for sure). Add a type to confirmed types once you're confident that the tracked species has that type. When you click on a type in these sections, it will instantly returns to the available types. If you need to remember used moves and their effectiveness, you can add them using \"Add result\" button: compile data shown in the appeared window and click the \"Add\" button.",
+    "automatic": "Automatic",
+    "automaticInfo": "If enabled in settings, you can use automatic tracking system by clicking on \"Add result\". After compiling data you will see a \"Calculate\" button in addition to the \"Add\" one. Using this function, system automatically calculates which types could correspond to the tracked species. This method skips some reasoning, that could accelerate type recognition, to be more time efficient. WARNING: system will base its calculations on manual changes already done. If these changes are incorrect, the system could follow a wrong way.",
+    "notes": "Notes",
+    "notesInfo": "This area is useful to write down every information you consider important during your adventure (moves, abilities,...)"
   },
   "matchSelection": {
     "adventureStarted": "Adventure started",
