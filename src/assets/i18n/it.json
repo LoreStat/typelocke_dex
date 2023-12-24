@@ -1,4 +1,9 @@
 {
+  "contacts": {
+    "discordContact": "oppure su discord",
+    "sendEmailText": "Se desideri segnalare un problema o inviare qualche suggerimento, puoi scrivere alla mail",
+    "version": "Versione"
+  },
   "effectiveness": {
     "effective": "Efficace",
     "immune": "Immune",
@@ -15,6 +20,7 @@
     "back": "Indietro",
     "calculate": "Calcola",
     "cancel": "Annulla",
+    "clickToCopy": "Clicca per copiare",
     "create": "Crea",
     "filter": "Filtra",
     "reset": "Reset",

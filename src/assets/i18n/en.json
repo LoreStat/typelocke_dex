@@ -1,4 +1,9 @@
 {
+  "contacts": {
+    "discordContact": "or on discord",
+    "sendEmailText": "If you want to report a bug or send some suggestione, please text me to",
+    "version": "Version"
+  },
   "effectiveness": {
     "effective": "Effective",
     "immune": "Immune",
@@ -15,6 +20,7 @@
     "back": "Back",
     "calculate": "Calculate",
     "cancel": "Cancel",
+    "clickToCopy": "Click to copy",
     "create": "Create",
     "filter": "Filter",
     "reset": "Reset",
@@ -458,7 +464,7 @@
     "Spoink": "Spoink",
     "Squirtle": "Squirtle",
     "Stantler": "Stantler",
-    "Staraptor": "Staraptor",
+    "Staraptor": "StaraptEmailor",
     "Staravia": "Staravia",
     "Starly": "Starly",
     "Starmie": "Starmie",

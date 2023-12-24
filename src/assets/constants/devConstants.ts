@@ -6,3 +6,5 @@ export const LANGUAGES: DropdownItem[] = [
   {label: "Italiano", value: "it"},
   {label: "English", value: "en"}
 ]
+
+export const version = require('../../../package.json').version;
