@@ -6,12 +6,13 @@ import { PokemonInfo, Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { EFFECTIVENESSES } from 'src/assets/constants/MovesData';
-import { POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
+import { EVOLUTIONS_GROUPS, POKEMON_EVOS, TYPE, TYPES_LIST } from 'src/assets/constants/PokemonData';
 import { composeRecentMoveFromEffectiveness, composeRecentMoveFromType, getBackgroundClassFromRecentMove, getEffectivenessFromRecentMove } from 'src/app/services/utils'
 enum SuggestionResponseType {
   CHECK = "CHECK",
   TRACK = "TRACK",
-  NULL = "NULL"
+  NULL = "NULL",
+  IMPOSSIBLE = "IMPOSSIBLE"
 }
 
 interface SuggestionResponse {
@@ -196,7 +197,7 @@ export class TrackerComponent {
   }
 
   public calculateUsedMove(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
-    if (this.pokemon.name === "Shedinja") this.calculateShedinja(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
+    if (POKEMON_EVOS[this.pokemon.name] === EVOLUTIONS_GROUPS.SHEDINJA) this.calculateShedinja(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
     else this.calculateAttackEffectivenesses(selectedSuggestionType, selectedSuggestionEffectiveness, actualMove);
 
     if (this.selectedSuggestionType === selectedSuggestionType) {
@@ -381,7 +382,96 @@ export class TrackerComponent {
   }
 
   private calculateShedinja(selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
+    if(selectedSuggestionEffectiveness === "notEffective" || selectedSuggestionEffectiveness === "effective") {
+      this.suggestionResponse = {
+        type: SuggestionResponseType.IMPOSSIBLE,
+        result: false,
+        typesResult: { confirmedTypes: [], dubiousTypes: [], removedTypes: [] }
+      }
+      return;
+    }
 
+    const selectedTypeEffectivenesses = EFFECTIVENESSES[selectedSuggestionType as string];
+    const firstUndefined = this.pokemon.confirmedTypes.find(x => x !== "?");
+    if(!firstUndefined) {
+      const typesCombinationEffectiveness =  (selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] !== undefined ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] : 1)
+                    * (selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] !== undefined ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] : 1);
+      if((typesCombinationEffectiveness >= 2 && selectedSuggestionEffectiveness === "superEffective")
+          || (typesCombinationEffectiveness >= 2 && selectedSuggestionEffectiveness === "immune")) {
+        this.suggestionResponse = {
+          type: SuggestionResponseType.CHECK,
+          result: true,
+          typesResult: { dubiousTypes: [typesCombinationEffectiveness >= 2 ? "superEffective" : "immune"], confirmedTypes: [], removedTypes: [] }
+        }
+      } else {
+        this.suggestionResponse = {
+          type: SuggestionResponseType.CHECK,
+          result: true,
+          typesResult: { dubiousTypes: [typesCombinationEffectiveness >= 2 ? "superEffective" : "immune"], confirmedTypes: [], removedTypes: [] }
+        }
+      }
+      return;
+    }
+
+    this.suggestionResponse = {
+      type: SuggestionResponseType.TRACK,
+      result: true,
+      typesResult: { dubiousTypes: [], confirmedTypes: [], removedTypes: [] }
+    }
+    const trackedType = this.pokemon.confirmedTypes.find(x => x !== "?");
+    if(trackedType) {
+      let availableTypesEffectiveness: Record<string, number> = {};
+      this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
+      this.pokemon.dubiousTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
+
+      const actualEffectiveness = EFFECTIVENESSES[trackedType][selectedSuggestionType] !== undefined ? EFFECTIVENESSES[trackedType][selectedSuggestionType] : 1;
+
+      if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "superEffective") {
+        Object.keys(availableTypesEffectiveness).forEach(t => {
+          if(availableTypesEffectiveness[t] < 1) {
+            this.moveToRemoved(t);
+            this.suggestionResponse.typesResult.removedTypes.push(t);
+          }
+        })
+      } else if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "immune") {
+        // se il tipo della mossa è superefficace sul tipo già confermato ma la mossa usata non fa danni = devo togliere tutte le superefficaci e normali e tenere le non efficaci e immuni della mossa usata
+        Object.keys(availableTypesEffectiveness).forEach(t => {
+          if(availableTypesEffectiveness[t] < 1) {
+            this.moveToRemoved(t);
+            this.suggestionResponse.typesResult.removedTypes.push(t);
+          }
+        })
+      } else if(actualEffectiveness < 2 && selectedSuggestionEffectiveness === "superEffective") {
+        // se il tipo della mossa è immune sul tipo già confermato ma la mossa usata è superefficace = devo tenere solo i tipi su cui è superefficace il tipo della mossa usata
+        Object.keys(availableTypesEffectiveness).forEach(t => {
+          if(availableTypesEffectiveness[t] !== 2) {
+            this.moveToRemoved(t);
+            this.suggestionResponse.typesResult.removedTypes.push(t);
+          }
+        })
+      } else if(actualEffectiveness < 2 && selectedSuggestionEffectiveness === "immune") {
+        // se il tipo della mossa è immune sul tipo già confermato e anche la mossa usata risulta immune = posso solo togliere tutti i tipi su cui quella mossa è superefficace
+        Object.keys(availableTypesEffectiveness).forEach(t => {
+          if(availableTypesEffectiveness[t] === 2) {
+            this.moveToRemoved(t);
+            this.suggestionResponse.typesResult.removedTypes.push(t);
+          }
+        })
+      }
+    } else {
+      if(selectedSuggestionEffectiveness === "superEffective") {
+        Object.keys(selectedTypeEffectivenesses).forEach(t => {
+          if(selectedTypeEffectivenesses[t] === 2) {
+            this.moveToDubious(t);
+            this.suggestionResponse.typesResult.dubiousTypes.push(t);
+          } else {
+            this.moveToRemoved(t);
+            this.suggestionResponse.typesResult.removedTypes.push(t);
+          }; // can move to removed because other registered type effectivenesses are not very effective and immune
+        })
+      }
+    }
+    if (this.pokemon.availableTypes.length + this.pokemon.dubiousTypes.length === 0) this.suggestionResponse.result = false;
   }
 
   public getBackgroundClassFromRecentMoveCaller(value: string) {

@@ -578,6 +578,7 @@
     "check-true": "L'efficacia della mossa utilizzata è coerente con i tipi confermati",
     "confirmed": "Confermati",
     "dubious": "Possibili",
+    "impossible": "I dati inseriti non sono corretti",
     "notes": "Note",
     "removed": "Esclusi",
     "result": "Risultato",

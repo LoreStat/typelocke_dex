@@ -3,6 +3,9 @@
 </p-blockUI>
 <p-sidebar [(visible)]="sidebarVisible" (onHide)="resetSuggestionResponse">
   <h3>{{ 'tracker.result' | translate }}</h3>
+  <div *ngIf="(suggestionResponse.type) === 'IMPOSSIBLE'">
+    {{ 'tracker.impossible' | translate }}
+  </div>
   <div *ngIf="(suggestionResponse.type) === 'CHECK'">
     <p *ngIf="suggestionResponse.result">
       {{ 'tracker.check-true' | translate }}

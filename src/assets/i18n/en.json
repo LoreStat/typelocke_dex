@@ -578,6 +578,7 @@
     "check-true": "Used move effectiveness is consistent with confirmed types",
     "confirmed": "Confirmed",
     "dubious": "Dubious",
+    "impossible": "Selected data is incorrect",
     "notes": "Notes",
     "removed": "Removed",
     "result": "Result",
