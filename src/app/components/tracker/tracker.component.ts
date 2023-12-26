@@ -205,6 +205,7 @@ export class TrackerComponent {
       this.fillDataAndSave();
       this.resetSelectedTypeAndEffectiveness();
     }
+    if (this.op) this.op.hide();
   }
 
   public resetSelectedTypeAndEffectiveness() {
@@ -239,7 +240,6 @@ export class TrackerComponent {
       // se c'è già un tipo confermato moltiplico tutte le efficace per quella del tipo confermato, e poi confronto i risultati con l'efficacia
       // es. grass - fire , attacco water = 1.0 => avevo già fire confermato quindi moltiplico tutto per 2, grass diventa 1.0, ground 4.0, ghost: 2.0
       // quindi grass andrà tra i dubbi, e se non c'è n'è nessun altro con la stessa efficacia andrà direttamente tra i confermati
-      if (this.op) this.op.hide();
       this.fillDataAndSave();
     }
   }
@@ -392,7 +392,7 @@ export class TrackerComponent {
     }
 
     const selectedTypeEffectivenesses = EFFECTIVENESSES[selectedSuggestionType as string];
-    const firstUndefined = this.pokemon.confirmedTypes.find(x => x !== "?");
+    const firstUndefined = this.pokemon.confirmedTypes.find(x => x === "?");
     if(!firstUndefined) {
       const typesCombinationEffectiveness =  (selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] !== undefined ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[0]] : 1)
                     * (selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] !== undefined ? selectedTypeEffectivenesses[this.pokemon.confirmedTypes[1]] : 1);
@@ -419,11 +419,10 @@ export class TrackerComponent {
       typesResult: { dubiousTypes: [], confirmedTypes: [], removedTypes: [] }
     }
     const trackedType = this.pokemon.confirmedTypes.find(x => x !== "?");
+    let availableTypesEffectiveness: Record<string, number> = {};
+    this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
+    this.pokemon.dubiousTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
     if(trackedType) {
-      let availableTypesEffectiveness: Record<string, number> = {};
-      this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
-      this.pokemon.dubiousTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
-
       const actualEffectiveness = EFFECTIVENESSES[trackedType][selectedSuggestionType] !== undefined ? EFFECTIVENESSES[trackedType][selectedSuggestionType] : 1;
 
       if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "superEffective") {
@@ -460,14 +459,16 @@ export class TrackerComponent {
       }
     } else {
       if(selectedSuggestionEffectiveness === "superEffective") {
-        Object.keys(selectedTypeEffectivenesses).forEach(t => {
-          if(selectedTypeEffectivenesses[t] === 2) {
-            this.moveToDubious(t);
-            this.suggestionResponse.typesResult.dubiousTypes.push(t);
-          } else {
+        Object.keys(availableTypesEffectiveness).forEach(t => {
+          if(availableTypesEffectiveness[t] === 2) {
+            if(this.pokemon.dubiousTypes.findIndex(dubTyp => dubTyp === t) === -1) {
+              this.moveToDubious(t);
+              this.suggestionResponse.typesResult.dubiousTypes.push(t);
+            }
+          } else if(availableTypesEffectiveness[t] < 1) {
             this.moveToRemoved(t);
             this.suggestionResponse.typesResult.removedTypes.push(t);
-          }; // can move to removed because other registered type effectivenesses are not very effective and immune
+          };
         })
       }
     }
