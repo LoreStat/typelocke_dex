@@ -423,44 +423,47 @@ export class TrackerComponent {
     this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
     this.pokemon.dubiousTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
     if(trackedType) {
-      const actualEffectiveness = EFFECTIVENESSES[trackedType][selectedSuggestionType] !== undefined ? EFFECTIVENESSES[trackedType][selectedSuggestionType] : 1;
-
-      if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "superEffective") {
-        Object.keys(availableTypesEffectiveness).forEach(t => {
-          if(availableTypesEffectiveness[t] < 1) {
-            this.moveToRemoved(t);
-            this.suggestionResponse.typesResult.removedTypes.push(t);
-          }
-        })
-      } else if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "immune") {
-        // se il tipo della mossa è superefficace sul tipo già confermato ma la mossa usata non fa danni = devo togliere tutte le superefficaci e normali e tenere le non efficaci e immuni della mossa usata
-        Object.keys(availableTypesEffectiveness).forEach(t => {
-          if(availableTypesEffectiveness[t] < 1) {
-            this.moveToRemoved(t);
-            this.suggestionResponse.typesResult.removedTypes.push(t);
-          }
-        })
-      } else if(actualEffectiveness < 2 && selectedSuggestionEffectiveness === "superEffective") {
-        // se il tipo della mossa è immune sul tipo già confermato ma la mossa usata è superefficace = devo tenere solo i tipi su cui è superefficace il tipo della mossa usata
-        Object.keys(availableTypesEffectiveness).forEach(t => {
-          if(availableTypesEffectiveness[t] !== 2) {
-            this.moveToRemoved(t);
-            this.suggestionResponse.typesResult.removedTypes.push(t);
-          }
-        })
-      } else if(actualEffectiveness < 2 && selectedSuggestionEffectiveness === "immune") {
-        // se il tipo della mossa è immune sul tipo già confermato e anche la mossa usata risulta immune = posso solo togliere tutti i tipi su cui quella mossa è superefficace
-        Object.keys(availableTypesEffectiveness).forEach(t => {
-          if(availableTypesEffectiveness[t] === 2) {
-            this.moveToRemoved(t);
-            this.suggestionResponse.typesResult.removedTypes.push(t);
-          }
-        })
+      const actualEffectiveness = EFFECTIVENESSES[selectedSuggestionType][trackedType] !== undefined ? EFFECTIVENESSES[selectedSuggestionType][trackedType] : 1;
+      if(actualEffectiveness !== 0) {
+        if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "superEffective") {
+          Object.keys(availableTypesEffectiveness).forEach(t => {
+            if(availableTypesEffectiveness[t] < 1) {
+              this.moveToRemoved(t);
+              this.suggestionResponse.typesResult.removedTypes.push(t);
+            }
+          })
+        } else if(actualEffectiveness === 2 && selectedSuggestionEffectiveness === "immune") {
+          // se il tipo della mossa è superefficace sul tipo già confermato ma la mossa usata non fa danni = devo togliere tutte le superefficaci e normali e tenere le non efficaci e immuni della mossa usata
+          Object.keys(availableTypesEffectiveness).forEach(t => {
+            if(availableTypesEffectiveness[t] < 1) {
+              this.moveToRemoved(t);
+              this.suggestionResponse.typesResult.removedTypes.push(t);
+            }
+          })
+        } else if(actualEffectiveness === 1 && selectedSuggestionEffectiveness === "superEffective") {
+          // se il tipo della mossa è immune sul tipo già confermato ma la mossa usata è superefficace = devo tenere solo i tipi su cui è superefficace il tipo della mossa usata
+          Object.keys(availableTypesEffectiveness).forEach(t => {
+            if(availableTypesEffectiveness[t] !== 2) {
+              this.moveToRemoved(t);
+              this.suggestionResponse.typesResult.removedTypes.push(t);
+            }
+          })
+        } else if(actualEffectiveness < 2 && selectedSuggestionEffectiveness === "immune") {
+          // se il tipo della mossa è immune sul tipo già confermato e anche la mossa usata risulta immune = posso solo togliere tutti i tipi su cui quella mossa è superefficace
+          Object.keys(availableTypesEffectiveness).forEach(t => {
+            if(availableTypesEffectiveness[t] === 2) {
+              this.moveToRemoved(t);
+              this.suggestionResponse.typesResult.removedTypes.push(t);
+            }
+          })
+        }
       }
     } else {
       if(selectedSuggestionEffectiveness === "superEffective") {
+        const superEffectivesCount: string[] = [];
         Object.keys(availableTypesEffectiveness).forEach(t => {
           if(availableTypesEffectiveness[t] === 2) {
+            superEffectivesCount.push(t);
             if(this.pokemon.dubiousTypes.findIndex(dubTyp => dubTyp === t) === -1) {
               this.moveToDubious(t);
               this.suggestionResponse.typesResult.dubiousTypes.push(t);
@@ -469,10 +472,32 @@ export class TrackerComponent {
             this.moveToRemoved(t);
             this.suggestionResponse.typesResult.removedTypes.push(t);
           };
-        })
+        });
+        if(superEffectivesCount.length === 1) {
+          this.moveToConfirmed(superEffectivesCount[0]);
+          this.suggestionResponse.typesResult.confirmedTypes.push(superEffectivesCount[0]);
+        }
       }
     }
     if (this.pokemon.availableTypes.length + this.pokemon.dubiousTypes.length === 0) this.suggestionResponse.result = false;
+    else if(this.pokemon.availableTypes.length + this.pokemon.dubiousTypes.length === 1) {
+      if(this.pokemon.availableTypes.length === 1) {
+        this.suggestionResponse.typesResult.confirmedTypes.push(this.pokemon.availableTypes[0]);
+        this.moveToConfirmed(this.pokemon.availableTypes[0]);
+      } else {
+        this.suggestionResponse.typesResult.confirmedTypes.push(this.pokemon.dubiousTypes[0]);
+        this.moveToConfirmed(this.pokemon.dubiousTypes[0]);
+      }
+    } else {
+      const missingType = this.pokemon.confirmedTypes.find(x => x === "?");
+      if (missingType && this.pokemon.registeredMoves.length > actualMove) {
+        const nextRecentMove = this.pokemon.registeredMoves[actualMove];
+        this.calculateUsedMove(
+          getBackgroundClassFromRecentMove(nextRecentMove.substring(0, 2)),
+          getEffectivenessFromRecentMove(nextRecentMove.substring(2, 3)).split(".")[1],
+          actualMove + 1);
+      } // SHEDINJA SI è SPOSTATO TUTTO
+    }
   }
 
   public getBackgroundClassFromRecentMoveCaller(value: string) {
