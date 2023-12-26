@@ -1,12 +1,17 @@
 <div class="fadeindown fadeoutup animation-duration-500">
-  <div *ngFor="let match of savedMatches" (click)="loadMatch(match.file)" class="clickable mt-2">
+  <div *ngFor="let match of savedMatches" class="mt-2">
     <p-card>
-      <div class="d-flex">
-        <img [src]="pokemonIconPath + match.iconName" alt="es" width="64" height="64">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex clickable w-100" (click)="loadMatch(match.file)">
+          <img [src]="pokemonIconPath + match.iconName" alt="es" width="64" height="64">
+          <div>
+            <p>{{match.matchName}} </p>
+            <p>{{ 'matchSelection.lastLogin' | translate }}: {{ getLocaleDateString(match.lastLogin) }}</p>
+            <p>{{ 'matchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
+          </div>
+        </div>
         <div>
-          <p>{{match.matchName}} </p>
-          <p>{{ 'matchSelection.lastLogin' | translate }}: {{ getLocaleDateString(match.lastLogin) }}</p>
-          <p>{{ 'matchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
+          <i class="pi pi-times clickable" (click)="askRemoveAdventure(match)"></i>
         </div>
       </div>
     </p-card>
@@ -15,3 +20,4 @@
     <p-button (click)="back()" [label]="'general.back' | translate" styleClass="p-button-text"></p-button>
   </div>
 </div>
+<p-confirmDialog [closable]="false" [style]="{width: '50vw'}"></p-confirmDialog>

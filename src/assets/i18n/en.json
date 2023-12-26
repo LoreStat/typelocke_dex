@@ -24,7 +24,9 @@
     "create": "Create",
     "filter": "Filter",
     "reset": "Reset",
-    "save": "Save"
+    "save": "Save",
+    "yes": "Yes",
+    "no": "No"
   },
   "howToUse": {
     "title": "How to use",
@@ -43,7 +45,8 @@
   },
   "matchSelection": {
     "adventureStarted": "Adventure started",
-    "lastLogin": "Last login"
+    "lastLogin": "Last login",
+    "deleteMessage":"Do you really want to delete this adventure?"
   },
   "menu": {
     "help": "Help",
@@ -568,7 +571,7 @@
   "startScreen": {
     "contacts": "Contacts",
     "continue": "Continue",
-    "newGame": "New game",
+    "newGame": "New adventure",
     "settings": "Settings"
   },
   "tracker": {

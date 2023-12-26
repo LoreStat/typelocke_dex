@@ -496,7 +496,7 @@ export class TrackerComponent {
           getBackgroundClassFromRecentMove(nextRecentMove.substring(0, 2)),
           getEffectivenessFromRecentMove(nextRecentMove.substring(2, 3)).split(".")[1],
           actualMove + 1);
-      } // SHEDINJA SI è SPOSTATO TUTTO
+      }
     }
   }
 

@@ -52,4 +52,12 @@ export class FileService {
 
     this.fs.writeFileSync(`./saves/games/${this.dataService.lastSelectedMatch}`, stringedData);
   }
+
+  public deleteFile(value: string, savedMatches: SavedMatch[], settings: Settings) {
+    this.fs.unlink(`./saves/games/${value}.txt`, (val: any) => {
+      if(val == null) {
+        this.writeSavedMatches(savedMatches, settings);
+      }
+    });
+  }
 }

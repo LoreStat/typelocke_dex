@@ -24,7 +24,9 @@
     "create": "Crea",
     "filter": "Filtra",
     "reset": "Reset",
-    "save": "Salva"
+    "save": "Salva",
+    "yes": "Si",
+    "no": "No"
   },
   "howToUse": {
     "title": "Guida",
@@ -43,7 +45,8 @@
   },
   "matchSelection": {
     "adventureStarted": "Inizio avventura",
-    "lastLogin": "Ultimo accesso"
+    "lastLogin": "Ultimo accesso",
+    "deleteMessage":"Vuoi davvero eliminare questa avventura?"
   },
   "menu": {
     "help": "Aiuto",
@@ -568,7 +571,7 @@
   "startScreen": {
     "contacts": "Contatti",
     "continue": "Continua",
-    "newGame": "Nuovo gioco",
+    "newGame": "Nuova avventura",
     "settings": "Impostazioni"
   },
   "tracker": {

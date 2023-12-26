@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
 import { PokemonInfo, SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
@@ -19,7 +21,9 @@ export class MatchSelectionComponent {
     private dataService: DataService,
     private router: Router,
     private fileService: FileService,
-    private location: Location
+    private location: Location,
+    private confirmationService: ConfirmationService,
+    private translate: TranslateService
     ) {
     this.savedMatches = dataService.getSavedMatches();
     this.pokemonIconPath = this.dataService.getIconsPath();
@@ -59,5 +63,19 @@ export class MatchSelectionComponent {
 
   public getLocaleDateString(value: string) {
     return new Date(value).toLocaleDateString();
+  }
+
+  public askRemoveAdventure(match: SavedMatch) {
+    this.confirmationService.confirm({
+      message: this.translate.instant('matchSelection.deleteMessage'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.translate.instant('general.yes'),
+      rejectLabel: this.translate.instant('general.no'),
+      accept: () => {
+        const indexToDelete = this.savedMatches.findIndex(x => x.matchName === match.matchName);
+        this.savedMatches.splice(indexToDelete, 1);
+        this.fileService.deleteFile(match.matchName, this.savedMatches, this.dataService.getSettings())
+      },
+    });
   }
 }
