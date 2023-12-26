@@ -481,4 +481,10 @@ export class TrackerComponent {
   public getEffectivenessFromRecentMoveCaller(value: string) {
     return getEffectivenessFromRecentMove(value)
   }
+
+  public removeUsedMove(value: string) {
+    const indexToDelete = this.pokemon.registeredMoves.findIndex(x => x === value);
+    this.pokemon.registeredMoves.splice(indexToDelete, 1);
+    this.fillDataAndSave();
+  }
 }
