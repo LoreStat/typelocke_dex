@@ -30,7 +30,7 @@ export class StartScreenComponent {
     private messageService: MessageService,
     private translate: TranslateService,
   ) {
-    const savedData = this.fileService.getFile('savedMatches.txt', false);
+    const savedData = this.fileService.createOrGetSavedMatches();
     const savedDataList = savedData.split("\n");
     const settingsArray = savedDataList.shift().split(",");
 

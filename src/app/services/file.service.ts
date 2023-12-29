@@ -60,4 +60,14 @@ export class FileService {
       }
     });
   }
+
+  public createOrGetSavedMatches() {
+    try {
+      return this.getFile('savedMatches.txt', false);
+    } catch {
+      this.fs.mkdirSync('./saves/games', { recursive: true });
+      this.writeFile("savedMatches.txt", "true,true,false,true,it", false);
+      return this.getFile('savedMatches.txt', false);
+    }
+  }
 }

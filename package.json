@@ -1,5 +1,7 @@
 {
   "name": "typelocke-dex",
+  "author": "LoreStatiz",
+  "description": "An application to store and calculate data for typelocke Pokemon challenge",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
