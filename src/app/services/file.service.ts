@@ -21,7 +21,7 @@ export class FileService {
   }
 
   public writeSavedMatches(savedMatches: SavedMatch[], settings: Settings) {
-    const settingsStringToSave = `${settings.automatic},${settings.automaticPlus},${settings.automaticSummary},${settings.hideRecentPokemon},${settings.hdImages},${settings.language}\n`
+    const settingsStringToSave = `${settings.automatic},${settings.automaticSummary},${settings.hideRecentPokemon},${settings.hdImages},${settings.language}\n`
     const matchesStringToSave = savedMatches.map(x => {
       return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastLogin + "," + x.iconName
     }).join("\n");

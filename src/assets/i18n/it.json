@@ -563,7 +563,6 @@
   },
   "settings": {
     "automatic": "Abilita il bottone per calcolare tipo ed efficacia dell'ultima mossa usata e fare in modo che il sistema tracci automaticamente eventuali informazioni aggiuntive sui tipi dei pokemon. Il sistema si baserà sui cambiamenti già effettuati che, se sbagliati, lo potrebbero portare fuori strada",
-    "automaticPlus": "Abilità la modalità automatica con la massima efficienza. Potrebbe impiegare più tempo per il calcolo, ma i risultati saranno decisamente più accurati",
     "automaticSummary": "Mostra il riassunto dei tipi spostati durante il tracciamento automatico",
     "hdImages": "Utilizza le immagini dei pokemon in HD",
     "hideRecentPokemon": "Nascondi sempre i pokemon recenti",

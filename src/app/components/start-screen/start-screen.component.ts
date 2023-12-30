@@ -36,11 +36,10 @@ export class StartScreenComponent {
 
     const settings: Settings = {
       automatic: this.isTrue(settingsArray[0]),
-      automaticPlus: this.isTrue(settingsArray[1]),
-      automaticSummary: this.isTrue(settingsArray[2]),
-      hideRecentPokemon: this.isTrue(settingsArray[3]),
-      hdImages: this.isTrue(settingsArray[4]),
-      language: settingsArray[5]
+      automaticSummary: this.isTrue(settingsArray[1]),
+      hideRecentPokemon: this.isTrue(settingsArray[2]),
+      hdImages: this.isTrue(settingsArray[3]),
+      language: settingsArray[4]
     }
     dataService.setSettings(settings)
     this.pokemonIconPath = this.dataService.getIconsPath();
