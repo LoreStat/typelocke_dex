@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { PokemonInfo, Settings } from 'src/app/models/models';
+import { DoubleType, PokemonInfo, Settings, UsedMoveFilter } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { EFFECTIVENESSES } from 'src/assets/constants/MovesData';
@@ -114,7 +114,12 @@ export class TrackerComponent {
       this.pokemon.availableTypes.splice(availableIndex, 1);
     } else {
       availableIndex = this.pokemon.dubiousTypes.findIndex(e => e === type);
-      this.pokemon.dubiousTypes.splice(availableIndex, 1);
+      if(availableIndex !== -1) {
+        this.pokemon.dubiousTypes.splice(availableIndex, 1);
+      } else {
+        availableIndex = this.pokemon.confirmedTypes.findIndex(e => e === type);
+        this.pokemon.confirmedTypes[availableIndex] = "?";
+      }
     }
     this.pokemon.removedTypes.push(type);
     this.typeSelected = "";
@@ -255,7 +260,7 @@ export class TrackerComponent {
   }
 
   private calculate(selectedTypeEffectivenesses: Record<string, number>, selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
-    if(this.settings?.automaticPlus) this.calculateCombinationsAndRemoveTypes(selectedSuggestionType, selectedSuggestionEffectiveness);
+    if(actualMove === 0) this.calculateCombinationsAndRemoveTypes(selectedSuggestionType, selectedSuggestionEffectiveness);
     const confirmedType = this.pokemon.confirmedTypes.find(x => x !== "?");
     const actualEffectivenessValue = (confirmedType ? (selectedTypeEffectivenesses[confirmedType] || 1) : 1);
 
@@ -515,7 +520,29 @@ export class TrackerComponent {
     this.fillDataAndSave();
   }
 
-  calculateCombinationsAndRemoveTypes(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
+  private calculateCombinationsAndRemoveTypes(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
+    let typeCombinations: DoubleType[] = this.dataService.getAllTypesCombinations();
+    const typeFilters: UsedMoveFilter[] = [{effectiveness: selectedSuggestionEffectiveness, type: selectedSuggestionType}];
+    this.pokemon.registeredMoves.forEach(regMove => {
+      typeFilters.push({type: this.getBackgroundClassFromRecentMoveCaller(regMove.substring(0,2)), effectiveness: this.getEffectivenessFromRecentMoveCaller(regMove.substring(2,3)).split('.')[1]})
+    })
 
+    typeFilters.forEach(filterT => {
+      typeCombinations = typeCombinations.filter((x) => x.vulnerabilities[filterT.type as string] === filterT.effectiveness);
+    })
+
+    const typesMap: Record<string, boolean> = {};
+    typeCombinations.forEach(typeComb => {
+      typesMap[typeComb.type1] = true;
+      typesMap[typeComb.type2] = true;
+    })
+
+    const allRemainingTypes = this.pokemon.confirmedTypes.filter(x => x !== "?").concat(this.pokemon.availableTypes).concat(this.pokemon.dubiousTypes);
+    allRemainingTypes.forEach(remType => {
+      if(!typesMap[remType]) {
+        this.moveToRemoved(remType);
+        this.suggestionResponse.typesResult.removedTypes.push(remType);
+      }
+    })
   }
 }
