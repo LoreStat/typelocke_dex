@@ -1,8 +1,9 @@
 module.exports = {
   packagerConfig: {
     asar: true,
-    executableName: "TYPEXD",
-    icon: "./src/assets/images/icons/logoTD.png"
+    executableName: "TypelockeDex",
+    icon: "./src/assets/images/icons/logoTD.ico",
+    out: "./TypelockeDex"
   },
   rebuildConfig: {},
   makers: [
