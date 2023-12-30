@@ -15,6 +15,7 @@ export interface SavedMatch {
 
 export interface Settings {
   automaticSummary: boolean,
+  automaticPlus: boolean,
   automatic: boolean,
   language: string,
   hideRecentPokemon: boolean,

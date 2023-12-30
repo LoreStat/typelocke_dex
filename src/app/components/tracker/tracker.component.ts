@@ -255,6 +255,7 @@ export class TrackerComponent {
   }
 
   private calculate(selectedTypeEffectivenesses: Record<string, number>, selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
+    if(this.settings?.automaticPlus) this.calculateCombinationsAndRemoveTypes(selectedSuggestionType, selectedSuggestionEffectiveness);
     const confirmedType = this.pokemon.confirmedTypes.find(x => x !== "?");
     const actualEffectivenessValue = (confirmedType ? (selectedTypeEffectivenesses[confirmedType] || 1) : 1);
 
@@ -512,5 +513,9 @@ export class TrackerComponent {
     const indexToDelete = this.pokemon.registeredMoves.findIndex(x => x === value);
     this.pokemon.registeredMoves.splice(indexToDelete, 1);
     this.fillDataAndSave();
+  }
+
+  calculateCombinationsAndRemoveTypes(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {
+
   }
 }
