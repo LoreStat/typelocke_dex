@@ -8,6 +8,10 @@
       <label for="automatic"> {{ "settings.automatic" | translate }}</label>
     </div>
     <div class="pt-3">
+      <p-checkbox [disabled]="settings['automatic'] === false" [(ngModel)]="settings['automaticPlus']" [binary]="true" inputId="automaticPlus"></p-checkbox>
+      <label for="automaticPlus"> {{ "settings.automaticPlus" | translate }}</label>
+    </div>
+    <div class="pt-3">
       <p-checkbox [disabled]="settings['automatic'] === false" [(ngModel)]="settings['automaticSummary']" [binary]="true" inputId="automaticSummary"></p-checkbox>
       <label for="automaticSummary"> {{ "settings.automaticSummary" | translate }}</label>
     </div>
