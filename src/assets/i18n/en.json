@@ -39,7 +39,7 @@
     "manual": "Manual",
     "manualInfo": "The main tracking method is the manual one. By clicking on types, you can move them to the desired section for you to choose from: confirmed, dubious, removed. Removed types are the ones that can't be associated to the tracked species (e.g. using a normal move you deal damage, so foe can't be ghost type). A type is dubious when it could be associated to the tracker evolution family (e.g. using a ghost move, if it's supereffective then the pokemon is ghost or psychic type for sure). Add a type to confirmed types once you're confident that the tracked species has that type. When you click on a type in these sections, it will instantly returns to the available types. If you need to remember used moves and their effectiveness, you can add them using \"Add result\" button: compile data shown in the appeared window and click the \"Add\" button.",
     "automatic": "Automatic",
-    "automaticInfo": "If enabled in settings, you can use automatic tracking system by clicking on \"Add result\". After compiling data you will see a \"Calculate\" button in addition to the \"Add\" one. Using this function, system automatically calculates which types could correspond to the tracked species. This method skips some reasoning, that could accelerate type recognition, to be more time efficient. WARNING: system will base its calculations on manual changes already done. If these changes are incorrect, the system could follow a wrong way.",
+    "automaticInfo": "If enabled in settings, you can use automatic tracking system by clicking on \"Add result\". After compiling data you will see a \"Calculate\" button in addition to the \"Add\" one. Using this function, system automatically calculates which types could correspond to the tracked species. WARNING: system will base its calculations on manual changes already done. If these changes are incorrect, the system could follow a wrong way.",
     "notes": "Notes",
     "notesInfo": "This area is useful to write down every information you consider important during your adventure (moves, abilities,...)"
   },
@@ -563,7 +563,6 @@
   },
   "settings": {
     "automatic": "Enable button to calculate type and effectiveness of the last used move, so that system can automatically tracks additional informations of pokemons types. Calculations are affected by existing changes. If these changes are incorrect, the system could follow a wrong way",
-    "automaticPlus": "Enable automatic mode with max efficiency. It could take more time to calculate results, but they will be way more accurate",
     "automaticSummary": "Show the summary of moved types during automatic track",
     "hdImages": "Use HD pokemon images",
     "hideRecentPokemon": "Always hide recent pokemons",

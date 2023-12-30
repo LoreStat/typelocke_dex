@@ -43,6 +43,5 @@ export class SettingsComponent implements OnInit {
 
   public setAutomaticSummaryToFalse() {
     this.settings.automaticSummary = false;
-    this.settings.automaticPlus = false;
   }
 }
