@@ -95,7 +95,11 @@ export class DataService {
   }
 
   public resetTypesCombinations() {
-    this.typesCombinations = TYPES_LIST.flatMap(
+    this.typesCombinations = this.getAllTypesCombinations();
+  }
+
+  public getAllTypesCombinations() {
+    return TYPES_LIST.flatMap(
       (t1, i) => TYPES_LIST.slice(i + 1).map(t2 =>{
         const combinationsVulnerabilities: Record<string, EffectivenessesCodes> = {};
         TYPES_LIST.forEach((type) => {
