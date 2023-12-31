@@ -15,7 +15,7 @@ function onReady () {
 	win.loadURL(url.format({
 		pathname: path.join(
 			__dirname,
-			'dist/typelocke_dex/index.html'),
+			'/build/index.html'),
 		protocol: 'file:',
 		slashes: true
 	}))
