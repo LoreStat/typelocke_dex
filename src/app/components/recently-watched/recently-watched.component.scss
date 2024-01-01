@@ -6,3 +6,7 @@
   width: fit-content !important;
   height: fit-content !important;
 }
+
+::ng-deep .p-dock-right {
+  position: fixed !important;
+}

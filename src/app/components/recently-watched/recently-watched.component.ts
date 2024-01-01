@@ -1,4 +1,5 @@
 import { AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { DataService } from 'src/app/services/data.service';
 
@@ -14,7 +15,7 @@ export class RecentlyWatchedComponent implements AfterContentChecked {
   private recentlyWatched: string[] = [];
   private iconsPath: string = "";
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private router: Router) {
     this.iconsPath = this.dataService.getIconsPath();
     this.dataService.selectedPokemon.subscribe(pokemon => {
       if(pokemon !== "undefined") {
@@ -28,6 +29,7 @@ export class RecentlyWatchedComponent implements AfterContentChecked {
             icon: `${this.iconsPath + el}.png`,
             command: () => {
               this.dataService.setPokemon(el);
+              this.router.navigate(["tracker"]);
             }
           }
         })
