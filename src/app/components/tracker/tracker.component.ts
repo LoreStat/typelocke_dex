@@ -278,6 +278,7 @@ export class TrackerComponent {
         (selectedSuggestionEffectiveness !== "immune" && confirmedType && !this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, actualEffectivenessValue * availableTypesEffectiveness[t]))
       ) {
         this.moveToRemoved(t);
+        this.deleteFromSuggestionResponseIfPresent(t)
         this.suggestionResponse.typesResult.removedTypes.push(t);
       }
     });
@@ -291,6 +292,7 @@ export class TrackerComponent {
         // potrebbe essere fuorviante..erba fuoco, lancio acqua ed erba fuoco rimangono disponibili, mentre tra i dubbi andrebbero spettro, normale...
         if (this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, availableTypesEffectiveness[t])) {
           this.moveToDubious(t);
+          this.deleteFromSuggestionResponseIfPresent(t);
           this.suggestionResponse.typesResult.dubiousTypes.push(t);
         }
       })
@@ -305,6 +307,8 @@ export class TrackerComponent {
       if (this.pokemon.dubiousTypes.length === 2) {
         this.pokemon.confirmedTypes = this.pokemon.dubiousTypes;
         this.pokemon.dubiousTypes = [];
+        this.deleteFromSuggestionResponseIfPresent(this.pokemon.dubiousTypes[0]);
+        this.deleteFromSuggestionResponseIfPresent(this.pokemon.dubiousTypes[1]);
         this.suggestionResponse.typesResult.confirmedTypes.push(...this.pokemon.confirmedTypes)
       } else {
         const combinations: string[][] = this.pokemon.dubiousTypes.flatMap(
@@ -318,7 +322,9 @@ export class TrackerComponent {
         })
         if (possibleConfirmations.length === 1) {
           this.moveToConfirmed(possibleConfirmations[0][0]);
+          this.deleteFromSuggestionResponseIfPresent(possibleConfirmations[0][0])
           this.suggestionResponse.typesResult.confirmedTypes.push(possibleConfirmations[0][0]);
+          this.deleteFromSuggestionResponseIfPresent(possibleConfirmations[0][1])
           this.moveToConfirmed(possibleConfirmations[0][1]);
           this.suggestionResponse.typesResult.confirmedTypes.push(possibleConfirmations[0][1]);
         }
@@ -348,6 +354,7 @@ export class TrackerComponent {
     });
     if (remainingTypesEffectiveness.length === 1) {
       this.moveToConfirmed(remainingTypesEffectiveness[0]);
+      this.deleteFromSuggestionResponseIfPresent(remainingTypesEffectiveness[0]);
       this.suggestionResponse.typesResult.confirmedTypes.push(remainingTypesEffectiveness[0]);
     }
 
@@ -435,6 +442,7 @@ export class TrackerComponent {
           Object.keys(availableTypesEffectiveness).forEach(t => {
             if(availableTypesEffectiveness[t] < 1) {
               this.moveToRemoved(t);
+              this.deleteFromSuggestionResponseIfPresent(t)
               this.suggestionResponse.typesResult.removedTypes.push(t);
             }
           })
@@ -443,6 +451,7 @@ export class TrackerComponent {
           Object.keys(availableTypesEffectiveness).forEach(t => {
             if(availableTypesEffectiveness[t] < 1) {
               this.moveToRemoved(t);
+              this.deleteFromSuggestionResponseIfPresent(t)
               this.suggestionResponse.typesResult.removedTypes.push(t);
             }
           })
@@ -451,6 +460,7 @@ export class TrackerComponent {
           Object.keys(availableTypesEffectiveness).forEach(t => {
             if(availableTypesEffectiveness[t] !== 2) {
               this.moveToRemoved(t);
+              this.deleteFromSuggestionResponseIfPresent(t)
               this.suggestionResponse.typesResult.removedTypes.push(t);
             }
           })
@@ -459,6 +469,7 @@ export class TrackerComponent {
           Object.keys(availableTypesEffectiveness).forEach(t => {
             if(availableTypesEffectiveness[t] === 2) {
               this.moveToRemoved(t);
+              this.deleteFromSuggestionResponseIfPresent(t)
               this.suggestionResponse.typesResult.removedTypes.push(t);
             }
           })
@@ -472,15 +483,18 @@ export class TrackerComponent {
             superEffectivesCount.push(t);
             if(this.pokemon.dubiousTypes.findIndex(dubTyp => dubTyp === t) === -1) {
               this.moveToDubious(t);
+              this.deleteFromSuggestionResponseIfPresent(t)
               this.suggestionResponse.typesResult.dubiousTypes.push(t);
             }
           } else if(availableTypesEffectiveness[t] < 1) {
             this.moveToRemoved(t);
+            this.deleteFromSuggestionResponseIfPresent(t)
             this.suggestionResponse.typesResult.removedTypes.push(t);
           };
         });
         if(superEffectivesCount.length === 1) {
           this.moveToConfirmed(superEffectivesCount[0]);
+          this.deleteFromSuggestionResponseIfPresent(superEffectivesCount[0])
           this.suggestionResponse.typesResult.confirmedTypes.push(superEffectivesCount[0]);
         }
       }
@@ -488,9 +502,11 @@ export class TrackerComponent {
     if (this.pokemon.availableTypes.length + this.pokemon.dubiousTypes.length === 0) this.suggestionResponse.result = false;
     else if(this.pokemon.availableTypes.length + this.pokemon.dubiousTypes.length === 1) {
       if(this.pokemon.availableTypes.length === 1) {
+        this.deleteFromSuggestionResponseIfPresent(this.pokemon.availableTypes[0])
         this.suggestionResponse.typesResult.confirmedTypes.push(this.pokemon.availableTypes[0]);
         this.moveToConfirmed(this.pokemon.availableTypes[0]);
       } else {
+        this.deleteFromSuggestionResponseIfPresent(this.pokemon.dubiousTypes[0])
         this.suggestionResponse.typesResult.confirmedTypes.push(this.pokemon.dubiousTypes[0]);
         this.moveToConfirmed(this.pokemon.dubiousTypes[0]);
       }
@@ -541,8 +557,14 @@ export class TrackerComponent {
     allRemainingTypes.forEach(remType => {
       if(!typesMap[remType]) {
         this.moveToRemoved(remType);
+        this.deleteFromSuggestionResponseIfPresent(remType)
         this.suggestionResponse.typesResult.removedTypes.push(remType);
       }
     })
+  }
+
+  private deleteFromSuggestionResponseIfPresent(type: string) {
+    const index = this.suggestionResponse.typesResult.dubiousTypes.findIndex(x => x === type);
+    if(index > -1) this.suggestionResponse.typesResult.dubiousTypes.splice(index, 1);
   }
 }
