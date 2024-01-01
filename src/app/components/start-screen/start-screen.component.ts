@@ -138,7 +138,46 @@ export class StartScreenComponent {
     return value === "true";
   }
 
-  public importSave(file: any) {
-    console.log(file);
+  public importSave(file: any, fileUpload: any) {
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const data: string = fileReader.result as string;
+
+      const matchArray: string[] = data.split('\n')[0].split(',');
+      const match: SavedMatch = {
+        matchName: matchArray[0],
+        iconName: matchArray[4],
+        startDate: matchArray[2],
+        lastLogin: matchArray[3],
+        file: matchArray[1]
+      };
+
+      if(this.savedMatches.findIndex(x => x.matchName.split(".txt")[0] === match.matchName) >= 0) {
+        this.messageService.add(
+          {
+            severity: 'error',
+            summary: this.translate.instant("general.error"),
+            detail: this.translate.instant('errors.alreadySavedTitle')
+          }
+        );
+      } else {
+        this.savedMatches.unshift(match);
+        this.dataService.setSavedMatches(this.savedMatches);
+        this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+
+        const splitMatchData: string[] = data.split('\n');
+        splitMatchData.splice(0, 1);
+        const matchData = splitMatchData.join('\n');
+        
+        this.fileService.writeFile(match.matchName + ".txt", matchData, true);
+  
+        this.showNewMatchModal = false;
+        this.generateIcons = false;
+        this.goToMatchSelection();
+      }
+
+      fileUpload.clear();
+    }
+    fileReader.readAsText(file.files[0]);
   }
 }

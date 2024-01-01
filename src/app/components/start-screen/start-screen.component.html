@@ -16,8 +16,8 @@
   <ng-template pTemplate="footer">
     <div class="d-flex justify-content-between">
       <div>
-        <p-fileUpload mode="basic" [chooseLabel]="'general.import' | translate" accept="text/plain" chooseIcon="pi-upload"
-          [customUpload]="true" (uploadHandler)="importSave($event)"></p-fileUpload>
+        <p-fileUpload #fileUpload mode="basic" [chooseLabel]="'general.import' | translate" accept="text/plain" chooseIcon="pi-upload"
+          [customUpload]="true" (onSelect)="importSave($event, fileUpload)"></p-fileUpload>
       </div>
       <div>
         <p-button (click)="hideNewMatchModal()" [label]="'general.cancel' | translate"
