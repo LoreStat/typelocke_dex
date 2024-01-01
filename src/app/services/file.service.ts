@@ -70,4 +70,8 @@ export class FileService {
       return this.getFile('savedMatches.txt', false);
     }
   }
+
+  public exportSave(data: string, matchName: string) {
+    return this.fs.writeFileSync(`./${matchName}-EXPORT.txt`, data);
+  }
 }

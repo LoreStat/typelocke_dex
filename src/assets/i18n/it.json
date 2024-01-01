@@ -20,9 +20,14 @@
     "back": "Indietro",
     "calculate": "Calcola",
     "cancel": "Annulla",
+    "delete": "Elimina",
     "clickToCopy": "Clicca per copiare",
     "create": "Crea",
+    "error": "Errore",
+    "export": "Esporta",
+    "exported": "Salvato",
     "filter": "Filtra",
+    "import": "Importa",
     "reset": "Reset",
     "save": "Salva",
     "yes": "Si",
@@ -46,7 +51,8 @@
   "matchSelection": {
     "adventureStarted": "Inizio avventura",
     "lastLogin": "Ultimo accesso",
-    "deleteMessage":"Vuoi davvero eliminare questa avventura?"
+    "deleteMessage":"Vuoi davvero eliminare questa avventura?",
+    "exportCompletedSuccessfully": "Salvataggio esportato con successo all'interno della cartella dell'applicazione"
   },
   "menu": {
     "help": "Aiuto",

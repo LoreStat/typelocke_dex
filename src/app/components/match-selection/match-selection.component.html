@@ -10,8 +10,9 @@
             <p>{{ 'matchSelection.adventureStarted' | translate }}: {{ match.startDate }}</p>
           </div>
         </div>
-        <div>
-          <i class="pi pi-times clickable" (click)="askRemoveAdventure(match)"></i>
+        <div class="d-flex flex-column justify-content-between">
+          <i [pTooltip]="'general.delete' | translate"class="pi pi-times clickable" (click)="askRemoveAdventure(match)"></i>
+          <i [pTooltip]="'general.export' | translate" class="pi pi-download clickable" (click)="exportSave(match)"></i>
         </div>
       </div>
     </p-card>

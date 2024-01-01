@@ -14,8 +14,16 @@
     <img *ngIf="pokemonIcon" [src]="pokemonIconPath + pokemonIcon + '.png'" alt="es" width="64" height="64">
   </div>
   <ng-template pTemplate="footer">
-    <p-button (click)="hideNewMatchModal()" [label]="'general.cancel' | translate"
-      styleClass="p-button-text"></p-button>
-    <p-button (click)="createNewMatch()" [label]="'general.create' | translate" styleClass="p-button-text"></p-button>
+    <div class="d-flex justify-content-between">
+      <div>
+        <p-fileUpload mode="basic" [chooseLabel]="'general.import' | translate" accept="text/plain" chooseIcon="pi-upload"
+          [customUpload]="true" (uploadHandler)="importSave($event)"></p-fileUpload>
+      </div>
+      <div>
+        <p-button (click)="hideNewMatchModal()" [label]="'general.cancel' | translate"
+          styleClass="p-button-text"></p-button>
+        <p-button (click)="createNewMatch()" [label]="'general.create' | translate" styleClass="p-button-text"></p-button>
+      </div>
+    </div>
   </ng-template>
 </p-dialog>

@@ -90,7 +90,7 @@ export class TrackerComponent {
     if (undefinedIndex === -1) this.messageService.add(
       {
         severity: 'error',
-        summary: 'Errore',
+        summary: this.translate.instant("general.error"),
         detail: this.translate.instant("errors.alreadyConfirmedTypes")
       }
     );

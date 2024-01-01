@@ -102,7 +102,7 @@ export class StartScreenComponent {
       this.messageService.add(
         {
           severity: 'error',
-          summary: 'Errore',
+          summary: this.translate.instant("general.error"),
           detail: this.translate.instant('errors.titleLength')
         }
       );
@@ -112,7 +112,7 @@ export class StartScreenComponent {
       this.messageService.add(
         {
           severity: 'error',
-          summary: 'Errore',
+          summary: this.translate.instant("general.error"),
           detail: this.translate.instant('errors.alreadySavedTitle')
         }
       );
@@ -136,5 +136,9 @@ export class StartScreenComponent {
 
   private isTrue(value: string) {
     return value === "true";
+  }
+
+  public importSave(file: any) {
+    console.log(file);
   }
 }

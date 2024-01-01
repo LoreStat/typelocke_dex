@@ -44,6 +44,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { SidebarModule } from 'primeng/sidebar';
+import { FileUploadModule } from 'primeng/fileupload';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -80,6 +81,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     DockModule,
     DropdownModule,
+    FileUploadModule,
     InputTextareaModule,
     InputTextModule,
     MessagesModule,

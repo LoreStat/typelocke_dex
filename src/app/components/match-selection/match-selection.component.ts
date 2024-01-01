@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { PokemonInfo, SavedMatch } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
@@ -23,7 +23,8 @@ export class MatchSelectionComponent {
     private fileService: FileService,
     private location: Location,
     private confirmationService: ConfirmationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private messageService: MessageService
     ) {
     this.savedMatches = dataService.getSavedMatches();
     this.pokemonIconPath = this.dataService.getIconsPath();
@@ -77,5 +78,18 @@ export class MatchSelectionComponent {
         this.fileService.deleteFile(match.matchName, this.savedMatches, this.dataService.getSettings())
       },
     });
+  }
+
+  public exportSave(match: SavedMatch) {
+    const stringedInfo = this.fileService.getFile(match.file, true);
+    const dataExport = match.matchName + "," + match.file + "," + match.startDate + "," + match.lastLogin + "," + match.iconName + "\n" + stringedInfo;
+    this.fileService.exportSave(dataExport, match.matchName);
+    this.messageService.add(
+      {
+        severity: 'success',
+        summary: this.translate.instant('general.exported'),
+        detail: this.translate.instant('matchSelection.exportCompletedSuccessfully')
+      }
+    );
   }
 }

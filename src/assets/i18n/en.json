@@ -22,7 +22,12 @@
     "cancel": "Cancel",
     "clickToCopy": "Click to copy",
     "create": "Create",
+    "delete": "Delete",
+    "error": "Error",
+    "export": "Export",
+    "exported": "Saved",
     "filter": "Filter",
+    "import": "Import",
     "reset": "Reset",
     "save": "Save",
     "yes": "Yes",
@@ -46,7 +51,8 @@
   "matchSelection": {
     "adventureStarted": "Adventure started",
     "lastLogin": "Last login",
-    "deleteMessage":"Do you really want to delete this adventure?"
+    "deleteMessage":"Do you really want to delete this adventure?",
+    "exportCompletedSuccessfully": "Export completed successfully and saved in application's directory"
   },
   "menu": {
     "help": "Help",
