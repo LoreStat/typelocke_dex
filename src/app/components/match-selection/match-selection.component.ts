@@ -83,13 +83,14 @@ export class MatchSelectionComponent {
   public exportSave(match: SavedMatch) {
     const stringedInfo = this.fileService.getFile(match.file, true);
     const dataExport = match.matchName + "," + match.file + "," + match.startDate + "," + match.lastLogin + "," + match.iconName + "\n" + stringedInfo;
-    this.fileService.exportSave(dataExport, match.matchName);
-    this.messageService.add(
-      {
-        severity: 'success',
-        summary: this.translate.instant('general.exported'),
-        detail: this.translate.instant('matchSelection.exportCompletedSuccessfully')
-      }
-    );
+
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(dataExport)}`);
+    element.setAttribute('download', match.matchName + "-EXPORT");
+
+    document.body.appendChild(element);
+
+    element.click();
+    document.body.removeChild(element);
   }
 }
