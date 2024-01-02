@@ -262,7 +262,7 @@ export class TrackerComponent {
   private calculate(selectedTypeEffectivenesses: Record<string, number>, selectedSuggestionType: string, selectedSuggestionEffectiveness: string, actualMove: number) {
     if(actualMove === 0) this.calculateCombinationsAndRemoveTypes(selectedSuggestionType, selectedSuggestionEffectiveness);
     const confirmedType = this.pokemon.confirmedTypes.find(x => x !== "?");
-    const actualEffectivenessValue = (confirmedType ? (selectedTypeEffectivenesses[confirmedType] || 1) : 1);
+    const actualEffectivenessValue = (confirmedType ? (selectedTypeEffectivenesses[confirmedType] !== undefined ? selectedTypeEffectivenesses[confirmedType] : 1) : 1);
 
     let availableTypesEffectiveness: Record<string, number> = {};
     this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1));
@@ -286,7 +286,7 @@ export class TrackerComponent {
     availableTypesEffectiveness = {};
     this.pokemon.availableTypes.forEach(t => availableTypesEffectiveness[t] = (selectedTypeEffectivenesses[t] !== undefined ? selectedTypeEffectivenesses[t] : 1) * actualEffectivenessValue);
 
-    if ((confirmedType && !this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, selectedTypeEffectivenesses[confirmedType] ? selectedTypeEffectivenesses[confirmedType] : 1)) || (!confirmedType && selectedSuggestionEffectiveness !== "effective")) {
+    if ((confirmedType && !this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, selectedTypeEffectivenesses[confirmedType] !== undefined ? selectedTypeEffectivenesses[confirmedType] : 1)) || (!confirmedType && selectedSuggestionEffectiveness !== "effective")) {
       Object.keys(availableTypesEffectiveness).forEach(t => {
         // eviterei di spostare su dubbio una mossa normalmente efficace se non ho già informazioni su un secondo tipo
         // potrebbe essere fuorviante..erba fuoco, lancio acqua ed erba fuoco rimangono disponibili, mentre tra i dubbi andrebbero spettro, normale...
@@ -317,7 +317,9 @@ export class TrackerComponent {
 
         const possibleConfirmations: string[][] = [];
         combinations.forEach((c: string[]) => {
-          if (this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, selectedTypeEffectivenesses[c[0]] * selectedTypeEffectivenesses[c[1]]))
+          const eff1 = selectedTypeEffectivenesses[c[0]] !== undefined ? selectedTypeEffectivenesses[c[0]] : 1;
+          const eff2 = selectedTypeEffectivenesses[c[1]] !== undefined ? selectedTypeEffectivenesses[c[1]] : 1;
+          if (this.checkValueEffectivenessEquality(selectedSuggestionEffectiveness, eff1 * eff2))
             possibleConfirmations.push(c)
         })
         if (possibleConfirmations.length === 1) {
