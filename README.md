@@ -20,3 +20,4 @@ Due to types vulnerabilities and current Pokemons list, only some Pokemon games 
 - Pokemon Gold, Silver & Crystal
 - Pokemon Ruby, Sapphire & Emerald
 - Pokemon Heartgold & Soulsiver
+- Pokemon Diamond & Pearl
