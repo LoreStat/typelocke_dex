@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
@@ -6,6 +6,7 @@ import { SavedMatch, Settings } from 'src/app/models/models';
 import { DataService } from 'src/app/services/data.service';
 import { FileService } from 'src/app/services/file.service';
 import { POKEMON_IMAGES_LIST } from 'src/assets/constants/PokemonData';
+import { Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-start-screen',
@@ -13,7 +14,7 @@ import { POKEMON_IMAGES_LIST } from 'src/assets/constants/PokemonData';
   styleUrls: ['./start-screen.component.scss'],
   providers: [FileService]
 })
-export class StartScreenComponent {
+export class StartScreenComponent implements OnInit {
 
   public savedMatches: SavedMatch[] = [];
 
@@ -22,6 +23,7 @@ export class StartScreenComponent {
   public pokemonIcon: string = "";
   public pokemonIconPath: string = "";
   private generateIcons = false;
+  public permissionDenied = false;
 
   constructor(
     private dataService: DataService,
@@ -29,10 +31,18 @@ export class StartScreenComponent {
     private fileService: FileService,
     private messageService: MessageService,
     private translate: TranslateService,
-  ) {
-    const savedData = this.fileService.createOrGetSavedMatches();
+  ) { }
+
+  async ngOnInit() {
+    let permission = await Filesystem.checkPermissions();
+    if(permission.publicStorage !== 'granted') permission = await Filesystem.requestPermissions();
+    if(permission.publicStorage !== 'granted') {
+      this.permissionDenied = true;
+      return;
+    }
+    const savedData = await this.fileService.createOrGetSavedMatches();
     const savedDataList = savedData.split("\n");
-    const settingsArray = savedDataList.shift().split(",");
+    const settingsArray = (savedDataList.shift() as string).split(",");
 
     const settings: Settings = {
       automatic: this.isTrue(settingsArray[0]),
@@ -41,9 +51,9 @@ export class StartScreenComponent {
       hdImages: this.isTrue(settingsArray[3]),
       language: settingsArray[4]
     }
-    dataService.setSettings(settings)
+    this.dataService.setSettings(settings)
     this.pokemonIconPath = this.dataService.getIconsPath();
-    translate.use(settings.language);
+    this.translate.use(settings.language);
 
     this.savedMatches = savedDataList.filter((row: string) => !!row).map((match: string) => {
       const matchSplit = match.split(",");
@@ -60,7 +70,7 @@ export class StartScreenComponent {
       return (new Date(a.lastLogin).getTime() < new Date(b.lastLogin).getTime()) ? 1 : -1
     })
 
-    dataService.setSavedMatches(this.savedMatches);
+    this.dataService.setSavedMatches(this.savedMatches);
   }
 
   public goToMatchSelection() {
@@ -97,7 +107,7 @@ export class StartScreenComponent {
     setTimeout(() => { if (this.generateIcons) this.generateIcon() }, 200);
   }
 
-  public createNewMatch() {
+  public async createNewMatch() {
     if(this.newMatchTitle === "" || this.newMatchTitle.length > 12) {
       this.messageService.add(
         {
@@ -125,8 +135,8 @@ export class StartScreenComponent {
         file: this.newMatchTitle + ".txt"
       })
       this.dataService.setSavedMatches(this.savedMatches);
-      this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-      this.fileService.createMatchFile(this.newMatchTitle);
+      await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+      await this.fileService.createMatchFile(this.newMatchTitle);
 
       this.showNewMatchModal = false;
       this.generateIcons = false;
@@ -138,9 +148,9 @@ export class StartScreenComponent {
     return value === "true";
   }
 
-  public importSave(file: any, fileUpload: any) {
+  public async importSave(file: any, fileUpload: any) {
     let fileReader = new FileReader();
-    fileReader.onload = (e) => {
+    fileReader.onload = async (e) => {
       const data: string = fileReader.result as string;
 
       const matchArray: string[] = data.split('\n')[0].split(',');
@@ -163,13 +173,13 @@ export class StartScreenComponent {
       } else {
         this.savedMatches.unshift(match);
         this.dataService.setSavedMatches(this.savedMatches);
-        this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+        await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
 
         const splitMatchData: string[] = data.split('\n');
         splitMatchData.splice(0, 1);
         const matchData = splitMatchData.join('\n');
         
-        this.fileService.writeFile(match.matchName + ".txt", matchData, true);
+        await this.fileService.writeFile(match.matchName + ".txt", matchData, true);
   
         this.showNewMatchModal = false;
         this.generateIcons = false;

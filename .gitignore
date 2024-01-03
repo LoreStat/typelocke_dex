@@ -7,6 +7,7 @@
 /bazel-out
 /out
 /build
+/build-mobile
 
 # Node
 /node_modules

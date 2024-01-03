@@ -13,7 +13,8 @@
     "electron": "ng build && electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "getInstaller": "npm run build && npm run pack && npm run dist"
+    "getInstaller": "npm run build && npm run pack && npm run dist",
+    "buildMobile": "ng build --output-path ./build-mobile && npx cap sync"
   },
   "build": {
     "productName": "TypelockeDex",
@@ -60,6 +61,10 @@
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
+    "@capacitor/android": "^5.6.0",
+    "@capacitor/cli": "^5.6.0",
+    "@capacitor/core": "^5.6.0",
+    "@capacitor/filesystem": "^5.2.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "i18n": "^0.15.1",
@@ -74,6 +79,7 @@
     "@angular-devkit/build-angular": "^15.2.8",
     "@angular/cli": "~15.2.8",
     "@angular/compiler-cli": "^15.2.0",
+    "@capacitor/assets": "^3.0.4",
     "@types/jasmine": "~4.3.0",
     "@types/node": "20.10.4",
     "electron": "^25.2.0",

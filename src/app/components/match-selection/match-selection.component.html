@@ -1,4 +1,4 @@
-<div class="fadeindown fadeoutup animation-duration-500">
+<div *ngIf="!hideScreen">
   <div *ngFor="let match of savedMatches" class="mt-2">
     <p-card>
       <div class="d-flex justify-content-between">

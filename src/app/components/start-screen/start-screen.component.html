@@ -1,4 +1,4 @@
-<div class="text-center fadein animation-duration-500">
+<div class="text-center fadein animation-duration-500" *ngIf="!permissionDenied">
   <p-card [ngClass]="savedMatches.length > 0 ? 'clickable' : 'disabled'" (click)="goToMatchSelection()">{{
     'startScreen.continue' | translate }}</p-card>
   <div class="my-5" (click)="openNewMatchModal()"><p-card class="clickable">{{ 'startScreen.newGame' | translate
@@ -27,3 +27,6 @@
     </div>
   </ng-template>
 </p-dialog>
+<div *ngIf="permissionDenied">
+  Permissions must be enabled to use this application
+</div>

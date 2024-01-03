@@ -52,7 +52,7 @@
     "adventureStarted": "Inizio avventura",
     "lastLogin": "Ultimo accesso",
     "deleteMessage":"Vuoi davvero eliminare questa avventura?",
-    "exportCompletedSuccessfully": "Salvataggio esportato con successo all'interno della cartella dell'applicazione"
+    "exportCompletedSuccessfully": "Salvataggio esportato con successo tra i salvataggi nella cartella dei documenti"
   },
   "menu": {
     "help": "Aiuto",

@@ -157,10 +157,10 @@ export class TrackerComponent {
     }
   }
 
-  public fillDataAndSave() {
+  public async fillDataAndSave() {
     this.dataService.copySpeciesEvoPokemonData(this.pokemon.name);
 
-    this.fileService.saveChanges();
+    await this.fileService.saveChanges();
   }
 
   private addToRegisteredIfDontExist(selectedSuggestionType: string, selectedSuggestionEffectiveness: string) {

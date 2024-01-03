@@ -30,10 +30,10 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-  public saveSettings() {
+  public async saveSettings() {
     this.translate.use(this.settings.language);
     this.dataService.setSettings(this.settings);
-    this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+    await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
     this.back();
   }
 

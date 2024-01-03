@@ -52,7 +52,7 @@
     "adventureStarted": "Adventure started",
     "lastLogin": "Last login",
     "deleteMessage":"Do you really want to delete this adventure?",
-    "exportCompletedSuccessfully": "Export completed successfully and saved in application's directory"
+    "exportCompletedSuccessfully": "Export completed successfully and saved between saves files in documents directory"
   },
   "menu": {
     "help": "Help",

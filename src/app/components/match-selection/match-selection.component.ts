@@ -16,6 +16,7 @@ export class MatchSelectionComponent {
 
   public savedMatches: SavedMatch[] = [];
   public pokemonIconPath: string = "";
+  public hideScreen: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -28,14 +29,16 @@ export class MatchSelectionComponent {
     ) {
     this.savedMatches = dataService.getSavedMatches();
     this.pokemonIconPath = this.dataService.getIconsPath();
+    this.hideScreen = false;
   }
 
-  public loadMatch(matchName: string) {
+  public async loadMatch(matchName: string) {
+    this.hideScreen = true;
+    await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
     this.dataService.setLoadedMatch(matchName);
-    this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
 
     const pokemonMap: Record<string, PokemonInfo> = {};
-    const stringedInfo = this.fileService.getFile(matchName, true);
+    const stringedInfo = await this.fileService.getFile(matchName, true);
     const pokemonInfoList = stringedInfo.split("\n");
 
     (pokemonInfoList as string[]).forEach(pokeInfo => {
@@ -55,7 +58,9 @@ export class MatchSelectionComponent {
 
     this.dataService.setLoadedData(pokemonMap);
     console.log(pokemonMap);
-    this.router.navigate(['/dex']);
+    window.setTimeout(() => {
+      this.router.navigate(['/dex']);
+    }, 1)
   }
 
   public back() {
@@ -72,25 +77,25 @@ export class MatchSelectionComponent {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: this.translate.instant('general.yes'),
       rejectLabel: this.translate.instant('general.no'),
-      accept: () => {
+      accept: async () => {
         const indexToDelete = this.savedMatches.findIndex(x => x.matchName === match.matchName);
         this.savedMatches.splice(indexToDelete, 1);
-        this.fileService.deleteFile(match.matchName, this.savedMatches, this.dataService.getSettings())
+        await this.fileService.deleteFile(match.matchName, this.savedMatches, this.dataService.getSettings())
       },
     });
   }
 
-  public exportSave(match: SavedMatch) {
-    const stringedInfo = this.fileService.getFile(match.file, true);
+  public async exportSave(match: SavedMatch) {
+    const stringedInfo = await this.fileService.getFile(match.file, true);
     const dataExport = match.matchName + "," + match.file + "," + match.startDate + "," + match.lastLogin + "," + match.iconName + "\n" + stringedInfo;
 
-    const element = document.createElement('a');
-    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(dataExport)}`);
-    element.setAttribute('download', match.matchName + "-EXPORT");
-
-    document.body.appendChild(element);
-
-    element.click();
-    document.body.removeChild(element);
+    this.fileService.exportSave(dataExport, match.matchName);
+    this.messageService.add(
+      {
+        severity: 'success',
+        summary: this.translate.instant('general.exported'),
+        detail: this.translate.instant('matchSelection.exportCompletedSuccessfully')
+      }
+    );
   }
 }

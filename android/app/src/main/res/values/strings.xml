@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TypelockeDex</string>
+    <string name="title_activity_main">TypelockeDex</string>
+    <string name="package_name">com.typelockedex.app</string>
+    <string name="custom_url_scheme">com.typelockedex.app</string>
+</resources>
