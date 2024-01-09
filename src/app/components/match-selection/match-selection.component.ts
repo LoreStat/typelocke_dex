@@ -35,7 +35,6 @@ export class MatchSelectionComponent {
   public async loadMatch(matchName: string) {
     this.hideScreen = true;
     await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-    this.dataService.setLoadedMatch(matchName);
 
     const pokemonMap: Record<string, PokemonInfo> = {};
     const stringedInfo = await this.fileService.getFile(matchName, true);
@@ -57,10 +56,8 @@ export class MatchSelectionComponent {
     })
 
     this.dataService.setLoadedData(pokemonMap);
-    console.log(pokemonMap);
-    window.setTimeout(() => {
-      this.router.navigate(['/dex']);
-    }, 1)
+    this.router.navigate(['/dex']);
+    this.dataService.setLoadedMatch(matchName);
   }
 
   public back() {
