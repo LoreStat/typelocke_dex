@@ -31,7 +31,6 @@ export class MatchSelectionComponent {
   }
 
   public loadMatch(matchName: string) {
-    this.dataService.setLoadedMatch(matchName);
     this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
 
     const pokemonMap: Record<string, PokemonInfo> = {};
@@ -54,8 +53,8 @@ export class MatchSelectionComponent {
     })
 
     this.dataService.setLoadedData(pokemonMap);
-    console.log(pokemonMap);
     this.router.navigate(['/dex']);
+    this.dataService.setLoadedMatch(matchName);
   }
 
   public back() {
