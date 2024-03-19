@@ -31,7 +31,10 @@ export class MatchSelectionComponent {
   }
 
   public loadMatch(matchName: string) {
-    this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+    const matchIndex = this.savedMatches.findIndex(match => (match.matchName + ".txt") === matchName);
+    this.savedMatches[matchIndex].lastLogin = new Date().toISOString();
+
+    this.fileService.writeSavedMatches(this.savedMatches, this.dataService.getSettings());
 
     const pokemonMap: Record<string, PokemonInfo> = {};
     const stringedInfo = this.fileService.getFile(matchName, true);
