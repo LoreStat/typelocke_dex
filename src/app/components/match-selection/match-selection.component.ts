@@ -33,8 +33,12 @@ export class MatchSelectionComponent {
   }
 
   public async loadMatch(matchName: string) {
-    this.hideScreen = true;
     await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+    this.hideScreen = true;
+    const matchIndex = this.savedMatches.findIndex(match => (match.matchName + ".txt") === matchName);
+    this.savedMatches[matchIndex].lastLogin = new Date().toISOString();
+
+    this.fileService.writeSavedMatches(this.savedMatches, this.dataService.getSettings());
 
     const pokemonMap: Record<string, PokemonInfo> = {};
     const stringedInfo = await this.fileService.getFile(matchName, true);
