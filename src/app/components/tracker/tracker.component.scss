@@ -74,27 +74,6 @@
   }
 }
 
-::ng-deep .used-moves {
-  ::-webkit-scrollbar {
-    width: 20px;
-  }
-
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #2d3f47;
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #465b64;
-  }
-
-}
-
 ::ng-deep .p-inputtextarea {
   height: 144px !important;
 }
