@@ -13,7 +13,7 @@ Welcome to TypelockeDex Tracker, an application to store and calculate data for 
 <img src="https://github.com/LoreStat/typelocke_dex/assets/138003780/e16cc99f-b922-4f8c-9c44-bc4e51c57257" alt="Types combinations" width="600"/>
 
 ## Installation
-You can install Typelocke Tracker for [Windows](https://mega.nz/file/QiFDHR4S#0oEE4sFr6FdPL33Z06XTU0XqQoz_0FOxy0GYS5V-YqM) and [Android](https://mega.nz/file/V6sAHSLS#84YqKIzUPQM5jNhiK2q_2kKP79Jqx_2zb6-MxfKmM5k).
+You can install Typelocke Tracker for [Windows](https://mega.nz/file/QiFDHR4S#0oEE4sFr6FdPL33Z06XTU0XqQoz_0FOxy0GYS5V-YqM) and [Android](https://mega.nz/file/V6sAHSLS#84YqKIzUPQM5jNhiK2q_2kKP79Jqx_2zb6-MxfKmM5k).<br>
 **When updating application, make sure to export saved files by using the dedicated button in matches list!**
 
 ## Requirements
