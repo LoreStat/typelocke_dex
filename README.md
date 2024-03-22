@@ -24,3 +24,8 @@ Due to types vulnerabilities and current Pokemons list, only some Pokemon games 
 - Pokemon Ruby, Sapphire & Emerald
 - Pokemon Heartgold & Soulsiver
 - Pokemon Diamond & Pearl
+- 
+## Changelog
+Version 1.0.1:
+- Fixed last login date not updating
+- Fixed tracker used moves' scroller
