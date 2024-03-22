@@ -14,6 +14,7 @@ Welcome to TypelockeDex Tracker, an application to store and calculate data for 
 
 ## Installation
 You can install Typelocke Tracker for [Windows](https://mega.nz/file/QiFDHR4S#0oEE4sFr6FdPL33Z06XTU0XqQoz_0FOxy0GYS5V-YqM) and [Android](https://mega.nz/file/V6sAHSLS#84YqKIzUPQM5jNhiK2q_2kKP79Jqx_2zb6-MxfKmM5k).
+**When updating application, make sure to export saved files by using the dedicated button in matches list!**
 
 ## Requirements
 This tool is ONLY compatible with Windows OS and Android.
