@@ -84,7 +84,8 @@ export class MatchSelectionComponent {
 
   public exportSave(match: SavedMatch) {
     const stringedInfo = this.fileService.getFile(match.file, true);
-    const dataExport = match.matchName + "," + match.file + "," + match.startDate + "," + match.lastLogin + "," + match.iconName + "\n" + stringedInfo;
+    const dataExport = match.matchName + "," + match.file + "," + match.startDate +
+      "," + match.lastLogin + "," + match.iconName + "," + match.generation +"\n" + stringedInfo;
 
     const element = document.createElement('a');
     element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(dataExport)}`);

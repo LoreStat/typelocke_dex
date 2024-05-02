@@ -10,7 +10,8 @@ export interface SavedMatch {
   file: string,
   startDate: string,
   lastLogin: string,
-  iconName: string
+  iconName: string,
+  generation: string
 }
 
 export interface Settings {

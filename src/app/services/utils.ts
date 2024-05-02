@@ -1,4 +1,4 @@
-import { TYPE } from "src/assets/constants/PokemonData";
+import { EVOLUTIONS_GROUPS, EVOLUTIONS_GROUPS_2, EVOLUTIONS_GROUPS_3, EVOLUTIONS_GROUPS_4, POKEMON, TYPE } from "src/assets/constants/PokemonData";
 
 export function getBackgroundClassFromRecentMove(value: string) {
   switch (value) {
@@ -110,5 +110,32 @@ export function composeRecentMoveFromType(value: string) {
       return "wa";
     default:
       return "";
+  }
+}
+
+export function getPokemonsListByGeneration(gen: number): string[] {
+  switch(gen) {
+    case 2:
+      return POKEMON.slice(0, 251);
+    case 3:
+      return POKEMON.slice(0, 389);
+    case 4:
+      return POKEMON.slice(0, 505);
+    default:
+      return POKEMON;
+  }
+}
+
+
+export function getEvolutionsGroupsByGeneration(gen: number): Record<string, string[]> {
+  switch(gen) {
+    case 2:
+      return EVOLUTIONS_GROUPS_2;
+    case 3:
+      return EVOLUTIONS_GROUPS_3;
+    case 4:
+      return EVOLUTIONS_GROUPS_4;
+    default:
+      return EVOLUTIONS_GROUPS;
   }
 }

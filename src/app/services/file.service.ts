@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { SavedMatch, Settings } from "../models/models";
 import { POKEMON, TYPES_LIST } from "src/assets/constants/PokemonData";
 import { DataService } from "./data.service";
+import { getPokemonsListByGeneration } from "./utils";
 
 @Injectable()
 export class FileService {
@@ -23,13 +24,13 @@ export class FileService {
   public writeSavedMatches(savedMatches: SavedMatch[], settings: Settings) {
     const settingsStringToSave = `${settings.automatic},${settings.automaticSummary},${settings.hideRecentPokemon},${settings.hdImages},${settings.language}\n`
     const matchesStringToSave = savedMatches.map(x => {
-      return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastLogin + "," + x.iconName
+      return x.matchName + "," + x.file + "," + x.startDate + "," + x.lastLogin + "," + x.iconName + "," + x.generation
     }).join("\n");
     this.writeFile("savedMatches.txt", settingsStringToSave + matchesStringToSave, false)
   }
 
-  public createMatchFile(matchTitle: string) {
-    const allPoke = POKEMON;
+  public createMatchFile(matchTitle: string, generation: string) {
+    const allPoke = getPokemonsListByGeneration(+generation);
     const allTypes = TYPES_LIST.join(",");
 
     const divididerString = `/?/?/${allTypes}////`;

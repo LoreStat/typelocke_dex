@@ -45,6 +45,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { SidebarModule } from 'primeng/sidebar';
 import { FileUploadModule } from 'primeng/fileupload';
+import { BadgeModule } from 'primeng/badge';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -72,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     AutoCompleteModule,
     AutoFocusModule,
+    BadgeModule,
     BlockUIModule,
     ButtonModule,
     CardModule,
@@ -87,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessagesModule,
     OverlayPanelModule,
     ProgressSpinnerModule,
+    RadioButtonModule,
     ScrollerModule,
     SidebarModule,
     SpeedDialModule,

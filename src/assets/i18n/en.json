@@ -337,7 +337,7 @@
     "Mightyena": "Mightyena",
     "Milotic": "Milotic",
     "Miltank": "Miltank",
-    "Mime-jr": "Mime-jr",
+    "Mime-jr": "Mime Jr.",
     "Minun": "Minun",
     "Misdreavus": "Misdreavus",
     "Mismagius": "Mismagius",
@@ -577,6 +577,8 @@
   "startScreen": {
     "contacts": "Contacts",
     "continue": "Continue",
+    "generation": "Generation",
+    "generationTooltip": "Depending on selected generation, only a limited list of pokemon will be shown",
     "newGame": "New adventure",
     "settings": "Settings"
   },
