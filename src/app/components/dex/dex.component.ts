@@ -25,9 +25,7 @@ export class DexComponent {
     this.matchData = this.dataService.getLoadedData();
     this.imagesPath = this.dataService.getIconsPath();
     const generation = +((this.dataService.getSavedMatch() as SavedMatch).generation);
-    console.log(generation);
     this.speciesGroups = getEvolutionsGroupsByGeneration(generation);
-    console.log(this.speciesGroups);
   }
 
   public getPokemonImagePath(pokemonName: string) {

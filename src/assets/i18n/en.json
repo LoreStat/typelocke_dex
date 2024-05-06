@@ -592,6 +592,7 @@
     "impossible": "Selected data is incorrect",
     "notes": "Notes",
     "removed": "Removed",
+    "resistances": "Type effectiveness",
     "result": "Result",
     "track-false": "Warning! No one of remaining types could be a possible pokemon type with this effectiveness of the used type move",
     "track-true": "Following types has been moved to "

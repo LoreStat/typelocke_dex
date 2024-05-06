@@ -47,6 +47,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { BadgeModule } from 'primeng/badge';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { WeaknessesComponent } from './components/weaknesses/weaknesses.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -65,7 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DexComponent,
     TypesCombinationsComponent,
     ContactsComponent,
-    HowToUseComponent
+    HowToUseComponent,
+    WeaknessesComponent
   ],
   imports: [
     BrowserModule,

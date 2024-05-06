@@ -1,0 +1,98 @@
+<div class="abs-10 position-absolute">
+  <p-button
+    styleClass="p-button-rounded p-button-text"
+    icon="pi pi-times"
+    (click)="closeModal()"
+  ></p-button>
+</div>
+<div class="weaknesses-box">
+  <div class="d-flex">
+    <div class="effectiveness-box">
+      <div class="eff-value" *ngIf="veryEffectiveTypes.length > 0">
+        4&times;
+      </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap w-100">
+        <div *ngFor="let type of veryEffectiveTypes" class="mt-1 mb-1 ms-1">
+          <p-button
+            [ngClass]="type.toLowerCase()"
+            [label]="'types.' + type.toLowerCase() | translate"
+            styleClass="p-button-rounded"
+            class="type-button"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex mt-2">
+    <div class="effectiveness-box">
+      <div class="eff-value" *ngIf="effectiveTypes.length > 0">2&times;</div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap w-100">
+        <div *ngFor="let type of effectiveTypes" class="mt-1 mb-1 ms-1">
+          <p-button
+            [ngClass]="type.toLowerCase()"
+            [label]="'types.' + type.toLowerCase() | translate"
+            styleClass="p-button-rounded"
+            class="type-button"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex mt-2">
+    <div class="effectiveness-box">
+      <div class="eff-value" *ngIf="notEffectiveTypes.length > 0">½&times;</div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap w-100">
+        <div *ngFor="let type of notEffectiveTypes" class="mt-1 mb-1 ms-1">
+          <p-button
+            [ngClass]="type.toLowerCase()"
+            [label]="'types.' + type.toLowerCase() | translate"
+            styleClass="p-button-rounded"
+            class="type-button"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex mt-2">
+    <div class="effectiveness-box">
+      <div class="eff-value" *ngIf="veryNotEffectiveTypes.length > 0">
+        ¼&times;
+      </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap w-100">
+        <div *ngFor="let type of veryNotEffectiveTypes" class="mt-1 mb-1 ms-1">
+          <p-button
+            [ngClass]="type.toLowerCase()"
+            [label]="'types.' + type.toLowerCase() | translate"
+            styleClass="p-button-rounded"
+            class="type-button"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex mt-2">
+    <div class="effectiveness-box">
+      <div class="eff-value" *ngIf="immuneTypes.length > 0">0&times;</div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+      <div class="d-flex flex-wrap w-100">
+        <div *ngFor="let type of immuneTypes" class="mt-1 mb-1 ms-1">
+          <p-button
+            [ngClass]="type.toLowerCase()"
+            [label]="'types.' + type.toLowerCase() | translate"
+            styleClass="p-button-rounded"
+            class="type-button"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

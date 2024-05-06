@@ -57,6 +57,7 @@ export class TrackerComponent {
     }
   };
 
+  public showWeaknessesModal: boolean = false;
   public blockEnabled: boolean = false;
   public sidebarVisible: boolean = false;
   private op?: OverlayPanel;
@@ -568,5 +569,9 @@ export class TrackerComponent {
   private deleteFromSuggestionResponseIfPresent(type: string) {
     const index = this.suggestionResponse.typesResult.dubiousTypes.findIndex(x => x === type);
     if(index > -1) this.suggestionResponse.typesResult.dubiousTypes.splice(index, 1);
+  }
+
+  public checkBothTypeConfirmed(): boolean {
+    return this.pokemon.confirmedTypes.findIndex(x => x === "?") === -1;
   }
 }
