@@ -57,6 +57,7 @@ export class TrackerComponent {
     }
   };
 
+  public isReady: boolean = false;
   public showWeaknessesModal: boolean = false;
   public blockEnabled: boolean = false;
   public sidebarVisible: boolean = false;
@@ -65,11 +66,15 @@ export class TrackerComponent {
   constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService, private translate: TranslateService) {
     this.iconPath = this.dataService.getIconsPath();
     this.dataService.selectedPokemon.subscribe(pokemonName => {
-      this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
-      this.settings = dataService.getSettings();
-      this.evolutionsGroup = POKEMON_EVOS[pokemonName];
-
-      this.pokemonImage = `${this.iconPath + pokemonName}.png`
+      this.isReady = false;
+      setTimeout(() => {
+        this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
+        this.settings = dataService.getSettings();
+        this.evolutionsGroup = POKEMON_EVOS[pokemonName];
+  
+        this.pokemonImage = `${this.iconPath + pokemonName}.png`
+        this.isReady = true;
+      }, 0)
     });
   }
 

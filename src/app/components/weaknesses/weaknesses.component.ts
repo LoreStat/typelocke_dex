@@ -18,8 +18,9 @@ export class WeaknessesComponent {
   public immuneTypes: string[] = [];
 
   ngOnInit() {
-    const weak1 = WEAKNESSES[this.confirmedTypes[0]];
-    const weak2 = WEAKNESSES[this.confirmedTypes[1]];
+    const weak1 = Object.assign({}, WEAKNESSES[this.confirmedTypes[0]]);
+    const weak2 = Object.assign({}, WEAKNESSES[this.confirmedTypes[1]]);
+
     Object.keys(weak2).forEach(ty => {
       weak1[ty] = (weak1[ty] !== undefined ? weak1[ty] : 1) * weak2[ty];
     })

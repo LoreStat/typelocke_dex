@@ -64,6 +64,7 @@
             ></p-badge>
           </div>
           <p-dialog
+            *ngIf="checkBothTypeConfirmed() && isReady"
             [(visible)]="showWeaknessesModal"
             class="weaknesses-panel"
             [closable]="false"
