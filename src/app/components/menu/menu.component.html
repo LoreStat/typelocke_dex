@@ -16,7 +16,7 @@
           <i [pTooltip]="'Dex'" class="pi pi-calculator topbar-icon clickable" (click)="navigateToDex()"></i>
         </li>
         <li class="search-bar mx-5">
-          <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+          <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" [showClear]="true"
             (completeMethod)="search($event)" (onSelect)="selectSearchedPokemon($event)"></p-autoComplete>
         </li>
         <li>

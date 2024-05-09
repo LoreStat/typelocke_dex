@@ -21,6 +21,9 @@
   .search-bar {
     margin-left: 2% !important;
     margin-right: 2% !important;
+    ::ng-deep .p-autocomplete-input {
+      width: 220px;
+    }
   }
 }
 

@@ -337,7 +337,7 @@
     "Mightyena": "Mightyena",
     "Milotic": "Milotic",
     "Miltank": "Miltank",
-    "Mime-jr": "Mime-jr",
+    "Mime-jr": "Mime Jr.",
     "Minun": "Minun",
     "Misdreavus": "Misdreavus",
     "Mismagius": "Mismagius",
@@ -577,6 +577,8 @@
   "startScreen": {
     "contacts": "Contatti",
     "continue": "Continua",
+    "generation": "Generazione",
+    "generationTooltip": "A seconda della generazione scelta verrà mostrato solo un limitato elenco di pokemon",
     "newGame": "Nuova avventura",
     "settings": "Impostazioni"
   },
@@ -590,6 +592,7 @@
     "impossible": "I dati inseriti non sono corretti",
     "notes": "Note",
     "removed": "Esclusi",
+    "resistances": "Resistenze e vulnerabilità",
     "result": "Risultato",
     "track-false": "Attenzione! Dato il tipo e l'efficacia selezionata, nessun tipo tra quelli rimanenti può essere un possibile tipo del pokemon",
     "track-true": "I seguenti tipi sono stati spostati tra i tipi "

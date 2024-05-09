@@ -32,9 +32,9 @@ export class MatchSelectionComponent {
     this.hideScreen = false;
   }
 
-  public async loadMatch(matchName: string) {
-    await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-    this.hideScreen = true;
+public async loadMatch(matchName: string) {
+  await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
+  this.hideScreen = true;
     const matchIndex = this.savedMatches.findIndex(match => (match.matchName + ".txt") === matchName);
     this.savedMatches[matchIndex].lastLogin = new Date().toISOString();
 
@@ -88,7 +88,8 @@ export class MatchSelectionComponent {
 
   public async exportSave(match: SavedMatch) {
     const stringedInfo = await this.fileService.getFile(match.file, true);
-    const dataExport = match.matchName + "," + match.file + "," + match.startDate + "," + match.lastLogin + "," + match.iconName + "\n" + stringedInfo;
+    const dataExport = match.matchName + "," + match.file + "," + match.startDate +
+      "," + match.lastLogin + "," + match.iconName + "," + match.generation +"\n" + stringedInfo;
 
     this.fileService.exportSave(dataExport, match.matchName);
     this.messageService.add(

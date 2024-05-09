@@ -13,6 +13,24 @@
     <input type="text" pInputText [autofocus]="true" class="p-inputtext-lg" [(ngModel)]="newMatchTitle" />
     <img *ngIf="pokemonIcon" [src]="pokemonIconPath + pokemonIcon + '.png'" alt="es" width="64" height="64">
   </div>
+  <div class="mt-2 flex flex-wrap gap-3">
+    {{ 'startScreen.generation' | translate }}
+    <p-badge [value]="'?'" [pTooltip]="'startScreen.generationTooltip' | translate"></p-badge>
+    <div class="flex align-items-center">
+        <p-radioButton name="gen" value="2" [(ngModel)]="selectedGeneration" inputId="gen2"></p-radioButton>
+        <label for="gen2" class="ml-2">2</label>
+    </div>
+
+    <div class="flex align-items-center">
+        <p-radioButton name="gen" value="3" [(ngModel)]="selectedGeneration" inputId="gen3"></p-radioButton>
+        <label for="gen3" class="ml-2">3</label>
+    </div>
+
+    <div class="flex align-items-center">
+        <p-radioButton name="gen" value="4" [(ngModel)]="selectedGeneration" inputId="gen4"></p-radioButton>
+        <label for="gen4" class="ml-2">4</label>
+    </div>
+</div>
   <ng-template pTemplate="footer">
     <div class="d-flex justify-content-between">
       <div>
@@ -22,7 +40,7 @@
       <div>
         <p-button (click)="hideNewMatchModal()" [label]="'general.cancel' | translate"
           styleClass="p-button-text"></p-button>
-        <p-button (click)="createNewMatch()" [label]="'general.create' | translate" styleClass="p-button-text"></p-button>
+        <p-button [disabled]="selectedGeneration === undefined" (click)="createNewMatch()" [label]="'general.create' | translate" styleClass="p-button-text"></p-button>
       </div>
     </div>
   </ng-template>

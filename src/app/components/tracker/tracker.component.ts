@@ -57,6 +57,8 @@ export class TrackerComponent {
     }
   };
 
+  public isReady: boolean = false;
+  public showWeaknessesModal: boolean = false;
   public blockEnabled: boolean = false;
   public sidebarVisible: boolean = false;
   private op?: OverlayPanel;
@@ -64,11 +66,15 @@ export class TrackerComponent {
   constructor(private dataService: DataService, private messageService: MessageService, private fileService: FileService, private translate: TranslateService) {
     this.iconPath = this.dataService.getIconsPath();
     this.dataService.selectedPokemon.subscribe(pokemonName => {
-      this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
-      this.settings = dataService.getSettings();
-      this.evolutionsGroup = POKEMON_EVOS[pokemonName];
-
-      this.pokemonImage = `${this.iconPath + pokemonName}.png`
+      this.isReady = false;
+      setTimeout(() => {
+        this.pokemon = (pokemonName) ? this.dataService.getSinglePokemonData(pokemonName) : this.getDummyPokemonInfo();
+        this.settings = dataService.getSettings();
+        this.evolutionsGroup = POKEMON_EVOS[pokemonName];
+  
+        this.pokemonImage = `${this.iconPath + pokemonName}.png`
+        this.isReady = true;
+      }, 0)
     });
   }
 
@@ -568,5 +574,9 @@ export class TrackerComponent {
   private deleteFromSuggestionResponseIfPresent(type: string) {
     const index = this.suggestionResponse.typesResult.dubiousTypes.findIndex(x => x === type);
     if(index > -1) this.suggestionResponse.typesResult.dubiousTypes.splice(index, 1);
+  }
+
+  public checkBothTypeConfirmed(): boolean {
+    return this.pokemon.confirmedTypes.findIndex(x => x === "?") === -1;
   }
 }

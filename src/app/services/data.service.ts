@@ -127,4 +127,8 @@ export class DataService {
   public setTypesCombinationsFilters(val: UsedMoveFilter[]) {
     this.typesCombinationsFilters = val;
   }
+
+  public getSavedMatch() {
+    return this.savedMatches.find(x => (x.matchName + ".txt") === this.lastSelectedMatch)
+  }
 }

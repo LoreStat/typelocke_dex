@@ -20,6 +20,7 @@ export class StartScreenComponent implements OnInit {
 
   public showNewMatchModal: boolean = false;
   public newMatchTitle: string = "";
+  public selectedGeneration?: string;
   public pokemonIcon: string = "";
   public pokemonIconPath: string = "";
   private generateIcons = false;
@@ -57,12 +58,14 @@ export class StartScreenComponent implements OnInit {
 
     this.savedMatches = savedDataList.filter((row: string) => !!row).map((match: string) => {
       const matchSplit = match.split(",");
+      const gen = matchSplit.length > 5 ? matchSplit[5] : "4";
       return {
         matchName: matchSplit[0],
         file: matchSplit[1],
         startDate: matchSplit[2],
         lastLogin: matchSplit[3],
         iconName: matchSplit[4],
+        generation: gen
       }
     })
 
@@ -96,6 +99,7 @@ export class StartScreenComponent implements OnInit {
     this.generateIcons = false;
     this.newMatchTitle = "";
     this.pokemonIcon = "";
+    this.selectedGeneration = undefined;
     this.showNewMatchModal = false;
   }
 
@@ -108,6 +112,8 @@ export class StartScreenComponent implements OnInit {
   }
 
   public async createNewMatch() {
+    if(this.selectedGeneration === undefined) return;
+    
     if(this.newMatchTitle === "" || this.newMatchTitle.length > 12) {
       this.messageService.add(
         {
@@ -132,11 +138,12 @@ export class StartScreenComponent implements OnInit {
         iconName: this.pokemonIcon + ".png",
         startDate: new Date().toLocaleDateString(),
         lastLogin: new Date().toISOString(),
-        file: this.newMatchTitle + ".txt"
+        file: this.newMatchTitle + ".txt",
+        generation: this.selectedGeneration as string
       })
       this.dataService.setSavedMatches(this.savedMatches);
       await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-      await this.fileService.createMatchFile(this.newMatchTitle);
+      await this.fileService.createMatchFile(this.newMatchTitle, this.selectedGeneration as string);
 
       this.showNewMatchModal = false;
       this.generateIcons = false;
@@ -154,12 +161,14 @@ export class StartScreenComponent implements OnInit {
       const data: string = fileReader.result as string;
 
       const matchArray: string[] = data.split('\n')[0].split(',');
+      const gen = matchArray.length > 5 ? matchArray[5] : "4";
       const match: SavedMatch = {
         matchName: matchArray[0],
         iconName: matchArray[4],
         startDate: matchArray[2],
         lastLogin: matchArray[3],
-        file: matchArray[1]
+        file: matchArray[1],
+        generation: gen,
       };
 
       if(this.savedMatches.findIndex(x => x.matchName.split(".txt")[0] === match.matchName) >= 0) {
@@ -178,9 +187,9 @@ export class StartScreenComponent implements OnInit {
         const splitMatchData: string[] = data.split('\n');
         splitMatchData.splice(0, 1);
         const matchData = splitMatchData.join('\n');
-        
+
         await this.fileService.writeFile(match.matchName + ".txt", matchData, true);
-  
+
         this.showNewMatchModal = false;
         this.generateIcons = false;
         this.goToMatchSelection();

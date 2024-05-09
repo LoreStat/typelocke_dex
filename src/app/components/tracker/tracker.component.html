@@ -1,115 +1,246 @@
 <p-blockUI [blocked]="blockEnabled">
   <p-progressSpinner></p-progressSpinner>
 </p-blockUI>
-<p-sidebar [(visible)]="sidebarVisible" (onHide)="resetSuggestionResponse">
-  <h3>{{ 'tracker.result' | translate }}</h3>
-  <div *ngIf="(suggestionResponse.type) === 'IMPOSSIBLE'">
-    {{ 'tracker.impossible' | translate }}
+<p-sidebar [(visible)]="sidebarVisible" (onHide)="(resetSuggestionResponse)">
+  <h3>{{ "tracker.result" | translate }}</h3>
+  <div *ngIf="suggestionResponse.type === 'IMPOSSIBLE'">
+    {{ "tracker.impossible" | translate }}
   </div>
-  <div *ngIf="(suggestionResponse.type) === 'CHECK'">
+  <div *ngIf="suggestionResponse.type === 'CHECK'">
     <p *ngIf="suggestionResponse.result">
-      {{ 'tracker.check-true' | translate }}
+      {{ "tracker.check-true" | translate }}
     </p>
     <p *ngIf="!suggestionResponse.result && suggestionResponse.typesResult">
-      {{ 'tracker.check-false' | translate }} {{ (('effectiveness.' + suggestionResponse.typesResult.dubiousTypes[0]) | translate).toLowerCase() }}
+      {{ "tracker.check-false" | translate }}
+      {{
+        (
+          "effectiveness." + suggestionResponse.typesResult.dubiousTypes[0]
+          | translate
+        ).toLowerCase()
+      }}
     </p>
   </div>
   <div *ngIf="suggestionResponse.type === 'TRACK'">
     <div *ngIf="suggestionResponse.typesResult">
       <p *ngIf="suggestionResponse.typesResult.confirmedTypes.length > 0">
-        {{ 'tracker.track-true' | translate}}{{ ('tracker.confirmed' | translate).toLocaleLowerCase() }}:
-        {{ getTranslatedTypesArray(suggestionResponse.typesResult.confirmedTypes) }}
+        {{ "tracker.track-true" | translate
+        }}{{ ("tracker.confirmed" | translate).toLocaleLowerCase() }}:
+        {{
+          getTranslatedTypesArray(suggestionResponse.typesResult.confirmedTypes)
+        }}
       </p>
       <p *ngIf="suggestionResponse.typesResult.dubiousTypes.length > 0">
-        {{ 'tracker.track-true' | translate}}{{ ('tracker.dubious' | translate).toLocaleLowerCase() }}:
-        {{ getTranslatedTypesArray(suggestionResponse.typesResult.dubiousTypes) }}
-
+        {{ "tracker.track-true" | translate
+        }}{{ ("tracker.dubious" | translate).toLocaleLowerCase() }}:
+        {{
+          getTranslatedTypesArray(suggestionResponse.typesResult.dubiousTypes)
+        }}
       </p>
       <p *ngIf="suggestionResponse.typesResult.removedTypes.length > 0">
-        {{ 'tracker.track-true' | translate}}{{ ('tracker.removed' | translate).toLocaleLowerCase() }}:
-        {{ getTranslatedTypesArray(suggestionResponse.typesResult.removedTypes) }}
-
+        {{ "tracker.track-true" | translate
+        }}{{ ("tracker.removed" | translate).toLocaleLowerCase() }}:
+        {{
+          getTranslatedTypesArray(suggestionResponse.typesResult.removedTypes)
+        }}
       </p>
     </div>
     <p *ngIf="!suggestionResponse.result">
-      {{ 'tracker.track-false' | translate }}
+      {{ "tracker.track-false" | translate }}
     </p>
   </div>
   <h4></h4>
 </p-sidebar>
-<div *ngIf="pokemon" class="fadein animation-duration-500">
+<div *ngIf="pokemon" class="fadein animation-duration-500" pAutoFocus [autofocus]="true">
   <div class="mb-2">
-    <p-card id="main-card" header="{{'pokemon.' + pokemon.name | translate}}" class="main-card">
+    <p-card id="main-card" class="main-card">
       <div class="d-flex flex-wrap justify-content-center">
         <p-card class="max-card-height">
-          <div class="text-center">
-            <img *ngFor="let pokeForImg of evolutionsGroup" [src]="getPokemonImagePath(pokeForImg)" [alt]="pokeForImg"
-              width="130" height="130">
+          <div class="position-absolute">
+            <p-badge
+              class="clickable"
+              *ngIf="checkBothTypeConfirmed()"
+              [value]="'i'"
+              (click)="showWeaknessesModal = !showWeaknessesModal"
+            ></p-badge>
           </div>
+          <p-dialog
+            *ngIf="checkBothTypeConfirmed() && isReady"
+            [(visible)]="showWeaknessesModal"
+            class="weaknesses-panel"
+            [closable]="false"
+            [style]="{ width: '80%', height: 'fit-content' }"
+            [modal]="true"
+            [breakpoints]="{ '809px': '100%' }"
+            [draggable]="false"
+            [position]="'top'"
+            [dismissableMask]="true"
+            [resizable]="false"
+            [header]="'tracker.resistances' | translate"
+          >
+            <app-weaknesses
+              (closeModalEmitter)="showWeaknessesModal = false"
+              [confirmedTypes]="pokemon.confirmedTypes"
+            ></app-weaknesses>
+          </p-dialog>
+          <div class="text-center">
+            <img
+              *ngFor="let pokeForImg of evolutionsGroup"
+              [src]="getPokemonImagePath(pokeForImg)"
+              [alt]="pokeForImg"
+              width="130"
+              height="130"
+            />
+          </div>
+
           <div class="d-flex justify-content-evenly">
-            <p-button *ngFor="let confirmedType of pokemon.confirmedTypes" [ngClass]="confirmedType.toLowerCase()"
-              [label]="'types.' + confirmedType.toLowerCase() | translate" styleClass="p-button-rounded"
-              (click)="removeType(confirmedType)" class="type-button ms-1 me-1"></p-button>
+            <p-button
+              *ngFor="let confirmedType of pokemon.confirmedTypes"
+              [ngClass]="confirmedType.toLowerCase()"
+              [label]="'types.' + confirmedType.toLowerCase() | translate"
+              styleClass="p-button-rounded"
+              (click)="removeType(confirmedType)"
+              class="type-button ms-1 me-1"
+            ></p-button>
           </div>
         </p-card>
 
         <p-card class="used-moves max-card-height">
           <div class="d-flex flex-column align-center">
-            <div (click)="toggleOverlayPanel(op, $event)" class="add-result clickable pb-2  pt-2 text-center">
-              {{ 'tracker.addResult' | translate }}
+            <div
+              (click)="toggleOverlayPanel(op, $event)"
+              class="add-result clickable pb-2 pt-2 text-center"
+            >
+              {{ "tracker.addResult" | translate }}
             </div>
-            <p-scroller [items]="pokemon.registeredMoves" [itemSize]="pokemon.registeredMoves.length" styleClass="border-1 surface-border" [style]="{'width': '200px'}">
+            <p-scroller
+              [items]="pokemon.registeredMoves"
+              [itemSize]="pokemon.registeredMoves.length"
+              styleClass="border-1 surface-border"
+              [style]="{ width: '200px' }"
+            >
               <ng-template pTemplate="item" let-item let-options="options">
-                <div class="flex align-items-center p-2 justify-content-between"
-                  [pTooltip]="('types.' + getBackgroundClassFromRecentMoveCaller(item.substring(0,2)).toLocaleLowerCase())| translate"
-                  [showDelay]="500" [ngClass]="getBackgroundClassFromRecentMoveCaller(item.substring(0,2))"
-                  style="height: 50px;">
-                  <span>{{ getEffectivenessFromRecentMoveCaller(item.substring(2,3)) | translate }}</span>
-                  <i class="pi pi-times clickable" (click)="removeUsedMove(item)"></i>
+                <div
+                  class="flex align-items-center p-2 justify-content-between"
+                  [pTooltip]="
+                    'types.' +
+                      getBackgroundClassFromRecentMoveCaller(
+                        item.substring(0, 2)
+                      ).toLocaleLowerCase() | translate
+                  "
+                  [showDelay]="500"
+                  [ngClass]="
+                    getBackgroundClassFromRecentMoveCaller(item.substring(0, 2))
+                  "
+                  style="height: 50px"
+                >
+                  <span>{{
+                    getEffectivenessFromRecentMoveCaller(item.substring(2, 3))
+                      | translate
+                  }}</span>
+                  <i
+                    class="pi pi-times clickable"
+                    (click)="removeUsedMove(item)"
+                  ></i>
                 </div>
               </ng-template>
             </p-scroller>
           </div>
         </p-card>
-        <p-card class="notes-title flex-1 max-card-height" header="{{'tracker.notes' | translate}}">
-          <textarea class="fill-available text-area-height" pInputTextarea [autoResize]="true"
-            [(ngModel)]="this.pokemon.notes" (blur)="fillDataAndSave()"></textarea>
+        <p-card
+          class="notes-title flex-1 max-card-height"
+          header="{{ 'tracker.notes' | translate }}"
+        >
+          <textarea
+            class="fill-available text-area-height"
+            pInputTextarea
+            [autoResize]="true"
+            [(ngModel)]="this.pokemon.notes"
+            (blur)="fillDataAndSave()"
+          ></textarea>
         </p-card>
         <p-overlayPanel #op class="used-moves-panel" [showCloseIcon]="true">
           <ng-template pTemplate="content">
-            <div class="suggestion-box d-flex justify-content-center flex-column"
-              *ngIf="allTypes && effectivenessesList">
-              <div class="types-box d-flex flex-wrap justify-content-evenly mb-2">
+            <div
+              class="suggestion-box d-flex justify-content-center flex-column"
+              *ngIf="allTypes && effectivenessesList"
+            >
+              <div
+                class="types-box d-flex flex-wrap justify-content-evenly mb-2"
+              >
                 <div *ngFor="let type of allTypes" class="mb-2">
-                  <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
-                    styleClass="p-button-rounded" (click)="selectedSuggestionType = type"
-                    class="type-button"></p-button>
+                  <!-- TOGLI TIPI GIÀ CALCOLATI-->
+                  <p-button
+                    [ngClass]="type.toLowerCase()"
+                    [label]="'types.' + type.toLowerCase() | translate"
+                    styleClass="p-button-rounded"
+                    (click)="selectedSuggestionType = type"
+                    class="type-button"
+                  ></p-button>
                 </div>
               </div>
-              <div class="effectiveness-box d-flex flex-wrap justify-content-between mb-5"
-                *ngIf="selectedSuggestionType">
+              <div
+                class="effectiveness-box d-flex flex-wrap justify-content-between mb-5"
+                *ngIf="selectedSuggestionType"
+              >
                 <div *ngFor="let effectiveness of effectivenessesList">
-                  <p-button [label]="'effectiveness.' + effectiveness | translate"
+                  <p-button
+                    [label]="'effectiveness.' + effectiveness | translate"
                     styleClass="p-button-rounded p-button-raised p-button-text"
-                    (click)="selectedSuggestionEffectiveness = effectiveness" class="type-button"></p-button>
+                    (click)="selectedSuggestionEffectiveness = effectiveness"
+                    class="type-button"
+                  ></p-button>
                 </div>
               </div>
-              <div class="d-flex justify-content-between fadein animation-duration-500 flex-wrap effectiveness-box"
-                *ngIf="selectedSuggestionEffectiveness && selectedSuggestionType">
-                <p-button [ngClass]="selectedSuggestionType.toLowerCase()"
-                  [label]="'types.' + selectedSuggestionType.toLowerCase() | translate" styleClass="p-button-rounded"
-                  class="type-button"></p-button>
+              <div
+                class="d-flex justify-content-between fadein animation-duration-500 flex-wrap effectiveness-box"
+                *ngIf="
+                  selectedSuggestionEffectiveness && selectedSuggestionType
+                "
+              >
+                <p-button
+                  [ngClass]="selectedSuggestionType.toLowerCase()"
+                  [label]="
+                    'types.' + selectedSuggestionType.toLowerCase() | translate
+                  "
+                  styleClass="p-button-rounded"
+                  class="type-button"
+                ></p-button>
                 <div class="d-flex">
-                  <p-button *ngIf="settings?.automatic" class="me-1" icon="pi pi-calculator"
+                  <p-button
+                    *ngIf="settings?.automatic"
+                    class="me-1"
+                    icon="pi pi-calculator"
                     [pTooltip]="'general.calculate' | translate"
                     styleClass="p-button-rounded p-button-text p-button-raised"
-                    (click)="confirmUsedMove(selectedSuggestionType, selectedSuggestionEffectiveness, 0)"></p-button>
-                  <p-button class="ms-1" icon="pi pi-plus" styleClass="p-button-rounded p-button-text p-button-raised"
+                    (click)="
+                      confirmUsedMove(
+                        selectedSuggestionType,
+                        selectedSuggestionEffectiveness,
+                        0
+                      )
+                    "
+                  ></p-button>
+                  <p-button
+                    class="ms-1"
+                    icon="pi pi-plus"
+                    styleClass="p-button-rounded p-button-text p-button-raised"
                     [pTooltip]="'general.add' | translate"
-                    (click)="addMoveToRegistered(selectedSuggestionType, selectedSuggestionEffectiveness)"></p-button>
+                    (click)="
+                      addMoveToRegistered(
+                        selectedSuggestionType,
+                        selectedSuggestionEffectiveness
+                      )
+                    "
+                  ></p-button>
                 </div>
-                <p-button [label]="'effectiveness.' + selectedSuggestionEffectiveness | translate"
-                  styleClass="p-button-rounded p-button-raised p-button-text" class="type-button"></p-button>
+                <p-button
+                  [label]="
+                    'effectiveness.' + selectedSuggestionEffectiveness
+                      | translate
+                  "
+                  styleClass="p-button-rounded p-button-raised p-button-text"
+                  class="type-button"
+                ></p-button>
               </div>
             </div>
           </ng-template>
@@ -121,50 +252,75 @@
   <p-card class="main-card" id="type-card">
     <div class="d-flex justify-content-center">
       <div class="flex-basis-28 text-center">
-        {{ 'tracker.dubious' | translate }}
+        {{ "tracker.dubious" | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.dubiousTypes" class="p-1">
-            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
-              styleClass="p-button-rounded" (click)="moveToAvailable('dubious', type)" class="type-button"></p-button>
+            <p-button
+              [ngClass]="type.toLowerCase()"
+              [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded"
+              (click)="moveToAvailable('dubious', type)"
+              class="type-button"
+            ></p-button>
           </div>
         </div>
       </div>
 
       <div class="flex-basis-44 borders-x text-center">
-        {{ 'tracker.available' | translate }}
+        {{ "tracker.available" | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.availableTypes" class="p-1">
-            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
-              styleClass="p-button-rounded" (click)="typeSelected = typeSelected !== type ? type : ''"
-              class="type-button"></p-button>
+            <p-button
+              [ngClass]="type.toLowerCase()"
+              [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded"
+              (click)="typeSelected = typeSelected !== type ? type : ''"
+              class="type-button"
+            ></p-button>
             <div *ngIf="typeSelected === type" class="position-absolute z-up">
-              <p-button class="position-absolute choice-button left-button" [ngClass]="type.toLowerCase()"
-                icon="pi pi-check" styleClass="p-button-rounded p-button-raised"
-                (click)="moveToConfirmed(type)"></p-button>
-              <p-button class="position-absolute choice-button right-button" [ngClass]="type.toLowerCase()"
-                icon="pi pi-times" styleClass="p-button-rounded p-button-raised"
-                (click)="moveToRemoved(type)"></p-button>
-              <p-button class="position-absolute choice-button bottom-button" [ngClass]="type.toLowerCase()"
-                icon="pi pi-question" styleClass="p-button-rounded p-button-raised"
-                (click)="moveToDubious(type)"></p-button>
+              <p-button
+                class="position-absolute choice-button left-button"
+                [ngClass]="type.toLowerCase()"
+                icon="pi pi-check"
+                styleClass="p-button-rounded p-button-raised"
+                (click)="moveToConfirmed(type)"
+              ></p-button>
+              <p-button
+                class="position-absolute choice-button right-button"
+                [ngClass]="type.toLowerCase()"
+                icon="pi pi-times"
+                styleClass="p-button-rounded p-button-raised"
+                (click)="moveToRemoved(type)"
+              ></p-button>
+              <p-button
+                class="position-absolute choice-button bottom-button"
+                [ngClass]="type.toLowerCase()"
+                icon="pi pi-question"
+                styleClass="p-button-rounded p-button-raised"
+                (click)="moveToDubious(type)"
+              ></p-button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="flex-basis-28 text-center">
-        {{ 'tracker.removed' | translate }}
+        {{ "tracker.removed" | translate }}
         <div class="d-flex flex-wrap justify-content-center">
           <div *ngFor="let type of pokemon.removedTypes" class="p-1">
-            <p-button [ngClass]="type.toLowerCase()" [label]="'types.' + type.toLowerCase() | translate"
-              styleClass="p-button-rounded" (click)="moveToAvailable('removed', type)" class="type-button"></p-button>
+            <p-button
+              [ngClass]="type.toLowerCase()"
+              [label]="'types.' + type.toLowerCase() | translate"
+              styleClass="p-button-rounded"
+              (click)="moveToAvailable('removed', type)"
+              class="type-button"
+            ></p-button>
           </div>
         </div>
       </div>
     </div>
   </p-card>
-
 </div>
 <div *ngIf="!pokemon" class="fadein animation-duration-500">
-  Seleziona un pokemon per visualizzare le informazioni relative ad esso
+  Select a pokemon to see info
 </div>

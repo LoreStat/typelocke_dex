@@ -15,7 +15,7 @@ import { FileService } from 'src/app/services/file.service';
 export class SettingsComponent implements OnInit {
 
   public settings!: Settings;
-
+  private settingsTemp!: Settings;
   public languages: DropdownItem[] = LANGUAGES;
 
   constructor(
@@ -24,20 +24,26 @@ export class SettingsComponent implements OnInit {
     private translate: TranslateService,
     private fileService: FileService
     ) {
-    this.settings = this.dataService.getSettings();
-  }
+      this.settingsTemp = Object.assign({}, this.dataService.getSettings());
+      this.settings = this.dataService.getSettings()
+    }
 
   ngOnInit() {
   }
 
   public async saveSettings() {
-    this.translate.use(this.settings.language);
     this.dataService.setSettings(this.settings);
     await this.fileService.writeSavedMatches(this.dataService.getSavedMatches(), this.dataService.getSettings());
-    this.back();
+    this.translate.use(this.settings.language);
+    this.back(false);
   }
 
-  public back() {
+  public back(cancel: boolean) {
+    if(cancel) {
+      Object.keys(this.settingsTemp).forEach(key => {
+        (this.settings as any)[key] = (this.settingsTemp as any)[key];
+      })
+    }
     this.location.back();
   }
 
