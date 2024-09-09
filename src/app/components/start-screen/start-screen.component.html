@@ -8,9 +8,9 @@
     <p-card class="clickable" (click)="goToContacts()">{{ 'startScreen.contacts' | translate }}</p-card>
   </div>
 </div>
-<p-dialog [(visible)]="showNewMatchModal" [style]="{width: '500px'}" [draggable]="false" [showHeader]="false">
+<p-dialog [(visible)]="showNewMatchModal" [style]="{width: '95%'}" [draggable]="false" [showHeader]="false">
   <div class="pt-5 d-flex justify-content-evenly">
-    <input type="text" pInputText [autofocus]="true" class="p-inputtext-lg" [(ngModel)]="newMatchTitle" />
+    <input type="text" pInputText [autofocus]="true" class="p-inputtext-lg w-100" [(ngModel)]="newMatchTitle" />
     <img *ngIf="pokemonIcon" [src]="pokemonIconPath + pokemonIcon + '.png'" alt="es" width="64" height="64">
   </div>
   <div class="mt-2 flex flex-wrap gap-3">
